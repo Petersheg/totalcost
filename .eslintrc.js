@@ -18,5 +18,13 @@ module.exports = {
     'no-constant-condition':'off',
     'no-dupe-keys': 'off',
     'no-undef':'off'
-  }
+  }, 
+  "overrides": [
+    {
+      "files": ["assets/js/*.js"], 
+      "rules": {
+        "require-jsdoc": "off"
+      }
+    }
+  ],
 }
