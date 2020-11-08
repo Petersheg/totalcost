@@ -76,243 +76,12 @@
         <section class="section_block">
            <div class="container section_wrapper">
               <div class="row">
-                   <section class="details_section col-md-7 col-lg-8 order-1">
-                       <article class="details_block" id="sv_about" >
-                            <header class="section_header">
-                                <h3 class="dt_block_title">About Service</h3>
-                            </header>
-                            <div class="service_info_section">
-                                <div class="vendor_info">
-                                   <div class="sv_vendor_info">
-                                        <h4 class="vendor_name font-bold">{{servicesDetail.businessName}}</h4>
-                                        <div class="rating_ind">
-                                            <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                                            <div class="rating_summary_vl">
-                                                <span class="rating_score font-bold">{{servicesDetail.averageRating}}</span>
-                                                <span class="rating_sample_space">
-                                                    {{servicesDetail.reviewsCount}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="meta_list">
-                                            <div class="info_meta">
-                                                <span class="meta_value">{{servicesDetail.businessTags}}</span>
-                                            </div>
-                                            <div class="info_meta">
-                                                <span class="meta_value">
-                                                    {{servicesDetail.contacts[0].city}},
-                                                    {{servicesDetail.contacts[0].state}},
-                                                    {{servicesDetail.contacts[0].country}},
-                                                    </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <div class="vendor_info_sub">
-                                        <div class="insight_item">
-                                            <div class="insight_value color-inverse">
-                                                <span class="value_lg">
-                                                    <span class="currency naira">{{servicesDetail.price}}</span>
-                                                </span>
-                                            </div>
-                                            <div class="insight_title">Starting From</div>
-                                        </div>
-                                   </div>
-                               </div>
-                            </div>
-                            <div class="content_inner">
-                                <p>{{servicesDetail.about}}</p>
-                            </div>
-                       </article>
+                   <section class="details_section col-md-7 col-lg-8 order-1" v-for="detaill in servicesDetail" :key="detaill">
+                       <AboutView :servicesDetail="servicesDetail"></AboutView>
                            
-                       <article class="details_block" id="sv_pricing">
-                            <header class="section_header">
-                                <h3 class="dt_block_title">Service Pricing</h3>
-                            </header>
-                            <div class="block_default hidden">
-                                <p>No price information provided on this service. Contact the vendor to request a quote.</p>
-                                <div class="section_cto">
-                                    <a href="" class="btn btn-inverse">Request Quote</a>
-                                </div>
-                            </div>
-                            <div class="content_inner">
-                               <p>Price packages provide a way for you to create different pricing schemes for different customer needs. </p>
-                                <div class="panel-group" id="package_panels" v-for="packagee in packages" :key="packagee.id">
-                                    <!--Preview page for an existing package.-->
-                                    <div class="panel settings_panel">
-                                        <header class="wd_wrapper" >
-                                           <a class="widget_info accordion-toggle collapsed" data-toggle="collapse" data-parent="#settings_accordions" href="#pkg_one">
-                                                <h4 class="panel-title color-black">{{packagee.name}}</h4>
-                                                <div class="info_meta color-grey">
-                                                    <span class="meta_label">View Details</span>
-                                                </div>
-                                            </a>
-                                            <div class="widget_controls">
-                                               <div class="insight_item text-right">
-                                                    <div class="insight_value">
-                                                        <span class="value">
-                                                            <span class="currency naira">{{packagee.amount}}</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="insight_title">Package Price</div>
-                                                </div>
-                                            </div>
-                                       </header>
-                                        <div class="panel-collapse collapse" id="pkg_one">
-                                            <div class="panel_inner">
-                                                <p>Package description as provided in the package information setup goes here. It is then followed by the package price, and a list of package constraints, also set by the vendor.</p>
-                                                <div class="pricing_addon">
-                                                    <div class="insight_title text-caps font-bold">Package Options</div>
-                                                    <div class="pricing_addon_list">
-                                                       <!--toggle the -->
-                                                        <article class="addonItem selected">
-                                                            <label for="add_1_1" class="item_wrapper">
-                                                               <input type="checkbox" checked hidden name="addon_item" id="add_1_1">
-                                                               <span class="selectionMarker"></span>
-                                                                <span class="addonTitle">Crowd size</span>
-                                                                <div class="addonPrice font-bold">
-                                                                    <span class="currency naira">15,000</span>
-                                                                </div>
-                                                                <span class="addon_cto">
-                                                                    <a href="#" class="btn-link">Details</a>
-                                                                </span>
-                                                            </label>
-                                                        </article>
-                                                        
-                                                        <article class="addonItem selected">
-                                                            <label for="add_1_2" class="item_wrapper">
-                                                               <input type="checkbox" checked hidden name="addon_item" id="add_1_2">
-                                                               <span class="selectionMarker"></span>
-                                                                <span class="addonTitle">Transportation</span>
-                                                                <div class="addonPrice font-bold">
-                                                                    <span class="currency naira">10,000</span>
-                                                                </div>
-                                                                <span class="addon_cto">
-                                                                    <a href="#" class="btn-link">Details</a>
-                                                                </span>
-                                                            </label>
-                                                        </article>
-                                                        
-                                                        <article class="addonItem selected">
-                                                            <label for="add_1_3" class="item_wrapper">
-                                                               <input type="checkbox" checked hidden name="addon_item" id="add_1_3">
-                                                               <span class="selectionMarker"></span>
-                                                                <span class="addonTitle">Extra Staffs</span>
-                                                                <div class="addonPrice font-bold">
-                                                                    <span class="currency naira">35,000</span>
-                                                                </div>
-                                                                <span class="addon_cto">
-                                                                    <a href="#" class="btn-link">Details</a>
-                                                                </span>
-                                                            </label>
-                                                        </article>
-                                                        
-                                                        <article class="addonItem selected">
-                                                            <label for="add_1_4" class="item_wrapper">
-                                                               <input type="checkbox" checked hidden name="addon_item" id="add_1_4">
-                                                               <span class="selectionMarker"></span>
-                                                                <span class="addonTitle">Service Charge</span>
-                                                                <div class="addonPrice font-bold">
-                                                                    <span class="currency naira">5,000</span>
-                                                                </div>
-                                                                <span class="addon_cto">
-                                                                    <a href="#" class="btn-link">Details</a>
-                                                                </span>
-                                                            </label>
-                                                        </article>
-                                                    </div>
-                                                    <div class="pricing_footer font-bold">
-                                                        <div class="">
-                                                            <span class="infoTitle font-regular">Price Total:</span>
-                                                        </div>
-                                                        <div class="value">
-                                                            <span class="currency naira">75,000</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                           </div>
-                       </article>
+                       <Pricing :servicesDetail="servicesDetail" :packages="packages"></Pricing>
                        
-                       <article class="details_block" id="sv_faqs">
-                            <header class="section_header">
-                                <div class="vendor_info">
-                                   <div class="sv_vendor_info">
-                                        <h3 class="dt_block_title">Frequestly asked Questions</h3>
-                                    </div>
-                               </div>
-                            </header>
-                            <div class="block_default hidden">
-                                <p>There are not FAQs provided by the vendor. Send a direct message to the vendor to make your enquires.</p>
-                            </div>
-                            <div class="content_inner ">
-                                <div class="panel-group" id='faq_list'>
-                                    <article class="panel panel_opaque">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq_list" href="#article_1">Are you available for international services?</a>
-                                            </h4>
-                                        </div>
-                                        <div id="article_1" class="panel-collapse collapse">
-                                            <div class="panel-body post_content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor accusantium velit omnis tempora nobis, debitis architecto, at veniam magni quam eum commodi eius! Quos repudiandae nulla, commodi error vel, inventore.</p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                    <article class="panel panel_opaque">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq_list" href="#article_2">Are you available for international services?</a>
-                                            </h4>
-                                        </div>
-                                        <div id="article_2" class="panel-collapse collapse">
-                                            <div class="panel-body post_content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor accusantium velit omnis tempora nobis, debitis architecto, at veniam magni quam eum commodi eius! Quos repudiandae nulla, commodi error vel, inventore.</p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                    <article class="panel panel_opaque">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq_list" href="#article_3">Are you available for international services?</a>
-                                            </h4>
-                                        </div>
-                                        <div id="article_3" class="panel-collapse collapse">
-                                            <div class="panel-body post_content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor accusantium velit omnis tempora nobis, debitis architecto, at veniam magni quam eum commodi eius! Quos repudiandae nulla, commodi error vel, inventore.</p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                    <article class="panel panel_opaque">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq_list" href="#article_4">Are you available for international services?</a>
-                                            </h4>
-                                        </div>
-                                        <div id="article_4" class="panel-collapse collapse">
-                                            <div class="panel-body post_content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor accusantium velit omnis tempora nobis, debitis architecto, at veniam magni quam eum commodi eius! Quos repudiandae nulla, commodi error vel, inventore.</p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                    <article class="panel panel_opaque">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq_list" href="#article_5">Are you available for international services?</a>
-                                            </h4>
-                                        </div>
-                                        <div id="article_5" class="panel-collapse collapse">
-                                            <div class="panel-body post_content">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor accusantium velit omnis tempora nobis, debitis architecto, at veniam magni quam eum commodi eius! Quos repudiandae nulla, commodi error vel, inventore.</p>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                           </div>
-                       </article>
+                       <Faq :servicesDetail="servicesDetail" :faqs="faqs"></Faq>
                        
                        <article class="details_block" id="sv_review">
                             <header class="section_header">
@@ -870,14 +639,23 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import AboutView from './about_view';
+import Pricing from './pricing';
+import Faq from './questions'
 
 export default {
   name: 'ServicedetailsV',
+  components:{
+      AboutView,
+      Pricing,
+      Faq
+  },
   data(){
       return{
           packages:null,
-          servicesDetail:null,
+          faqs:null,
+          servicesDetail:[],
         baseURL : 'http://totalcost.ng',
         listDetailURL:`/api/v1/vendor/${this.idd}/service/${this.serid}`,
       }
@@ -891,10 +669,9 @@ export default {
         const url = this.baseURL+endPoint;
         axios.get(url)
         .then(res => {
-            this.servicesDetail = res.data;
+            this.servicesDetail.push(res.data);
             this.packages = res.data.packages;
-            console.log(res.data.packages);
-            console.log(res.data);
+            this.faqs = res.data.faqs;
         })
         .catch(err => console.log(err));
 

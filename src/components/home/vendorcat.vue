@@ -17,37 +17,49 @@
 
 <script>
 import axios from 'axios';
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: 'Category',
   data(){
       return{
-        categories:null,
+        //categories:null,
       }
   },
   methods:{
       getImg(src){
           return require('../../assets'+ src);
       },
-    //   filterS(){
-    //     return this.categories.filter(category => {
-    //     return category.name.toLowerCase().includes(this.search.toLowerCase())
-    //   })
-      //}
   },
-  props:{
-      getCatgory: String,
-      filterS: Function
+   computed:{
+    //...mapGetters({categories:'returnServices'})
+    categories:function(){ return this.$store.getters.returnServices}
   },
   mounted(){
-      const baseURL = 'http://totalcost.ng';
-      const featureURL = "/api/v1/services/vendors";
-      const url = baseURL+featureURL;
-      axios.get(url)
-      .then(res => this.categories = res.data.data)
-      .catch(err => console.log(err));
+    //...mapActions(['fetchServices');
+    this.$store.dispatch('fetchServices');
+  },
+ 
+  props:{
+      getCatgory: String,
+  },
+  
+//   async mounted(){
 
-      this.filterS(this.categories);
-  }
+//     if ( this.returnServices.length === 0 ) {
+//             // set loading screen
+//             this.isLoading = true;
+//             await this.fetchServices();
+//             this.isLoading = false;
+//         }
+//     // const baseURL = 'http://totalcost.ng';
+//     // const featureURL ="/api/v1/services/vendors";
+//     // const url = baseURL+featureURL;
+//     // axios.get(url)
+//     // .then(res => this.allservices = res.data.data)
+//     // .catch(err => console.log(err));
+
+//   }
 }
 </script>
 

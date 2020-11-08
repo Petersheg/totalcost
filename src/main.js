@@ -6,5 +6,4 @@ import LoadScript from "vue-plugin-load-script";
 import $ from 'jquery';
 
 const app = createApp(App);
-app.use(LoadScript);
 app.use(store).use(router).mount('#app');

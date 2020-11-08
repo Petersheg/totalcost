@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <p class="categorySummary">
-                        <span>245</span>
+                        <span>{{getLength()}}</span>
                         vendors near
                         <a href="#change_location" data-toggle="modal" class="catFilter_location">
                             <span>Ikeja, Lagos</span>
@@ -342,7 +342,7 @@ export default {
   },
   data(){
       return{
-        serviceLists:null,
+        serviceLists:[],
         baseURL : 'http://totalcost.ng',
         listURL : `/api/v1/services/${this.id}/vendors`,
         serviceURL : '/api/v1/services',
@@ -358,16 +358,21 @@ export default {
         const url = this.baseURL+endPoint;
         axios.get(url)
         .then(res =>{
-            this.serviceLists = res.data.data
-            console.log(res.data.data);
+            this.serviceLists = res.data.data;
         })
         .catch(err => console.log(err))
     },
+        getLength(){
+        return this.serviceLists.length
+    }
   },
 
   mounted(){
-    this.getUrl(this.listURL);
+    this.getUrl(this.listURL); 
   },
+  updated(){
+      this.getLength()  
+    }
 }
 </script>
 

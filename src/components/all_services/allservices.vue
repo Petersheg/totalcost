@@ -5,40 +5,53 @@
             <div class="cat_card_image" :style ="{backgroundImage:`url(${getImg(service.banner)})`}"></div>
             <div class="cat_card_content">
                 <div class="cat_icon_marker">
-                    <img :src="getImg(service.imageUrl)" alt="" class="cust_icon icon_md">
+                    <img :src="getImg(service.logo)" alt="" class="cust_icon icon_md">
                 </div>
                 <h3 class="cat_card_title">{{service.name}}</h3>
-                <p class="cat_card_subtitle"><span>18</span> Vendors</p>
+                <p class="cat_card_subtitle"><span>{{service.vendorsCount}}</span> Vendors</p>
             </div>
         </router-link>
     </article>
+    
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: 'Allservices',
   data(){
       return{
-        allservices:null,
+        //allservices:null,
+        isLoading:true
       }
   },
-
+  computed:{
+    ...mapGetters('allservices',[returnServices])
+  },
   methods:{
       getImg(src){
           return require('../../assets'+ src);
-      }
+      },
+      ...mapActions('user',[fetchServices])
   },
 
-  mounted(){
+  async mounted(){
 
-    const baseURL = 'http://totalcost.ng';
-    const featureURL = "/api/v1/services";
-    const url = baseURL+featureURL;
-    axios.get(url)
-    .then(res => this.allservices = res.data.data)
-    .catch(err => console.log(err));
+    if ( this.returnServices.length === 0 ) {
+            // set loading screen
+            this.isLoading = true;
+            await this.fetchServices();
+            this.isLoading = false;
+        }
+    // const baseURL = 'http://totalcost.ng';
+    // const featureURL ="/api/v1/services/vendors";
+    // const url = baseURL+featureURL;
+    // axios.get(url)
+    // .then(res => this.allservices = res.data.data)
+    // .catch(err => console.log(err));
 
   }
 }

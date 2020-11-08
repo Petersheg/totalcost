@@ -19,7 +19,7 @@
                     <h1 class="section_title font_regular">Browse by Category</h1>
                     <span class="deco_bar"></span>
                 </header>
-                <Allservices></Allservices>
+                <Category/>
             </div>
         </section>
         
@@ -96,13 +96,13 @@
 </template>
 
 <script>
-import Allservices from './allservices'
 import Vendors from '../home/featureventure'
+import Category from '../home/vendorcat'
 export default {
   name: 'Services',
   components:{
-      Allservices,
-      Vendors
+      Vendors,
+      Category
   }
 }
 </script>

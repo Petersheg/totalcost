@@ -1,12 +1,12 @@
 <template>
     
-    <div class="vendor_list_container" v-for="oneservice in servicesList" :key="oneservice.id">
+    <div class="vendor_list_container">
         <!--add the class "" for services the user has wishlisted-->
         <!-- v-for="oneservice in servicesList" :key="oneservice.id" -->
-        <article class="card_bar vendor_service" v-for="packagee in packages" :key="packagee.id">
+        <article class="card_bar vendor_service" v-for="oneservice in servicesList" :key="oneservice.id">
             <div class="bar_wrapper" >
-                <div class="bar_image" v-for="oneservice in servicesList" :key="oneservice.id">
-                    <span class="bar_img_holder" :style ="{backgroundImage:`url(${getImg(oneservice.logo)})`}"></span>
+                <div class="bar_image">
+                    <span class="bar_img_holder" :style ="{backgroundImage:`url(${getImg(oneservice.serviceLogo)})`}"></span>
                 </div>
                 <div class="itemControl">
                     <button class="fav_control" type="button">
@@ -17,13 +17,13 @@
                 </div>
                 <div class="bar_content">
                     <div class="barCard_details">
-                        <h3 class="barCard_title color-primary">{{packagee.name}}</h3>
-                        <p class="brand_name"><span :class="{'is_verified': packagee.isVerified}">{{packagee.description}}</span></p>
+                        <h3 class="barCard_title color-primary">{{oneservice.businessName}}</h3>
+                        <p class="brand_name"><span :class="{'is_verified': oneservice.isVerified}">{{oneservice.vendorsName}}</span></p>
                         <div class="prd_support_info">
                             <div class="rating_ind">
                                 <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" 
                             data-rateit-readonly="true"></div>
-                                <span class="rating_space" title="4.5 from 10 reviews">10</span>
+                                <span class="rating_space" title="4.5 from 10 reviews">{{oneservice.reviewsCount}}</span>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                         <div class="insight_item">
                             <div class="insight_value color-inverse">
                                 <span class="value_lg">
-                                    <span class="currency naira">{{packagee.amount}}</span>
+                                    <span class="currency naira">{{oneservice.price}}</span>
                                 </span>
                             </div>
                             <div class="insight_title hidden__s">From</div>
@@ -66,7 +66,7 @@ export default {
   
   methods:{
       getImg(src){
-          return src;
+          return require(`../../assets${src}`);
       },
       getUrl(endPoint){
         const url = this.baseURL+endPoint;

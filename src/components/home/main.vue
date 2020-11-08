@@ -198,7 +198,7 @@
                     <span class="deco_bar"></span>
                 </header>
                     <Category :filterS="filterMethod"></Category>
-                <div class="scroll_arrows"></div>
+                    
                 <div class="section_cto text-center">
                     <router-link to="/all_services" class="btn btn-outline">See All</router-link>
                 </div>
@@ -248,12 +248,12 @@
 </template>
 
 <script>
-import $ from 'jquery';
 import axios from 'axios';
 import Vendors from "./featureventure";
 import Category from "./vendorcat";
 import Navbar from '../navfoot/navbar';
-import Hero from '../home/hero'
+import Hero from '../home/hero';
+import {mapActions} from 'vuex'
 
 //import hs from '../../assets/js/main';
 export default {
@@ -266,13 +266,13 @@ export default {
   },
   data(){
       return{
-          search:""
+          search:"",
       }
   },
   methods:{
       filterMethod(categories){
         console.log(categories);
-      }
+      },
   },
 }
 </script>
