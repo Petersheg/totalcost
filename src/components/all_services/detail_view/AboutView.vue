@@ -22,11 +22,9 @@
                             <span class="meta_value">{{detaill.businessTags}}</span>
                         </div>
                         <div class="info_meta">
-                            <span class="meta_value">
-                                <!-- {{detaill.contacts[0].city}},
-                                 {{detaill.contacts[0].state}},
-                                {{detaill.contacts[0].country}}, -->
-                                </span>
+                            <span class="meta_value" v-for="contact in contacts" :key="contact.id">
+                                {{contact.country}}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -55,7 +53,8 @@ export default {
   name: 'AboutView',
   
   props:{
-      servicesDetail:Array
+      servicesDetail:Array,
+      contacts:Array
   },
  }
 </script>

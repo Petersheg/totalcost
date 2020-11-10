@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-      <Navbar :searchQ="search" :callFilter="alertMethod"></Navbar>
       <Hero />
       <main class="main_content_area">
         <section class="section_block">
@@ -197,7 +196,7 @@
                     <h1 class="section_title font-regular">Find the best vendor near you.</h1>
                     <span class="deco_bar"></span>
                 </header>
-                    <Category :filterS="filterMethod"></Category>
+                    <Category></Category>
                     
                 <div class="section_cto text-center">
                     <router-link to="/all_services" class="btn btn-outline">See All</router-link>
@@ -248,32 +247,37 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Vendors from "./featureventure";
-import Category from "./vendorcat";
-import Navbar from '../navfoot/navbar';
-import Hero from '../home/hero';
+import Vendors from "./FeatureVenture";
+import Category from "./VendorCat";
+import Hero from '../home/Hero';
 import {mapActions} from 'vuex'
 
 //import hs from '../../assets/js/main';
+import Peter from '../../api/newService'
+
 export default {
   name: 'Main',
   components:{
       Vendors,
       Category,
-      Navbar,
       Hero
   },
   data(){
       return{
-          search:"",
+          
       }
   },
   methods:{
-      filterMethod(categories){
-        console.log(categories);
+      loadaScript(src){
+          const script = document.createElement("script");
+          script.setAttribute('src', src);
+          script.async=true;
+          document.body.appendChild(script)
       },
   },
+  mounted(){
+      this.loadaScript('../../../js/interScript/home.js');
+  }
 }
 </script>
 

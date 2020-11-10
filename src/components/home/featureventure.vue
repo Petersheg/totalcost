@@ -16,34 +16,28 @@
 </template>
 
 <script>
-import axios from 'axios';
-//import hs from '../../assets/js/main';
+import {mapActions,mapGetters} from 'vuex'
 export default {
   name: 'Vendors',
   data(){
       return{
-          vendors: []
       }
+  },
+  computed:{
+      vendors:function(){return this.$store.getters.returnVendors}
   },
   methods:{
       getImg(src){
           return require('../../assets'+ src);
       }
+      
   },
   mounted: function(){
-      const baseURL = 'http://totalcost.ng';
-      const featureURL = "/api/v1/vendor/featured/0/100";
-      const url = baseURL+featureURL;
-      axios.get(url)
-      .then(res => this.vendors = res.data.data)
-      .catch(err => console.log(err))
+      this.$store.dispatch('fetchVendors');
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .ven-img{
-        background-image: url('../../assets/img/logos/dummy_logo_3.png');
-    }
 </style>

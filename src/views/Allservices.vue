@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Services from "../components/all_services/services";
+import Services from "../components/all_services/Services";
 export default {
   name: 'Allservices',
   components:{

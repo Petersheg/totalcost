@@ -21,45 +21,18 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: 'Category',
-  data(){
-      return{
-        //categories:null,
-      }
-  },
   methods:{
       getImg(src){
           return require('../../assets'+ src);
       },
   },
    computed:{
-    //...mapGetters({categories:'returnServices'})
     categories:function(){ return this.$store.getters.returnServices}
   },
   mounted(){
-    //...mapActions(['fetchServices');
+    //...mapActions('fetchServices')
     this.$store.dispatch('fetchServices');
   },
- 
-  props:{
-      getCatgory: String,
-  },
-  
-//   async mounted(){
-
-//     if ( this.returnServices.length === 0 ) {
-//             // set loading screen
-//             this.isLoading = true;
-//             await this.fetchServices();
-//             this.isLoading = false;
-//         }
-//     // const baseURL = 'http://totalcost.ng';
-//     // const featureURL ="/api/v1/services/vendors";
-//     // const url = baseURL+featureURL;
-//     // axios.get(url)
-//     // .then(res => this.allservices = res.data.data)
-//     // .catch(err => console.log(err));
-
-//   }
 }
 </script>
 

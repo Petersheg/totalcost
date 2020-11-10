@@ -1,5 +1,5 @@
 <template>
-  <div id="nav">
+  <div >
     <Navbar />
       <router-view/>
     <Footer></Footer>
@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import Footer from './components/navfoot/footer';
-import Navbar from './components/navfoot/navbar';
+import Footer from './components/navfoot/Footer';
+import Navbar from './components/navfoot/Navbar';
 export default {
 
   components:{
@@ -24,9 +24,10 @@ export default {
 </script>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
   @import url('./assets/css/base.min.css');
+  @import url('https://unpkg.com/aos@next/dist/aos.css');
   @import url('./assets/css/slick.css');
   @import url('./assets/css/style.css');
-  @import url('https://unpkg.com/aos@next/dist/aos.js');
   @import url('./assets/css/font-awesome.css');
 </style>

@@ -16,7 +16,7 @@
                 <!--Preview page for an existing package.-->
                 <div class="panel settings_panel">
                     <header class="wd_wrapper" >
-                        <a class="widget_info accordion-toggle collapsed" data-toggle="collapse" data-parent="#settings_accordions" href="#pkg_one">
+                        <a class="widget_info accordion-toggle collapsed" data-toggle="collapse" data-parent="#settings_accordions" :href="getHref(packagee.name)">
                             <h4 class="panel-title color-black">{{packagee.name}}</h4>
                             <div class="info_meta color-grey">
                                 <span class="meta_label">View Details</span>
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                     </header>
-                    <div class="panel-collapse collapse" id="pkg_one">
+                    <div class="panel-collapse collapse" :id="packagee.name">
                         <div class="panel_inner">
                             <p>Package description as provided in the package information setup goes here. It is then followed by the package price, and a list of package constraints, also set by the vendor.</p>
                             <div class="pricing_addon">
@@ -124,6 +124,11 @@ export default {
       servicesDetail:Array,
       packages:Array
   },
+  methods:{
+      getHref(path){
+          return `#${path}`;
+      }
+  }
  }
 </script>
 

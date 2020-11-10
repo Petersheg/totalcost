@@ -13,7 +13,7 @@
             </div>
             <div class="navbar_group navbar_group_center">
                 <form class="navbar_search_form">
-                    <input class="navbar_search_input" type="search" placeholder="Find vendor by name or services" v-model="search" @input="filterState">
+                    <input class="navbar_search_input" type="search" placeholder="Find vendor by name or services">
                     <ul class="searchbar_autocomplete">
                     </ul>
                     <button class="navbar_search_btn navbar_search_submit" type="submit">
@@ -39,7 +39,7 @@
                             <div class="sub_bav_block">
                                 <div class="nav_block_wrapper">
                                    <ul class="nav_item_list">
-                                       <li class="nav_item" v-for="service in allservices" :key="service.id">
+                                       <li class="nav_item" v-for="service in allServices" :key="service.id">
                                            <router-link :to="{path:`/service_listings/${service.id}/vendors`}">{{service.name}}</router-link>
                                         </li>
                                    </ul>
@@ -87,30 +87,17 @@
 import axios from 'axios';
 
 export default {
-  name: 'Navbar',
-  data(){
-      return{
-          allservices:null,
-          search : this.searchQ,
-          filterState: this.callFilter,
-      }
-  },
-
-    props:{
-        searchQ: String,
-        callFilter : Function
+    name: 'Navbar',
+    data(){
+        return{
+        }
     },
-
-  mounted(){
-
-    const baseURL = 'http://totalcost.ng';
-    const featureURL = "/api/v1/services";
-    const url = baseURL+featureURL;
-    axios.get(url)
-    .then(res => this.allservices = res.data.data)
-    .catch(err => console.log(err));
-
-  }
+    computed:{
+        allServices:function(){return this.$store.getters.returnAllServices}
+    },
+    mounted(){
+        this.$store.dispatch('allServices')
+    }
 }
 </script>
 

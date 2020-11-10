@@ -34,21 +34,9 @@
                         <div class="dropdown-menu">
                             <div class="categories_dropdown">
                                 <ul class="subNavigation">
-                                    <li><a href="service_listings.html" class="menuLink_item">Disk Jockey</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Cakes &amp; Confectioneries</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Ushering &amp; Hospitality</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Logistics</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Rentals</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Decoration</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Makeup &amp; Makeover</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Photography &amp; Videography</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Musical Band</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Drinks &amp; Cocktails</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Security</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Fashion Designer</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Multimedia</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Venue Management</a></li>
-                                    <li><a href="service_listings.html" class="menuLink_item">Event Compere (MC)</a></li>
+                                    <li v-for="service in allServices" :key="service.id">
+                                        <router-link :to="{path:`/service_listings/${service.id}/vendors`}" class="menuLink_item">{{service.name}}</router-link>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -333,7 +321,7 @@
 </template>
 
 <script>
-import Subservicelist from '../all_services/subservicelist';
+import Subservicelist from '../all_services/SubServiceList';
 import axios from 'axios';
 export default {
   name: 'Serviceslist',
@@ -352,6 +340,9 @@ export default {
   props:{
       id:String
   },
+  computed:{
+      allServices:function(){return this.$store.getters.returnAllServices}
+  },
    methods:{
 
       getUrl(endPoint){
@@ -368,7 +359,8 @@ export default {
   },
 
   mounted(){
-    this.getUrl(this.listURL); 
+    this.getUrl(this.listURL);
+    this.$store.dispatch('allServices');
   },
   updated(){
       this.getLength()  

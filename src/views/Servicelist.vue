@@ -6,7 +6,7 @@
 
 
 <script>
-import Serviceslist from "../components/all_services/serviceslist";
+import Serviceslist from "../components/all_services/ServicesList";
 export default {
   name: 'Servicelist',
   components:{

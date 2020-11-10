@@ -3,7 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import LoadScript from "vue-plugin-load-script";
-import $ from 'jquery';
+const $ = window.$;
 
 const app = createApp(App);
+
+app.use(LoadScript);
+
 app.use(store).use(router).mount('#app');

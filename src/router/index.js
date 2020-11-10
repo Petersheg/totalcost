@@ -38,18 +38,18 @@ const routes = [
   {
     path: '/service_listings/:id/vendors',
     name: 'Serviceslist',
-    component: () => import( '../views/Servicelist.vue'),
+    component: () => import( '../views/ServiceList.vue'),
     props: (route)=>({id : route.params.id})
   },
   {
     path: '/merchant_home',
     name: 'Marchant',
-    component: () => import('../views/marchanthome.vue')
+    component: () => import('../views/MarchantHome.vue')
   },
   {
     path: '/service_details_view/:idd/service/:serid',
     name: 'ServicedetailsV',
-    component: () => import('../views/servicedetail-view.vue'),
+    component: () => import('../views/ServicedetailView.vue'),
     props: (route)=>({idd: route.params.idd , serid: route.params.serid})
   },
   

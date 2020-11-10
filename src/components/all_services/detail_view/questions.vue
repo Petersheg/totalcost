@@ -11,15 +11,15 @@
         <div class="block_default hidden">
             <p>There are not FAQs provided by the vendor. Send a direct message to the vendor to make your enquires.</p>
         </div>
-        <div class="content_inner ">
+        <div class="content_inner">
             <div class="panel-group" id='faq_list'>
-                <article class="panel panel_opaque" v-for="faq in faqs" :key="faq.id">
+                <article class="panel panel_opaque"  v-for="faq in faqs" :key="faq.id">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq_list" href="#article_1">{{faq.question}}?</a>
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#faq_list" :href="getHref(faq.id)">{{faq.question}}?</a>
                         </h4>
                     </div>
-                    <div id="article_1" class="panel-collapse collapse">
+                    <div :id="faq.id" class="panel-collapse collapse">
                         <div class="panel-body post_content">
                             <p>{{faq.answer}}</p>
                         </div>
@@ -39,6 +39,11 @@ export default {
       servicesDetail:Array,
       faqs:Array
   },
+  methods:{
+      getHref(path){
+          return `#${path}`
+      }
+  }
  }
 </script>
 
