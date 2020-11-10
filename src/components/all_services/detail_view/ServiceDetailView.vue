@@ -38,15 +38,7 @@
            </div>
         </section>
         <section class="section_block bg-white">
-            <div class="container section_wrapper">
-               <header class="section_header">
-                   <h3 class="section_title">Similar Services</h3>
-               </header>
-                <div class="prd_card_list row" id="related_services">
-                    <SimilarService :servicesDetail="servicesDetail"></SimilarService>
-                </div>
-                <div class="scroll_arrows"></div>
-            </div>
+            <SimilarService :servicesDetail="servicesDetail"></SimilarService>
         </section>
     </main>
 </template>
@@ -114,8 +106,6 @@ export default {
   mounted(){
       this.getUrl(this.listDetailURL);
       //Loading Script
-      this.loadScript('../../../../js/ScrollMagic.min.js');
-      this.loadScript('../../../../js/slick.min.js');
       this.loadScript('../../../../js/jquery.rateit.min.js');
       this.loadScript('../../../../js/interScript/serviceDetailView.js');
   }

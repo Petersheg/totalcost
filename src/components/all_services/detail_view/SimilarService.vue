@@ -1,6 +1,11 @@
 <template>
-    
-    <article class="prd_card col-sm-6 col-md-3" v-for="similar in similaService" :key="similar.id">
+
+    <div class="container section_wrapper">
+        <header class="section_header">
+            <h3 class="section_title">Similar Services</h3>
+        </header>
+        <div class="prd_card_list row" id="related_services">
+        <article class="prd_card col-sm-6 col-md-3" v-for="similar in similaService" :key="similar.id">
         <div class="prd_card_wrapper bg-white">
             <a href="mng_service.html" class="prd_card_banner">
                 <div class="prd_card_img" :style ="{backgroundImage:`url(${getImg(similar.logo)})`}">
@@ -21,8 +26,12 @@
                 </div>
             </div>
         </div>
-    </article>
-
+        </article>
+                    
+        </div>
+        <div class="scroll_arrows"></div>
+    </div>
+    
 </template>
 
 <script>
