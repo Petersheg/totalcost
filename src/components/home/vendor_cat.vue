@@ -17,7 +17,6 @@
 
 <script>
 import axios from 'axios';
-import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: 'Category',
@@ -30,7 +29,6 @@ export default {
     categories:function(){ return this.$store.getters.returnServices}
   },
   mounted(){
-    //...mapActions('fetchServices')
     this.$store.dispatch('fetchServices');
   },
 }

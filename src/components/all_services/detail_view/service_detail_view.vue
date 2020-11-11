@@ -45,13 +45,13 @@
 
 <script>
 import axios from 'axios';
-import AboutView from './AboutView';
-import Pricing from './Pricing';
-import Faq from './Questions';
+import AboutView from './about_view';
+import Pricing from './pricing';
+import Faq from './questions';
 import Review from './Review';
-import Card from './Card';
-import Gallery from './Gallery';
-import SimilarService from './SimilarService';
+import Card from './card';
+import Gallery from './gallery';
+import SimilarService from './similar_service';
 
 export default {
   name: 'ServicedetailsV',

@@ -321,7 +321,7 @@
 </template>
 
 <script>
-import Subservicelist from '../all_services/SubServiceList';
+import Subservicelist from '../all_services/subservice_list';
 import axios from 'axios';
 export default {
   name: 'Serviceslist',

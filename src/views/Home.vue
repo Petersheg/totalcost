@@ -6,7 +6,7 @@
 
 <script>
 // @ is an alias to /src
-import Main from '../components/home/Main'
+import Main from '../components/home/main'
 
 export default {
   name: 'Home',

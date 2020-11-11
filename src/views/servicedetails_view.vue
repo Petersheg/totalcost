@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ServicedetailsV from "../components/all_services/detail_view/ServiceDetailView";
+import ServicedetailsV from "../components/all_services/detail_view/service_detail_view";
 export default {
   components:{
     ServicedetailsV
