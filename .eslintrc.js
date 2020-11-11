@@ -18,7 +18,7 @@ module.exports = {
     'no-constant-condition':'off',
     'no-dupe-keys': 'off',
     'no-undef':'off',
-    'no-console':off
+    'no-console':'off'
   }, 
   "overrides": [
     {
