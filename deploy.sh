@@ -10,5 +10,5 @@ cd dist
 git init
 git add -A
 git commit -m 'deploy'
-git push -f git@https://github.com/Petersheg/oceandigitProject.git origin:deploy
+git push -f git@github.com:Petersheg/totalcost.git origin:deploy
 cd -
