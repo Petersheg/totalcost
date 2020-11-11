@@ -247,9 +247,9 @@
 </template>
 
 <script>
-import Vendors from "./feature_venture";
-import Category from "./vendor_cat";
-import Hero from '../home/hero';
+import Vendors from "./feeature_vendor";
+import Category from "./veendor_cat";
+import Hero from '../home/heero';
 import {mapActions} from 'vuex'
 
 //import hs from '../../assets/js/main';
