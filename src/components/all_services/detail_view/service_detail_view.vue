@@ -49,8 +49,8 @@ import AboutView from './about_view';
 import Pricing from './pricing';
 import Faq from './questions';
 import Review from './reeview';
-import Card from './card';
-import Gallery from './gallery';
+import Card from './caard';
+import Gallery from './gaallery';
 import SimilarService from './similar_service';
 
 export default {
