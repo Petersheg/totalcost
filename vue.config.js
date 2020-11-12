@@ -1,19 +1,14 @@
 module.exports = {
-    configureWebpack: {
-      module:{
-        rules:[{
-            loader: 'babel-loader',
-            test: /\.js$|jsx/,
-            exclude: /node_modules/
-        },
+  configureWebpack: {
+    module: {
+      rules: [
         {
-          loader: 'file-loader',
+          loader: "file-loader",
           test: /\.ico/,
-          exclude: /node_modules/
-      }]
-    }
+          exclude: /node_modules/,
+        },
+      ],
     },
-    publicPath: process.env.NODE_ENV === 'production'
-    ? '/totalcost/'
-    : '/'
-  }
+  },
+  publicPath: process.env.NODE_ENV === "production" ? "/totalcost/" : "/",
+};

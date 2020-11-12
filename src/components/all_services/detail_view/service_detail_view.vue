@@ -48,9 +48,9 @@ import axios from 'axios';
 import AboutView from './about_view';
 import Pricing from './pricing';
 import Faq from './questions';
-import Review from './review';
-import Card from './card';
-import Gallery from './gallery';
+import Review from './Review.vue';
+import Card from './Card.vue';
+import Gallery from './Gallery.vue';
 import SimilarService from './similar_service';
 
 export default {
