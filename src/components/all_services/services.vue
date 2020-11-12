@@ -96,8 +96,8 @@
 </template>
 
 <script>
-import Vendors from '../home/FeatureVenture'
-import Category from '../home/VendorCat'
+import Vendors from '../home/feature_venture'
+import Category from '../home/vendor_cat'
 export default {
   name: 'Services',
   components:{

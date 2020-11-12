@@ -1,20 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
-import axios from 'axios'
+import Home from '../views/home.vue';
+import Allservices from '../views/all_services.vue';
+import ServiceList from '../views/service_list.vue';
+import ServicedetailsV from '../views/servicedetails_view.vue';
+import Merchant from '../views/marchant_home.vue';
 
-// props={
-//   id:String
-// }
-
-// function getParams(){
-
-//   const baseURL = 'http://totalcost.ng';
-//   const serviceURL = '/api/v1/services';
-//   const url = baseURL+serviceURL;
-//     axios.get(url)
-//     .then(res => this.id = res.data.data.id)
-//     .catch(err => console.log(err));
-// }
 
 const routes = [
   {
@@ -33,23 +23,23 @@ const routes = [
   {
     path: '/all_services',
     name: 'Services',
-    component: () => import('../views/Allservices.vue')
+    component: Allservices
   },
   {
     path: '/service_listings/:id/vendors',
     name: 'Serviceslist',
-    component: () => import( '../views/ServiceList.vue'),
+    component: ServiceList,
     props: (route)=>({id : route.params.id})
   },
   {
     path: '/merchant_home',
     name: 'Marchant',
-    component: () => import('../views/MarchantHome.vue')
+    component: Merchant
   },
   {
     path: '/service_details_view/:idd/service/:serid',
     name: 'ServicedetailsV',
-    component: () => import('../views/ServicedetailView.vue'),
+    component: ServicedetailsV,
     props: (route)=>({idd: route.params.idd , serid: route.params.serid})
   },
   
