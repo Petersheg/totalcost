@@ -1,5 +1,5 @@
 {   
-    "root": "public",
+    "root": "dist",
     "clean_urls": true,
     "proxies": {
         "/all_services": {
