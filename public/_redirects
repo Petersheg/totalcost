@@ -1,2 +1,2 @@
 # Netlify settings for single-page application
-/all_services  http://totalcost.ng/api/v1/services
+/*  http://totalcost.ng/api/v1/:splat 200
