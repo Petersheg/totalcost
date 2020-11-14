@@ -331,9 +331,8 @@ export default {
   data(){
       return{
         serviceLists:[],
-        baseURL : 'http://totalcost.ng',
+        baseURL : process.env.VUE_APP_baseURL,
         listURL : `/api/v1/services/${this.id}/vendors`,
-        serviceURL : '/api/v1/services',
       }
   },
   

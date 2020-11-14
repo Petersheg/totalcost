@@ -73,7 +73,7 @@ export default {
           gallery:null,
           servicesDetail:[],
 
-        baseURL : 'http://totalcost.ng',
+        baseURL : process.env.VUE_APP_baseURL,
         listDetailURL:`/api/v1/vendor/${this.idd}/service/${this.serid}`,
       }
   },
