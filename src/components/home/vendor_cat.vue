@@ -17,6 +17,7 @@
 
 <script>
 import axios from 'axios';
+import scriptHelper from '@/helpers/ScriptHelpers'
 
 export default {
   name: 'Category',
@@ -28,8 +29,10 @@ export default {
    computed:{
     categories:function(){ return this.$store.getters.returnServices}
   },
-  mounted(){
-    this.$store.dispatch('fetchServices');
+  async mounted(){
+    await this.$store.dispatch('fetchServices');
+    //Ensure services are fetched before enabling carousel, otherwise loading order fails
+    scriptHelper.EnableSlickCarousel();
   },
 }
 </script>

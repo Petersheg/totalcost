@@ -197,11 +197,10 @@
                     <span class="deco_bar"></span>
                 </header>
                     <Category></Category>
-                    
-                <div class="section_cto text-center">
-                    <router-link to="/all_services" class="btn btn-outline">See All</router-link>
-                </div>
-                
+            <div class="scroll_arrows"></div>
+            <div class="section_cto text-center">
+                <router-link to="/all_services" class="btn btn-outline">See All</router-link>
+            </div>
             </div>
         </section>
         <section class="section_block banner_bg ev_budget_banner">
@@ -251,6 +250,7 @@ import Vendors from "./feature_venture";
 import Category from "./vendor_cat";
 import Hero from '../home/hero';
 import {mapActions} from 'vuex'
+import scriptHelper from '@/helpers/ScriptHelpers'
 
 //import hs from '../../assets/js/main';
 import Peter from '../../api/newService'
