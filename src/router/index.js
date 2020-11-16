@@ -42,13 +42,34 @@ const routes = [
     component: ServicedetailsV,
     props: (route)=>({idd: route.params.idd , serid: route.params.serid})
   },
+  {
+    path:'/login',
+    name:'Login',
+    component:()=> import('@/views/event_merchant/login.vue')
+  },
+  {
+    path:'/signup',
+    name:'SignUp',
+    component:()=> import('@/views/event_merchant/sign_up.vue')
+  },
+  {
+    path:'/f_password',
+    name:'Fpassword',
+    component:()=> import('@/views/event_merchant/f_password.vue')
+  },
+  {
+    path:'/vendor_profile_view',
+    name:'Vendorprofileview',
+    component:()=> import('@/views/user/vendor_profile_view.vue'),
+    // props:(route)=>({id: route.params.id})
+  }
   
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  mode:'history'
+  //mode:'history'
 })
 
 export default router

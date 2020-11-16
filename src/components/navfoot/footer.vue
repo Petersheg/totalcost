@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-     
+     <a href="#0" class="to-top">Top</a>
     <footer class="bg-primary" role="contentinfo">
         <div class="container">
             <div class="flex_row">

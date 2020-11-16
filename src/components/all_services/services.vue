@@ -19,7 +19,9 @@
                     <h1 class="section_title font_regular">Browse by Category</h1>
                     <span class="deco_bar"></span>
                 </header>
-                <Category/>
+                <div class="row service_cat_list">
+                        <Categorry/>
+                </div>
             </div>
         </section>
         
@@ -29,26 +31,7 @@
                     <h1 class="section_title font_regular">Top vendors</h1>
                     <span class="deco_bar"></span>
                 </header>
-                <div class="row">
-                    <div class="col-md-6 col-lg-8">
-                         <Vendors />
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="feature_ad_panel">
-                            <div class="cat_card_wrapper">
-                               <div class="cat_card_image" style="background-image: url(./img/banners/merchant_hold.jpg)"></div>
-                                <div class="ad_content cat_card_content">
-                                    <h3 class="section_title">Become a Vendor</h3>
-                                    <p>Do you offer event services in any capacity, and will like to get more clients? </p>
-                                    <p>Sign up as a Totalcost Vendor today, and start receiving orders from all parts of the Country.</p>
-                                    <div class="section_cto">
-                                        <a href="merchant_home.html" class="btn btn-inverse">Become a Vendor</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Topvendors/>
             </div>
         </section>
         
@@ -96,13 +79,13 @@
 </template>
 
 <script>
-import Vendors from '../home/feature_venture'
-import Category from '../home/vendor_cat'
+import Topvendors from './top_vendors'
+import Categorry from './category'
 export default {
   name: 'Services',
   components:{
-      Vendors,
-      Category
+      Topvendors,
+      Categorry
   }
 }
 </script>

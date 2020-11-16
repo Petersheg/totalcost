@@ -1,14 +1,14 @@
 <template>
    <div class="card_list">
         <article class="card_item" v-for="browse in browses" :key="browse.id">
-            <a href="#" class="feature_wrapper">
+            <router-link :to="{path:`/service_listings/${browse.id}/vendors`}" class="feature_wrapper">
                 <figure class="feature_icon">
                     <img :src="getImg(browse.imageUrl)" alt="{{browse.name}}">
                 </figure>
                 <h4 class="feature_title font-regular">
                     {{browse.name}}
                 </h4>
-            </a>
+            </router-link>
         </article>
    </div>
 </template>
@@ -20,7 +20,6 @@ export default {
   name: 'Browse',
   data(){
       return{
-          browses: []
       }
   },
   methods:{
@@ -28,20 +27,15 @@ export default {
           return require('../../assets'+ src);
       }
   },
+  computed:{
+      browses:function(){return this.$store.getters.returnAllServices}
+  },
   mounted: function(){
-      const baseURL = 'http://totalcost.ng';
-      const featureURL = "/api/v1/services";
-      const url = baseURL+featureURL;
-      axios.get(url)
-      .then(res => this.browses = res.data.data)
-      .catch(err => console.log(err))
+      this.$store.dispatch('allServices')
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .ven-img{
-        background-image: url('../../assets/img/logos/dummy_logo_3.png');
-    }
 </style>

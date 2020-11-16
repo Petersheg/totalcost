@@ -1,7 +1,7 @@
 <template>
   <div >
     <Navbar />
-      <router-view/>
+      <router-view :key="$route.fullPath"></router-view>
     <Footer></Footer>
   </div>
 </template>
@@ -18,8 +18,17 @@ export default {
   methods:{
       getImg(src){
           return require('../../assets'+ src);
-      }
+      },
+      loadaScript(src){
+          const script = document.createElement("script");
+          script.setAttribute('src', src);
+          script.async=true;
+          document.body.appendChild(script)
+      },
   },
+  created(){
+    
+  }
 }
 </script>
 

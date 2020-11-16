@@ -2,7 +2,7 @@
 
     <div class="vendor_bar_list row" data-aos="fade-up" data-aos-duration="400" >
         <article class="card_bar tiny_bar col-sm-6 col-md-4" v-for="vendor in vendors" :key="vendor.id">
-            <a href="vendor_profile_view.html" class="bar_wrapper">
+            <router-link to="/vendor_profile_view" class="bar_wrapper">
                 <div class="bar_image">
                     <span class="bar_img_holder" :style ="{backgroundImage:`url(${vendor.logo})`}"></span>
                 </div>
@@ -10,7 +10,7 @@
                     <h5 class="brand_name"><span :class ='{ "is_verified": vendor.isVerified }'>{{vendor.name}}</span></h5>
                     <p class="card_subtitle">{{vendor.serviceCsv}}</p>
                 </div>
-            </a>
+            </router-link>
         </article>
     </div>
 </template>

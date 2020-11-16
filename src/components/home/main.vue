@@ -271,12 +271,14 @@ export default {
       loadaScript(src){
           const script = document.createElement("script");
           script.setAttribute('src', src);
-          script.async=true;
           document.body.appendChild(script)
       },
   },
   mounted(){
-      this.loadaScript('../../../js/interScript/home.js');
+       this.loadaScript('../../../js/interScript/home.js');
+  },
+  beforeCreated(){
+     
   }
 }
 </script>

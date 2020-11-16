@@ -210,7 +210,7 @@
                     </article>
                 </div>
                 <div class="section_cto text-center">
-                    <a href="#signup" class="btn btn-inverse">Get Started</a>
+                    <router-link to="/signup" class="btn btn-inverse">Get Started</router-link>
                 </div>
             </div>
         </section>

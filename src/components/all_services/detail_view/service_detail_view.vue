@@ -106,6 +106,9 @@ export default {
   mounted(){
       this.getUrl(this.listDetailURL);
       //Loading Script
+  },
+  beforeCreated(){
+      this.loadScript('../../../../js/ScrollMagic.min.js');
       this.loadScript('../../../../js/jquery.rateit.min.js');
       this.loadScript('../../../../js/interScript/serviceDetailView.js');
   }
