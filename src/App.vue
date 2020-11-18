@@ -26,9 +26,6 @@ export default {
           document.body.appendChild(script)
       },
   },
-  created(){
-    
-  }
 }
 </script>
 

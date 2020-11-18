@@ -40,7 +40,29 @@ const routes = [
     path: '/service_details_view/:idd/service/:serid',
     name: 'ServicedetailsV',
     component: ServicedetailsV,
-    props: (route)=>({idd: route.params.idd , serid: route.params.serid})
+    props: (route)=>({idd: route.params.idd , serid: route.params.serid}),
+    // children:[
+    //   {
+    //     path: '',
+    //     name: 'About',
+    //     component:()=> import('../components/all_services/detail_view/about_view.vue')
+    //   },
+    //   {
+    //     path: '',
+    //     name: 'Pricing',
+    //     component:()=> import('../components/all_services/detail_view/pricing.vue')
+    //   },
+    //   {
+    //     path: '',
+    //     name: 'Review',
+    //     component:()=> import('../components/all_services/detail_view/Review.vue')
+    //   },
+    //   {
+    //     path: '',
+    //     name: 'Question',
+    //     component:()=> import('../components/all_services/detail_view/questions.vue')
+    //   },
+    // ]
   },
   {
     path:'/login',
@@ -64,12 +86,13 @@ const routes = [
     // props:(route)=>({id: route.params.id})
   }
   
-]
+];
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   //mode:'history'
-})
+});
 
 export default router

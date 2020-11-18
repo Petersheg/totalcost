@@ -21,7 +21,7 @@
                         <p class="brand_name"><span :class="{'is_verified': oneservice.isVerified}">{{oneservice.vendorsName}}</span></p>
                         <div class="prd_support_info">
                             <div class="rating_ind">
-                                <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" 
+                                <div class="rateit" :data-rateit-value="oneservice.averageRating" data-rateit-ispreset="true" 
                             data-rateit-readonly="true"></div>
                                 <span class="rating_space" title="4.5 from 10 reviews">{{oneservice.reviewsCount}}</span>
                             </div>
@@ -73,7 +73,6 @@ export default {
         .then(res => {
             this.servicesList = res.data.data;
             this.packages = res.data.data[0].packages;
-            console.log(res.data.data[0].packages);
         })
         .catch(err => console.log(err));
 

@@ -8,6 +8,12 @@
                 <div class="container">
                     <div class="section_nav_row" id="menu_nav">
                         <ul class="nav nav-tabs">
+                            <!-- <li class="active"><a href="#sv_gallery">Photos</a></li>
+                            <li><router-link :to="{name:'About',hash:'#sv_about'}">About</router-link></li>
+                            <li><router-link :to="{name:'Pricing',hash:'#sv_pricing'}">Pricing</router-link></li>
+                            <li><router-link :to="{name:'Question',hash:'#sv_faqs'}">FAQs</router-link></li>
+                            <li><router-link :to="{name:'Review',hash:'#sv_review'}">Reviews</router-link></li> -->
+                            
                             <li class="active"><a href="#sv_gallery">Photos</a></li>
                             <li><a href="#sv_about">About</a></li>
                             <li><a href="#sv_pricing">Pricing</a></li>
@@ -107,7 +113,7 @@ export default {
       this.getUrl(this.listDetailURL);
       //Loading Script
   },
-  beforeCreated(){
+  beforecreated(){
       this.loadScript('../../../../js/ScrollMagic.min.js');
       this.loadScript('../../../../js/jquery.rateit.min.js');
       this.loadScript('../../../../js/interScript/serviceDetailView.js');
