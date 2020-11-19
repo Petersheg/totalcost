@@ -1,6 +1,6 @@
 <template>
   <div >
-    <Navbar />
+    
       <router-view :key="$route.fullPath"></router-view>
     <Footer></Footer>
   </div>
@@ -8,12 +8,11 @@
 
 <script>
 import Footer from './components/navfoot/footer';
-import Navbar from './components/navfoot/navbar';
+//import Navbar from './components/navfoot/navbar';
 export default {
 
   components:{
     Footer,
-    Navbar
   },
   methods:{
       getImg(src){
