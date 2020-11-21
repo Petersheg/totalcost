@@ -84,7 +84,68 @@ const routes = [
     name:'Vendorprofileview',
     component:()=> import('@/views/user/vendor_profile_view.vue'),
     // props:(route)=>({id: route.params.id})
-  }
+  },
+  {
+    path:'/vendor_profile',
+    name:'VendorProfile',
+    component:()=> import('@/views/event_merchant/vendor_profile.vue'),
+    // props:(route)=>({id: route.params.id})
+  },
+  {
+    path:'/edit_profile',
+    name:'EditProfile',
+    component:()=> import('@/views/event_merchant/edit_profile.vue'),
+    // props:(route)=>({id: route.params.id})
+  },
+  {
+    path:'/new_service_1',
+    name:'NewService1',
+    component:()=> import('@/views/event_merchant/new_service_1.vue'),
+    // props:(route)=>({id: route.params.id})
+  },
+  {
+    path:'/new_service_2',
+    name:'NewService2',
+    component:()=> import('@/views/event_merchant/new_service_2.vue'),
+    // props:(route)=>({id: route.params.id})
+  },
+  {
+    path:'/new_service_3',
+    name:'NewService3',
+    component:()=> import('@/views/event_merchant/new_service_3.vue'),
+    // props:(route)=>({id: route.params.id})
+  },
+  {
+    path:'/new_service_4',
+    name:'NewService4',
+    component:()=> import('@/views/event_merchant/new_service_4.vue'),
+  },
+  
+  {
+    path:'/account_Settings',
+    name:'AccountSetting',
+    component:()=> import('@/views/event_merchant/account_settings.vue'),
+  },
+  {
+    path:'/mng_service',
+    name:'MngService',
+    component:()=> import('@/views/event_merchant/mng_service.vue'),
+  },
+  {
+    path:'/mng_gallery',
+    name:'MngGallery',
+    component:()=> import('@/views/event_merchant/mng_gallery.vue'),
+  },
+  {
+    path:'/vendor_services',
+    name:'VendorServices',
+    component:()=> import('@/views/event_merchant/vendor_services.vue'),
+  },
+  {
+    path:'/service_details',
+    name:'ServiceDetails',
+    component:()=> import('@/views/event_merchant/service_details.vue'),
+  },
   
 ];
 

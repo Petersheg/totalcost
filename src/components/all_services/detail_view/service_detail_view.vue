@@ -15,10 +15,10 @@
                             <li><router-link :to="{name:'Review',hash:'#sv_review'}">Reviews</router-link></li> -->
                             
                             <li class="active"><a href="#sv_gallery">Photos</a></li>
-                            <li><a href="#sv_about">About</a></li>
-                            <li><a href="#sv_pricing">Pricing</a></li>
-                            <li><a href="#sv_faqs">FAQs</a></li>
-                            <li><a href="#sv_review">Reviews</a></li>
+                            <li><a >About</a></li>
+                            <li><a >Pricing</a></li>
+                            <li><a @click="getId()">FAQs</a></li>
+                            <li><a >Reviews</a></li>
                         </ul>
                     </div>
                 </div>
@@ -27,15 +27,15 @@
         <section class="section_block">
            <div class="container section_wrapper">
               <div class="row">
-                   <section class="details_section col-md-7 col-lg-8 order-1" v-for="detaill in servicesDetail" :key="detaill">
-                       <AboutView :servicesDetail="servicesDetail" :contacts="contacts"></AboutView>
-                           
-                       <Pricing :servicesDetail="servicesDetail" :packages="packages"></Pricing>
+                   <section class="details_section col-md-7 col-lg-8 order-1" ref="detailz" v-for="detaill in servicesDetail" :key="detaill">
                        
-                       <Faq :servicesDetail="servicesDetail" :faqs="faqs"></Faq>
+                        <AboutView :servicesDetail="servicesDetail" :contacts="contacts"></AboutView>
+                            
+                        <Pricing :servicesDetail="servicesDetail" :packages="packages" ></Pricing>
+                        
+                        <Faq :servicesDetail="servicesDetail" :faqs="faqs" id="#sv_faqs"></Faq>
 
-                       <Review ></Review>
-                       
+                        <Review ></Review>
                    </section>
                    <aside class="col-md-5 col-lg-4 order-2">
                         <Card :servicesDetail="servicesDetail" :socials="socials" :contacts="contacts"></Card>
@@ -51,7 +51,7 @@
 
 <script>
 import axios from 'axios';
-import AboutView from './about_view';
+import AboutView from './about_view'
 import Pricing from './pricing';
 import Faq from './questions';
 import Review from './Review.vue';
@@ -68,7 +68,7 @@ export default {
       Review,
       Card,
       Gallery,
-      SimilarService
+      SimilarService,
   },
   data(){
       return{
@@ -99,24 +99,28 @@ export default {
             this.gallery = res.data.gallery
         })
         .catch(err => console.log(err));
-
     },
 
     loadScript(src){
       const script = document.createElement('script');
       script.setAttribute('src', src);
-      //script.async = true;
+      script.async = true;
       document.body.appendChild(script);
+    },
+
+    getId(){
+        this.$refs["detailz"].scrollIntoView("#sv_faqs",500);
     }
   },
   mounted(){
       this.getUrl(this.listDetailURL);
       //Loading Script
-  },
-  beforecreated(){
       this.loadScript('../../../../js/ScrollMagic.min.js');
       this.loadScript('../../../../js/jquery.rateit.min.js');
       this.loadScript('../../../../js/interScript/serviceDetailView.js');
+  },
+  beforeCreate(){
+      
   }
 }
 </script>

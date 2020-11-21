@@ -36,7 +36,8 @@
                                
                             </form>
                             <div class="section_cto text-center">
-                                <button type="submit" class="btn btn-inverse">Log In</button>
+                                <!-- <button type="submit" class="btn btn-inverse">Log In</button> -->
+                                <router-link to="/vendor_profile" class="btn btn-inverse">Login?</router-link>
                             </div>
                             <p class="">Don't have an account? <router-link to="/signup" class="btn-link font-bold">Sign Up</router-link></p>
                         </div>
