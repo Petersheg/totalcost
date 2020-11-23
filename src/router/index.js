@@ -98,22 +98,22 @@ const routes = [
     // props:(route)=>({id: route.params.id})
   },
   {
-    path:'/new_service_1',
+    path:'/new_service_category',
     name:'NewService1',
     component:()=> import('@/views/event_merchant/new_service_category.vue'),
   },
   {
-    path:'/new_service_2',
+    path:'/new_service_about',
     name:'NewService2',
     component:()=> import('@/views/event_merchant/new_service_about.vue'),
   },
   {
-    path:'/new_service_3',
+    path:'/new_service_media',
     name:'NewService3',
     component:()=> import('@/views/event_merchant/new_service_media.vue'),
   },
   {
-    path:'/new_service_4',
+    path:'/new_service_pricing',
     name:'NewService4',
     component:()=> import('@/views/event_merchant/new_service_pricing.vue'),
   },

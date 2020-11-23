@@ -53,7 +53,7 @@
                     <header class="user_infoHeader">
                         <h3 class="pane_title text-caps color-primary">My Services</h3>
                         <div class="header_cto">
-                            <router-link to="/new_service_1" class="btn btn-sm btn-inverse">New Service</router-link>
+                            <router-link to="/new_service_category" class="btn btn-sm btn-inverse">New Service</router-link>
                         </div>
                     </header>
                     <div class="empty_state d-none">
@@ -61,7 +61,7 @@
                             <h4 class="title font-bold color-primary">No Service found</h4>
                             <p class="">You have no listed services. Start by creating a service, and submiting it for verification.</p>
                             <div class="section_cto">
-                                <router-link to="new_service_1" class="btn btn-inverse">
+                                <router-link to="new_service_category" class="btn btn-inverse">
                                 New Service</router-link>
                             </div>
                         </div>

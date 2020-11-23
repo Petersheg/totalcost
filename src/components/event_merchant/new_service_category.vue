@@ -10,25 +10,25 @@
                                 <header class="widget_header">
                                     <div class="widget_progress_marker">
                                         <div class="progress_step active" title="Service Category">
-                                            <router-link to="/new_service_1" class="step_wrapper">
+                                            <router-link to="/new_service_category" class="step_wrapper">
                                                 <span class="step_label sr-only">Select Service Category</span>
                                                 <span class="step_count"></span>
                                             </router-link>
                                         </div>
                                         <div class="progress_step " title="Describe your service">
-                                            <router-link to="/new_service_2" class="step_wrapper">
+                                            <router-link to="/new_service_about" class="step_wrapper">
                                                 <span class="step_label sr-only">Describe your service</span>
                                                 <span class="step_count"></span>
                                             </router-link>
                                         </div>
                                         <div class="progress_step" title="Media Gallery">
-                                            <router-link to="/new_service_3" class="step_wrapper">
+                                            <router-link to="/new_service_media" class="step_wrapper">
                                                 <span class="step_label sr-only">Media Gallery</span>
                                                 <span class="step_count"></span>
                                             </router-link>
                                         </div>
                                         <div class="progress_step" title="Attach Packages">
-                                            <router-link to="/new_service_4" class="step_wrapper">
+                                            <router-link to="/new_service_pricing" class="step_wrapper">
                                                 <span class="step_label sr-only">Attach Packages</span>
                                                 <span class="step_count"></span>
                                             </router-link>
@@ -60,7 +60,7 @@
                                         </div>
                                         
                                         <div class="section_cto text-center">
-                                            <router-link to="/new_service_2" class="btn btn-inverse">
+                                            <router-link to="/new_service_about" class="btn btn-inverse">
                                                 Save & Continue
                                             </router-link>
                                         </div>

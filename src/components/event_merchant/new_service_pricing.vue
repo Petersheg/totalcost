@@ -42,25 +42,25 @@
                                 <header class="widget_header">
                                     <div class="widget_progress_marker">
                                         <div class="progress_step done" title="Service Category">
-                                            <router-link to="/new_service_1" class="step_wrapper">
+                                            <router-link to="/new_service_category" class="step_wrapper">
                                                 <span class="step_label sr-only">Select Service Category</span>
                                                 <span class="step_count"></span>
                                             </router-link>
                                         </div>
                                         <div class="progress_step done" title="Describe your service">
-                                            <router-link to="/new_service_2" class="step_wrapper">
+                                            <router-link to="/new_service_about" class="step_wrapper">
                                                 <span class="step_label sr-only">Describe your service</span>
                                                 <span class="step_count"></span>
                                             </router-link>
                                         </div>
                                         <div class="progress_step done" title="Media Gallery">
-                                            <router-link to="/new_service_3" class="step_wrapper">
+                                            <router-link to="/new_service_media" class="step_wrapper">
                                                 <span class="step_label sr-only">Media Gallery</span>
                                                 <span class="step_count"></span>
                                             </router-link>
                                         </div>
                                         <div class="progress_step active" title="Attach Packages">
-                                            <router-link to="/new_service_4" class="step_wrapper">
+                                            <router-link to="/new_service_pricing" class="step_wrapper">
                                                 <span class="step_label sr-only">Attach Packages</span>
                                                 <span class="step_count"></span>
                                             </router-link>
@@ -97,7 +97,7 @@
                                                     <label for="price_package" class=" has_details">
                                                         <input type="radio" checked id="price_package" name="sv_pricing">
                                                         <span>I have different Price Packages</span>
-                                                        <a href="#" class="info_trigger">
+                                                        <a href="#price_package" class="info_trigger">
                                                             <svg class="cust_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
                                                                 <path d="M28.9,47.7h6.3V28.9h-6.3V47.7z M32,0.6C14.7,0.6,0.6,14.7,0.6,32S14.7,63.4,32,63.4S63.4,49.3,63.4,32S49.3,0.6,32,0.6zM32,57.1C18.1,57.1,6.9,45.9,6.9,32S18.1,6.9,32,6.9S57.1,18.1,57.1,32S45.9,57.1,32,57.1zM28.9,22.6h6.3v-6.3h-6.3V22.6z"/>
                                                             </svg>
@@ -358,10 +358,10 @@
                                         </fieldset>
                                         
                                         <div class="section_cto text-center">
-                                            <router-link to="/new_service_3" class="btn btn-default">
+                                            <router-link to="/new_service_media" class="btn btn-default">
                                                 Back
                                             </router-link>
-                                            <router-link to="/new_service_4" class="btn btn-inverse">
+                                            <router-link to="/new_service_pricing" class="btn btn-inverse">
                                                 Continue
                                             </router-link>
                                         </div>

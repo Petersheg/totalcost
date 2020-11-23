@@ -154,7 +154,7 @@
                                             <li><router-link to="/edit_profile">Update your Profile</router-link></li>
                                             <li><router-link to="/edit_profile">Update your contact details</router-link></li>
                                             <li><router-link to="/">Create an Event</router-link></li>
-                                            <li><router-link to="new_service_1">List a Service</router-link></li>
+                                            <li><router-link to="new_service_category">List a Service</router-link></li>
                                             <li><router-link to="/account_settings">Manage your Bank accounts</router-link></li>
                                             <li><router-link to="/">Report a Vendor</router-link></li>
                                         </ul>
@@ -370,7 +370,7 @@
                                         <div class="def_wrapper text-center">
                                             <p>You have not listed any service yet. </p>
                                             <div class="section_cto">
-                                                <router-link to="/new_service_1" class="btn btn-primary btn-sm">List a Service</router-link>
+                                                <router-link to="/new_service_category" class="btn btn-primary btn-sm">List a Service</router-link>
                                             </div>
                                         </div>
                                     </div>
