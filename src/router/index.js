@@ -100,25 +100,22 @@ const routes = [
   {
     path:'/new_service_1',
     name:'NewService1',
-    component:()=> import('@/views/event_merchant/new_service_1.vue'),
-    // props:(route)=>({id: route.params.id})
+    component:()=> import('@/views/event_merchant/new_service_category.vue'),
   },
   {
     path:'/new_service_2',
     name:'NewService2',
-    component:()=> import('@/views/event_merchant/new_service_2.vue'),
-    // props:(route)=>({id: route.params.id})
+    component:()=> import('@/views/event_merchant/new_service_about.vue'),
   },
   {
     path:'/new_service_3',
     name:'NewService3',
-    component:()=> import('@/views/event_merchant/new_service_3.vue'),
-    // props:(route)=>({id: route.params.id})
+    component:()=> import('@/views/event_merchant/new_service_media.vue'),
   },
   {
     path:'/new_service_4',
     name:'NewService4',
-    component:()=> import('@/views/event_merchant/new_service_4.vue'),
+    component:()=> import('@/views/event_merchant/new_service_pricing.vue'),
   },
   
   {

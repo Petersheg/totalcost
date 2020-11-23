@@ -1,15 +1,15 @@
 <template>
     <NavbarMember/>
-    <NewService3></NewService3>
+    <NewService1></NewService1>
 </template>
 
 <script>
 // @ is an alias to /src
-import NewService3 from '@/components/event_merchant/new_service_3'
+import NewService1 from '@/components/event_merchant/new_service_category'
 import NavbarMember from '@/components/navfoot/navbar_member'
 export default {
   components: {
-    NewService3,
+    NewService1,
     NavbarMember
   }
 }

@@ -1140,7 +1140,7 @@ export default {
     },
   },
   mounted(){
-      this.loadScript('../../../js/interScript/nmgServices.js')
+      this.loadScript('../../../js/interScript/nmgServices.js');
   }
 }
 </script>
