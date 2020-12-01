@@ -1,11 +1,16 @@
 import axios from 'axios'
 
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = process.env.VUE_APP_baseURL;
+  
 export default class FetchAPI{
-    constructor(baseURL){
-        this.baseURL = baseURL
-    }
     async getData(Uri){
-        const response = await axios.get(this.baseURL+Uri);
+        const response = await axios.get(Uri);
         return response;
+    }
+
+    async authUser(Uri,form){
+        await axios.post(Uri);
+        return form;
     }
 }

@@ -7,6 +7,7 @@
 
 <script>
 import Footer from './components/navfoot/footer';
+import axios from 'axios';
 //import Navbar from './components/navfoot/navbar';
 export default {
 
@@ -24,6 +25,19 @@ export default {
           document.body.appendChild(script)
       },
   },
+  created(){
+    axios.interceptors.response.use(undefined, function (error) {
+    if (error) {
+      const originalRequest = error.config;
+      if (error.response.status === 401 && !originalRequest._retry) {
+    
+          originalRequest._retry = true;
+          store.dispatch('LogOut')
+          return router.push('/login')
+      }
+    }
+  })
+  }
 }
 </script>
 

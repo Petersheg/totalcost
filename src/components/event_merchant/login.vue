@@ -10,21 +10,21 @@
                             <h2 class="color-primary pane_title">Log into your account</h2>
                         </header>
                         <div class="content_inner">
-                            <div class="error_message">
-                                <p>Incorrect email address or password. Please try again.</p>
+                            <div class="error_message" v-if="errors">
+                                <p v-for="error in errors" :key="error">{{error}}</p>
                             </div>
-                            <form action="">
+                            <form  @submit.prevent="submit"><!-- -->
                                 <div class="form-group funky_form">
                                     <label class="control-label">
-                                        Email / Username
+                                        Email
                                     </label>
-                                    <input type="email" class="form-control" placeholder="Email / username">
+                                    <input type="email" class="form-control" v-model="form.email" placeholder="Email">
                                 </div>
                                 <div class="form-group funky_form field_pass">
                                     <label class="control-label">
                                         Password
                                     </label>
-                                    <input type="password" class="form-control" placeholder="Password">
+                                    <input type="password" class="form-control" v-model="form.password" placeholder="Password">
                                 </div>
                                 <div class="auth_meta clearfix">
                                     <label for="rem_me" class="checkbox-inline">
@@ -33,12 +33,13 @@
                                     </label>
                                     <router-link to="/f_password" class="btn-link">Forgot Password?</router-link>
                                </div>
+                               <div class="section_cto text-center">
+                                <button type="submit" class="btn btn-inverse">Log In</button>
+                                <!-- <router-link to="/vendor_profile" class="btn btn-inverse">Login?</router-link> -->
+                                </div>
                                
                             </form>
-                            <div class="section_cto text-center">
-                                <!-- <button type="submit" class="btn btn-inverse">Log In</button> -->
-                                <router-link to="/vendor_profile" class="btn btn-inverse">Login?</router-link>
-                            </div>
+                            
                             <p class="">Don't have an account? <router-link to="/signup" class="btn-link font-bold">Sign Up</router-link></p>
                         </div>
                         <div class="content_footer">
@@ -71,8 +72,44 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+import axios from 'axios'
 export default {
-  name: 'Login'
+  name: 'Login',
+  data:function(){
+      return{
+          form:{
+            email:"",
+            password:""
+          },
+      }
+  },
+
+  methods: {
+    ...mapActions(["LogIn"]),
+    async submit() {
+        const User={
+            email: this.form.email,
+            password: this.form.password
+        }
+      try {
+        await this.LogIn(User);
+        if(this.success){
+            this.$router.go({name:"VendorProfile"});
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    
+  },
+  computed:{
+        ...mapGetters({errors:'returnMessage',success:'returnData', auth:'isAuthenticated'}),
+        //...mapGetters()
+  },
+  mounted(){
+    console.log(this.auth);
+  }
 }
 </script>
 

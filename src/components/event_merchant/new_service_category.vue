@@ -46,8 +46,8 @@
                                         <label class="control-label font-bold">What kind of service do you provide?</label>
                                         <div class="card_list cst_select_list select_radio">
                                             <article class="card_item select_item" v-for="service in allServices" :key="service.id">
-                                                <label for="svc_dj" class="feature_wrapper">
-                                                   <input type="radio" id="svc_dj" class="cst_selector" name="service_cat">
+                                                <label :for="this.getUrl(service.id)" class="feature_wrapper">
+                                                   <input type="radio" :id="this.getUrl(service.id)" class="cst_selector" name="service_cat">
                                                     <figure class="feature_icon">
                                                         <img :src="getImg(service.imageUrl)" :alt="service.name">
                                                     </figure>
@@ -86,6 +86,9 @@ export default {
   methods:{
       getImg(src){
           return require('../../assets'+src)
+      },
+      getUrl(id){
+          return `svc_${id}`
       }
   },
   mounted: function(){
