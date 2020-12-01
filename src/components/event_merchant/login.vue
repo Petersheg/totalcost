@@ -107,9 +107,6 @@ export default {
         ...mapGetters({errors:'returnMessage',success:'returnData', auth:'isAuthenticated'}),
         //...mapGetters()
   },
-  mounted(){
-    console.log(this.auth);
-  }
 }
 </script>
 

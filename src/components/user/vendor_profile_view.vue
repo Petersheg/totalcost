@@ -1,7 +1,7 @@
 <template>
   
   <main class="main_content_area bg-off-white">
-       <section class="user_banner_area" style="background-image: url(./img/banners/merchant_hold.jpg);">
+       <section class="user_banner_area" :style ="{backgroundImage: `url(${getImg('/img/banners/merchant_hold.jpg')})`}">
             <div class="container">
                 <div class="merchant_profile_details">
                     <div class="pr_info_block">
@@ -189,14 +189,14 @@
                             <div class="prd_card_list row">
                                 <article class="prd_card col-sm-6 col-md-4">
                                     <div class="prd_card_wrapper bg-white">
-                                        <a href="service_details_view.html" class="prd_card_banner">
-                                            <div class="prd_card_img" style="background-image: url(./img/banners/merchant_hold.jpg);">
+                                        <router-link to="/service_details_view" class="prd_card_banner">
+                                            <div class="prd_card_img" :style ="{backgroundImage: `url(${getImg('/img/banners/merchant_hold.jpg')})`}">
                                             </div>
                                             <div class="card_gradient"></div>
-                                        </a>
+                                        </router-link>
                                         <div class="prd_card_bd">
                                             <h4 class="prd_title">
-                                                <a title="Thyme & Again Creative Catering" href="service_details_view.html">Thyme & Again Creative Catering</a>
+                                                <router-link title="Thyme & Again Creative Catering" to="/service_details_view">Thyme & Again Creative Catering</router-link>
                                             </h4>
                                             <p class="card_subtitle">Photography</p>
                                             <div class="prd_support_info">
