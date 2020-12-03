@@ -34,7 +34,7 @@
                 <nav class="primary_nav_menu">
                     <ul class="primary_nav">
                         <li class="nav_item">
-                            <a href="#" class="nav_link_item">Local Vendors</a>
+                            <router-link to="" class="nav_link_item">Local Vendors</router-link>
                             <!--Toggle "nav_visible" to show list-->
                             <div class="sub_bav_block">
                                 <div class="nav_block_wrapper">
@@ -52,32 +52,29 @@
                         <li class="nav_item">
                             <router-link to="/merchant_home" class="nav_link_item">Become a Vendor</router-link>
                         </li>
-
-                        <span v-if="!returnPath()">
-                            <li class="nav_item">
-                            <router-link to="/login" class="nav_link_item">
+                        <li class="nav_item">
+                        <router-link to="/login" class="nav_link_item">
                             Login</router-link>
-                            </li>
-                            <li class="nav_item ">
-                                <router-link to="/signup" class="nav_link_item link_highlight">
-                                Sign Up</router-link>
-                            </li>
-                        </span>
+                        </li>
+                        <li class="nav_item ">
+                            <router-link to="/signup" class="nav_link_item link_highlight">
+                            Sign Up</router-link>
+                        </li>
                     </ul>
                 </nav>
                 <div class="navbar_consts">
                     <div class="control_btns btn_search_trigger">
-                        <a href="#" class="">
+                        <router-link to="" class="">
                             <svg class="cust_icon icon_xs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
                                 <path class="cls-1" d="M58.53,51.44l-13-13c-.07-.07-.15-.12-.22-.18a24.68,24.68,0,1,0-7.05,7c.06.07.11.15.18.22l13,13a5,5,0,1,0,7.09-7.09ZM24.67,40.78A16.12,16.12,0,1,1,40.78,24.67,16.12,16.12,0,0,1,24.67,40.78Z"/>
                             </svg>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="control_btns btn_menu ">
-                        <a class="primary-nav-trigger" href="#0">
+                        <router-link class="primary-nav-trigger" to="">
                             <span class="menu-icon"></span>
                             <span class="menu-text sr-only">Menu</span>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -99,10 +96,7 @@ export default {
         allServices:function(){return this.$store.getters.returnAllServices}
     },
     methods:{
-        returnPath(){
-            const pathToString =  this.$route.fullPath.toString();
-            return pathToString.includes("login" || "signin")
-        }
+        
     },
     mounted(){
         this.$store.dispatch('allServices')

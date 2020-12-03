@@ -9,42 +9,71 @@
                         <header class="block_header text-center">
                             <h2 class="color-primary pane_title">Create an Account</h2>
                         </header>
-                        <div class="content_inner">
-                            <div class="error_message">
-                                <p>Oops, Something went wrong. Please try again in a bit.</p>
+                        <div class="content_inner" >
+                            <div class="error_message" v-if="msg">
+                                <p v-for="error in errors" :key="error">{{error}}</p>
+                                
                             </div>
-                            <form action="">
+                            <form @submit.prevent="submit"><!--  -->
+                                <div class="form-group funky_form">
+                                    <label class="control-label">
+                                        Full Name
+                                    </label>
+                                    <input type="text" class="form-control" v-model="form.fullName" placeholder="Full Name" required>
+                                </div>
                                 <div class="form-horizontal">
                                     <div class="form-group funky_form col-sm-6">
                                         <label class="control-label">
-                                            First Name
+                                            Business Name
                                         </label>
-                                        <input type="text" class="form-control " placeholder="First Name">
+                                        <input type="text" class="form-control"  v-model="form.businessName" placeholder="Business Name">
                                     </div>
                                     <div class="form-group funky_form col-sm-6">
                                         <label class="control-label">
-                                            Last Name
+                                            Phone Number
                                         </label>
-                                        <input type="text" class="form-control" placeholder="First Name">
+                                        <input type="phone" class="form-control" v-model="form.phoneNumber" placeholder="Phone Number">
+                                    </div>
+                                </div>
+                                <div class="form-horizontal">
+                                    <div class="form-group funky_form col-sm-6">
+                                        <label class="control-label">
+                                            State
+                                        </label>
+                                        <input type="text" class="form-control" v-model="form.state" placeholder="State">
+                                    </div>
+                                    <div class="form-group funky_form col-sm-6">
+                                        <label class="control-label">
+                                            City
+                                        </label>
+                                        <input type="phone" class="form-control" v-model="form.city" placeholder="City">
                                     </div>
                                 </div>
                                 <div class="form-group funky_form">
                                     <label class="control-label">
                                         Email Address
                                     </label>
-                                    <input type="email" class="form-control" placeholder="Email Address">
+                                    <input type="email" class="form-control" v-model="form.email" placeholder="Email Address" required>
                                 </div>
                                 <div class="form-group funky_form field_pass">
                                     <label class="control-label">
                                         Password
                                     </label>
-                                    <input type="password" class="form-control" placeholder="Password">
+                                    <input type="password" class="form-control" v-model="form.newPassword" placeholder="Password" required>
                                 </div>
                                
+                               <div class="form-group funky_form">
+                                    <label class="control-label">
+                                        Description
+                                    </label>
+                                    <textarea name="description" class="form-control" cols="30" rows="10" v-model="form.description" placeholder="Description"></textarea>
+                                </div>
+
+                               <div class="section_cto text-center">
+                                    <button type="submit" class="btn btn-inverse">Continue</button>
+                                </div>
                             </form>
-                            <div class="section_cto text-center">
-                                <button type="submit" class="btn btn-inverse">Continue</button>
-                            </div>
+                            
                             <p class="">Already have an account? <router-link to="/login" class="btn-link font-bold">Log in</router-link></p>
                         </div>
                         <div class="content_footer">
@@ -78,8 +107,51 @@
 </template>
 
 <script>
+import { mapActions, mapGetters} from "vuex";
+
 export default {
-  name: 'SignUp'
+  name: 'SignUp',
+  data(){
+      return{
+          form:{
+              fullName:"",
+              email:"",
+              newPassword:"",
+              businessName:"",
+              phoneNumber:"",
+              state:"",
+              city:"",
+              description:""
+
+          },
+      }
+  },
+
+  computed:{
+      ...mapGetters({errors:"returnRegE",success:"returnRegS"}),
+      msg:function(){ return this.$store.getters.returnRegE},
+  },
+  methods: {
+    ...mapActions(["Register"]),
+    async submit() {
+      try {
+          await this.Register(this.form);
+        if(this.success){
+            const email=this.form.email;
+            this.$router.replace({name:"verification", params:{email}});
+            localStorage.setItem('regEmail',email)
+            console.log(email);
+        }
+        
+      } catch (error) {
+        this.showError = true
+      }
+      this.$store.commit('userEmail',this.form.email)
+    },
+
+  },
+  mounted(){
+  }
 }
 </script>
 

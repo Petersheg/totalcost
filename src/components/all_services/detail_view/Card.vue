@@ -4,9 +4,9 @@
         <div class="card_wrapper">
             <div class="brand_info_block text-center">
                 <figure class="brand_logo">
-                    <a href="vendor_profile.html" class="avatar">
+                    <router-link to="/vendor_profile" class="avatar">
                     <img :src="getIMG(card.serviceLogo)" :alt="card.businessName">
-                    </a>
+                    </router-link>
                 </figure>
                 <div class="prof_header">
                     <h4 class="prof_title ">{{card.businessName}}</h4>
@@ -111,7 +111,7 @@ export default {
   },
   methods:{
       getIMG(src){
-      return require('../../../assets'+src)
+      return require('@/assets'+src)
   },
   getAhref(path){
       return path

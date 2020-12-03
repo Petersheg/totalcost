@@ -34,7 +34,7 @@
                 <nav class="primary_nav_menu">
                     <ul class="primary_nav">
                         <li class="nav_item">
-                            <a href="#" class="nav_link_item">Local Vendors</a>
+                            <router-link to="" class="nav_link_item">Local Vendors</router-link>
                             <!--Toggle "nav_visible" to show list-->
                             <div class="sub_bav_block">
                                 <div class="nav_block_wrapper">
@@ -53,17 +53,17 @@
                             <router-link to="/merchant_home" class="nav_link_item">Become a Vendor</router-link>
                         </li>
                     
-                        <li class="nav_item">
+                        <li class="nav_item" v-if="auth">
                             <div class="navbar_consts">
                                 <div class="control_btns btn_search_trigger">
-                                        <a href="#">
+                                        <router-link to="">
                                             <svg class="cust_icon icon_xs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
                                                 <path class="cls-1" d="M58.53,51.44l-13-13c-.07-.07-.15-.12-.22-.18a24.68,24.68,0,1,0-7.05,7c.06.07.11.15.18.22l13,13a5,5,0,1,0,7.09-7.09ZM24.67,40.78A16.12,16.12,0,1,1,40.78,24.67,16.12,16.12,0,0,1,24.67,40.78Z"/>
                                             </svg>
-                                        </a>
+                                        </router-link>
                                 </div>
                                 <div class="control_btns btn_user_messages">
-                                    <a href="#">
+                                    <router-link to="">
                                         <span class="msg_notification"></span>
                                         <span class="icon_holder">
                                             <svg class="cust_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 11.56">
@@ -71,28 +71,28 @@
                                                 <path d="M13,4.06,6.85,7.88h0L6.67,8h0L6.5,8h0L6.35,8h0L6.2,7.91h0L0,4.06a1.16,1.16,0,0,0,0,.2V10.4a1.16,1.16,0,0,0,1.16,1.16H11.84A1.16,1.16,0,0,0,13,10.4h0V4.26A1.15,1.15,0,0,0,13,4.06Z"/>
                                             </svg>
                                         </span>
-                                    </a>
+                                    </router-link>
                                 </div>
                                 <div class="control_btns btn_user_act dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                                    <router-link to="" data-toggle="dropdown" class="dropdown-toggle">
                                         <span class="icon_holder">
                                             <svg class="cust_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13.65 13">
                                                 <path d="M6.8,7.3A3.65,3.65,0,1,0,3.15,3.64,3.65,3.65,0,0,0,6.8,7.3ZM6.8,1A2.69,2.69,0,1,1,4.11,3.64,2.7,2.7,0,0,1,6.8,1Z"/>
                                                 <path d="M.48,13H13.17a.48.48,0,0,0,.48-.48A4.59,4.59,0,0,0,9.07,7.93H4.58A4.59,4.59,0,0,0,0,12.52.48.48,0,0,0,.48,13Zm4.1-4.1H9.07A3.62,3.62,0,0,1,12.65,12H1A3.63,3.63,0,0,1,4.58,8.9Z"/>
                                             </svg>
                                         </span>
-                                    </a>
+                                    </router-link>
                                     <div class="dropdown-menu dropdown-right profile_dropdown">
                                         <header class="dpd_header">
                                             <div class="media_item user_media">
                                                 <figure class="media_figure">
-                                                    <a href="user_profile.html" class="user_avatar">
+                                                    <router-link to="/user_profile" class="user_avatar">
                                                         <img src="../../assets/img/icons/user_default.png" alt="">
-                                                    </a>
+                                                    </router-link>
                                                 </figure>
                                                 <div class="media_info">
-                                                    <h4 class="media_title color-primary">David Olaniyi</h4>
-                                                    <router-link to="/vendor_profile" class="btn-link">View Profile</router-link>
+                                                    <h4 class="media_title color-primary">{{user}}</h4>
+                                                    <router-link to="/vendor_profile_view" class="btn-link">View Profile</router-link>
                                                 </div>
                                             </div>
                                         </header>
@@ -110,8 +110,8 @@
                                                     </span>
                                                 </router-link>
                                             </li>
-                                            <li class="dpd_nav_item">
-                                                <router-link to="/login" class="dsp_tab_row">
+                                            <li class="dpd_nav_item" @click="logout">
+                                                <router-link to="" class="dsp_tab_row">
                                                     <span class="icon_holder">
                                                         <svg class="cust_icon icon_xs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17.24">
                                                             <path d="M15.86,9h0l0,0h0l0,0h0l0,0h0l0,0h0a.25.25,0,0,0,0,0,0,0,0,0,1,0,0v0a.51.51,0,0,0,0-.12.18.18,0,0,0,0,0,0,0,0,0,0,0,0v0h0l0,0h0l0,0h0l0,0h0l0,0h0l0,0L12.34,4.71a.6.6,0,0,0-.86.86L13.93,8H4.19a.6.6,0,1,0,0,1.21h9.74L11.5,11.65a.6.6,0,1,0,.85.86l3.46-3.46Z"/>
@@ -127,10 +127,10 @@
                                     </div>
                                 </div>
                                 <div class="control_btns btn_menu">
-                                    <a class="primary-nav-trigger" href="#0">
+                                    <router-link class="primary-nav-trigger" to="">
                                         <span class="menu-icon"></span>
                                         <span class="menu-text sr-only">Menu</span>
-                                    </a>
+                                    </router-link>
                                 </div>
                             </div>
                         </li>
@@ -138,17 +138,17 @@
                 </nav>
                 <div class="navbar_consts">
                     <div class="control_btns btn_search_trigger">
-                        <a href="#" class="">
+                        <router-link to="" class="">
                             <svg class="cust_icon icon_xs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
                                 <path class="cls-1" d="M58.53,51.44l-13-13c-.07-.07-.15-.12-.22-.18a24.68,24.68,0,1,0-7.05,7c.06.07.11.15.18.22l13,13a5,5,0,1,0,7.09-7.09ZM24.67,40.78A16.12,16.12,0,1,1,40.78,24.67,16.12,16.12,0,0,1,24.67,40.78Z"/>
                             </svg>
-                        </a>
+                        </router-link>
                     </div>
                     <div class="control_btns btn_menu ">
-                        <a class="primary-nav-trigger" href="#0">
+                        <router-link class="primary-nav-trigger" to="">
                             <span class="menu-icon"></span>
                             <span class="menu-text sr-only">Menu</span>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -158,12 +158,19 @@
 </template>
 
 <script>
-
+import {mapGetters} from 'vuex'
 export default {
     name: 'NavbarMember',
 
     computed:{
-        allServices:function(){return this.$store.getters.returnAllServices}
+        allServices:function(){return this.$store.getters.returnAllServices},
+        ...mapGetters({user:"returnUser", auth:"isAuthenticated"})
+    },
+    methods: {
+      async logout (){
+        await this.$store.dispatch('LogOut')
+        this.$router.go('/login')
+      }
     },
     mounted(){
         this.$store.dispatch('allServices')
@@ -172,6 +179,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-
+<style lang="scss">
+    .navbar{
+        margin-bottom: 4rem;
+    }
 </style>
