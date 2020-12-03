@@ -21,7 +21,7 @@
                                         <p v-for="error in errors" :key="error">{{error}}</p>
                                     </span>
                                     <span v-else> 
-                                            <p>A 6 digit verification code has been sent to your email address <mark>{{newEmail}}</mark> 
+                                            <p>A 6 digit verification code has been sent to your email address <mark>{{email}}</mark> 
                                             Please enter the code in the field provided below to verify your account.</p>
                                     </span>
                                 </div>
@@ -30,7 +30,6 @@
                                     <label class="control-label">
                                         Verification Code
                                     </label>
-                                    <input type="text" class="font-md form-control text-center" v-model="newEmail" placeholder="Enter Email">
                                     <input type="text" class="font-md form-control text-center" v-model="userToken" placeholder="Enter verification code">
                                 </div>
                                 <div class="section_cto text-center">
@@ -55,8 +54,8 @@ export default {
   data(){
       return{
           userToken:"",
-          newEmail:"",
-          //email: this.$route.params.email,
+          //newEmail:"",
+          email: this.$route.params.email,
           //email: localStorage.getItem('regEmail'),
           check:false
       }
@@ -69,7 +68,7 @@ export default {
       
     async submit(){
         const verify = {
-            email:this.newEmail,
+            email:this.email,
             token:this.userToken,
         }
         try {
