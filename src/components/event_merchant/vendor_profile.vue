@@ -318,7 +318,7 @@
                             </div>
                         </figure>
                         <div class="prof_header">
-                            <h4 class="prof_title d-inline-block ">{{User}}</h4>
+                            <h4 class="prof_title d-inline-block ">{{userName}}</h4>
                             <span class="vend_status" title="Verified Vendor" data-toggle="tooltip">
                                 <i class="cust_icon user_verified"></i>
                             </span>
@@ -329,7 +329,7 @@
                                     <path d="M7,0A7,7,0,0,0,0,7c0,3.65,5.52,12,5.75,12.32A1.47,1.47,0,0,0,7,20a1.47,1.47,0,0,0,1.21-.7c.24-.35,5.76-8.68,5.76-12.33A7,7,0,0,0,7,0ZM7,11.27A4.3,4.3,0,1,1,11.27,7,4.3,4.3,0,0,1,7,11.27Z"/>
                                 </svg>
                             </span>
-                            <span class="meta_value">Lagos, Nigeria</span>
+                            <span class="meta_value">{{city}}, {{state}}</span>
                         </div>
                         <div class="info_meta meta_date">
                             <p class="meta_label">Joined <strong>2 Months ago</strong></p>
@@ -744,14 +744,18 @@ import { mapGetters, mapActions } from "vuex";
 import Updatebio from './update_bio'
 export default {
   name: 'VendorProfile',
-  computed: {
-    ...mapGetters({ User: "returnUser"}),
+  data(){
+      return{
+          userName: localStorage.getItem('userName'),
+          city: localStorage.getItem('city'),
+          state: localStorage.getItem('state'),
+      }
   },
   methods:{
       getSrc(src){
           return require('@/assets'+src)
       }
-  }
+  },
 }
 </script>
 

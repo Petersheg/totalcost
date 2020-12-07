@@ -53,10 +53,10 @@
                             <router-link to="/merchant_home" class="nav_link_item">Become a Vendor</router-link>
                         </li>
                         <li class="nav_item">
-                        <router-link to="/login" class="nav_link_item">
-                            Login</router-link>
+                        <router-link to="/login" class="nav_link_item" v-text="login">
+                            </router-link>
                         </li>
-                        <li class="nav_item ">
+                        <li class="nav_item " v-if="!auth">
                             <router-link to="/signup" class="nav_link_item link_highlight">
                             Sign Up</router-link>
                         </li>
@@ -84,21 +84,27 @@
 </template>
 
 <script>
-
+import {mapGetters} from 'vuex'
 export default {
     name: 'Navbar',
     data(){
         return{
-            merchant:false
+            merchant:false,
+            login:"Login"
         }
     },
     computed:{
-        allServices:function(){return this.$store.getters.returnAllServices}
+        ...mapGetters({auth:"isAuthenticated",allServices:"returnAllServices"}),
+        //allServices:function(){return this.$store.getters.returnAllServices}
     },
     methods:{
-        
+        toggleLogin(){
+            if(this.auth) return this.login = "Profile"
+            else return this.login
+        }
     },
     mounted(){
+        this.toggleLogin()
         this.$store.dispatch('allServices')
     }
 }

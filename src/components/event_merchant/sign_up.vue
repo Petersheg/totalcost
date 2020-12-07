@@ -10,7 +10,7 @@
                             <h2 class="color-primary pane_title">Create an Account</h2>
                         </header>
                         <div class="content_inner" >
-                            <div class="error_message" v-if="msg">
+                            <div class="error_message" v-if="errors">
                                 <p v-for="error in errors" :key="error">{{error}}</p>
                                 
                             </div>
@@ -128,30 +128,38 @@ export default {
   },
 
   computed:{
+    //   Mapping Getters to variable.
       ...mapGetters({errors:"returnRegE",success:"returnRegS"}),
-      msg:function(){ return this.$store.getters.returnRegE},
   },
+
   methods: {
     ...mapActions(["Register"]),
     async submit() {
       try {
           await this.Register(this.form);
         if(this.success){
+
             const email=this.form.email;
-            this.$router.replace({name:"verification", params:{email}});
-            localStorage.setItem('regEmail',email)
-            console.log(email);
+            const userName = this.form.fullName;
+            const city = this.form.city;
+            const state = this.form.state;
+
+            //redirect to Varification page after successful registration
+            this.$router.replace({name:"verification"});
+
+            // Saving some items to localStorage for later Use
+            localStorage.setItem('regEmail',email);
+            localStorage.setItem('userName',userName);
+            localStorage.setItem('city',city);
+            localStorage.setItem('state',state);
         }
         
       } catch (error) {
-        this.showError = true
+        console.log(error);
       }
-      this.$store.commit('userEmail',this.form.email)
     },
 
   },
-  mounted(){
-  }
 }
 </script>
 

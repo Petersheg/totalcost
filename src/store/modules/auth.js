@@ -94,65 +94,60 @@ const actions= {
       }
     },
 
-    async Register({dispatch,commit}, form) {
-        await axios.post('/vendor/new', form)
-        .then(response=>{
-            console.log(response.data);
-            commit('addregSuccess', response.data.data);
-            commit('addregError', response.data.error_messages);
-            
-            // let userEmail = new FormData()
-            // userEmail.append('email', form.email);
-            // userEmail.append('name', form.fullName);
-            //await dispatch('Verification', userEmail)
-            commit('setUser', form.fullName);
-            
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    //   const registration = new FetchAPI();
-    //   form = registration.authUser('/register', form)
+    async Register({commit}, form) {
+        //const res = await axios.post('/vendor/new', form)
+        const register = new FetchAPI();
+        const res = await register.authUser(process.env.VUE_APP_vendorReg, form)
+        try {
+          commit('addregSuccess', res.data.data);
+          commit('addregError', res.data.error_messages);
+        } catch (error) {
+          console.log(error);
+        }
+
+        await commit('userEmail',form.email);
+        await commit('setUser', form.fullName);
       
     },
 
     async LogIn({commit}, form) {
-        await axios.post('/identity/login', form)
-        .then(response=>{
-            commit('addMessage', response.data.error_messages);
-            commit('addData', response.data.data);
+        //const res = await axios.post('/identity/login', form)
+        const login = new FetchAPI();
+        const res = await login.authUser(process.env.VUE_APP_login, form);
+        try {
+          commit('addMessage', res.data.error_messages);
+          commit('addData', res.data.status);
 
-            const token = response.data.data.token
-            if(response.data.status === 'success'){
-                localStorage.setItem('token',token);
-                localStorage.removeItem('userToken');
-                axios.defaults.headers.common['Authorization'] = token
-            }
-            commit('setUser', form.email, token )
-        })
-        .catch(err => {
-            console.log(err)
-            localStorage.removeItem('token')
-        })
-        // const login = new FetchAPI();
-        // // form = login.authUser('/login', form)
-        // await commit('setUser', form.get('name'))
-        
+          const token = res.data.data.token;
+          if(res.data.status === 'success'){
+              localStorage.setItem('token',token);
+              axios.defaults.headers.common['Authorization'] = token
+          }
+        } catch (error) {
+          console.log(error)
+          localStorage.removeItem('token')
+        }  
     },
      
     async Verification({commit},verify){
-        await axios.post('/identity/verify',verify)
-        .then(response=>{
-            commit('addveryError',response.data.error_messages);
-            commit('addverySuccess',response.data.status);
-
-        }).catch(err => console.log(err))
+        //const res = await axios.post('/identity/verify',verify);
+        const varify = new FetchAPI();
+        const res = await varify.authUser(process.env.VUE_APP_verify,verify)
+        try {
+          commit('addveryError',res.data.error_messages);
+          commit('addverySuccess',res.data.status);
+        } catch (error) {
+          console.log(error);
+        }
 
     },
       
     async LogOut({commit}){
         let user = null;
         localStorage.removeItem('token');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('regEmail');
+        localStorage.removeItem('vuex');
         delete axios.defaults.headers.common['Authorization']
         commit('logOut',user)
       }

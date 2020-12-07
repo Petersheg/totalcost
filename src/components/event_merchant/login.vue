@@ -13,7 +13,7 @@
                             <div class="error_message" v-if="errors">
                                 <p v-for="error in errors" :key="error">{{error}}</p>
                             </div>
-                            <form  @submit.prevent="submit"><!-- -->
+                            <form  @submit.prevent="getSubmit"><!-- -->
                                 <div class="form-group funky_form">
                                     <label class="control-label">
                                         Email
@@ -73,6 +73,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import jwt_decode from "jwt-decode";
+
 import axios from 'axios'
 export default {
   name: 'Login',
@@ -87,26 +89,42 @@ export default {
 
   methods: {
     ...mapActions(["LogIn"]),
+    // this function will make the token available
     async submit() {
         const User={
             email: this.form.email,
             password: this.form.password
         }
-      try {
-        await this.LogIn(User);
-        if(this.success){
-            this.$router.go({name:"VendorProfile"});
+        try {
+            await this.LogIn(User);
+        } catch (error) {
+            console.log(error);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      
     },
+
+    // While this function make use of the token.
+    async getSubmit(){
+      await this.submit()
+      const token = localStorage.getItem('token');//get token from LS
+        const decodeToken = jwt_decode(token);//decode the token
+        const role = localStorage.setItem('role',decodeToken.role);//store role to Localstorage
+
+        if(this.success === "success" && decodeToken.role === 'User'){
+            this.$router.go({path:"/user_profile"});
+            console.log(this.success);
+        }else{
+            this.$router.go({path:"/vendor_profile"});
+        }
+    }
     
   },
   computed:{
         ...mapGetters({errors:'returnMessage',success:'returnData', auth:'isAuthenticated'}),
         //...mapGetters()
   },
+  mounted(){   
+  }
 }
 </script>
 

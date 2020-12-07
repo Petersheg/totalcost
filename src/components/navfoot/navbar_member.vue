@@ -91,7 +91,7 @@
                                                     </router-link>
                                                 </figure>
                                                 <div class="media_info">
-                                                    <h4 class="media_title color-primary">{{user}}</h4>
+                                                    <h4 class="media_title color-primary">{{userName}}</h4>
                                                     <router-link to="/vendor_profile_view" class="btn-link">View Profile</router-link>
                                                 </div>
                                             </div>
@@ -161,7 +161,11 @@
 import {mapGetters} from 'vuex'
 export default {
     name: 'NavbarMember',
-
+    data(){
+        return{
+            userName:localStorage.getItem('userName')
+        }
+    },
     computed:{
         allServices:function(){return this.$store.getters.returnAllServices},
         ...mapGetters({user:"returnUser", auth:"isAuthenticated"})
@@ -169,7 +173,7 @@ export default {
     methods: {
       async logout (){
         await this.$store.dispatch('LogOut')
-        this.$router.go('/login')
+        this.$router.go({path:'/login'});
       }
     },
     mounted(){
