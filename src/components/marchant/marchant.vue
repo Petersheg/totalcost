@@ -280,7 +280,18 @@
                     <h1 class="section_title color-primary">Browse our Service Directory</h1>
                     <p class="subtitle">Select a service to see a list of verified vendors offering such service near you. </p>
                 </header>
-                <Browse />
+                <div class="card_list">
+                    <article class="card_item" v-for="browse in browses" :key="browse.id">
+                        <router-link :to="{path:`/service_listings/${browse.id}/vendors`}" class="feature_wrapper">
+                            <figure class="feature_icon">
+                                <img :src="getImg(browse.imageUrl)" alt="{{browse.name}}">
+                            </figure>
+                            <h4 class="feature_title font-regular">
+                                {{browse.name}}
+                            </h4>
+                        </router-link>
+                    </article>
+                </div>
             </div>
             <div class="alt_bg bg_burst"></div>
         </section>
@@ -290,11 +301,19 @@
 </template>
 
 <script>
-import Browse from './browseservice'
 export default {
   name: 'Marchant',
-  components:{
-      Browse
+
+  methods:{
+      getImg(src){
+          return require('../../assets'+ src);
+      }
+  },
+  computed:{
+      browses:function(){return this.$store.getters.returnAllServices}
+  },
+  mounted: function(){
+      this.$store.dispatch('allServices')
   }
 }
 </script>

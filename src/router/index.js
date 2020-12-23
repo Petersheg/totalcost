@@ -4,7 +4,7 @@ import Allservices from '@/views/all_services.vue';
 import ServiceList from '@/views/service_list.vue';
 import ServicedetailsV from '@/views/servicedetails_view.vue';
 import Merchant from '@/views/marchant_home.vue';
-import store from '../store'
+import store from '../store';
 
 
 const routes = [
@@ -74,6 +74,7 @@ const routes = [
   {
     path:'/signup',
     name:'SignUp',
+    meta: { guest: true },
     component:()=> import('@/views/event_merchant/sign_up.vue'),
   },
   {
@@ -189,7 +190,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.guest)) {
     const role = localStorage.getItem('role');
     if (store.getters.isAuthenticated && role === "User") {
-      next('/user_profile');
+      next('User_profile');
       return;
     }else if(store.getters.isAuthenticated && role === "Admin"){
       next('/vendor_profile');

@@ -87,12 +87,12 @@
                                             <div class="media_item user_media">
                                                 <figure class="media_figure">
                                                     <router-link to="/user_profile" class="user_avatar">
-                                                        <img src="../../assets/img/icons/user_default.png" alt="">
+                                                        <img :src="getCloudinaryImg(userData.picture)" alt="profile_image">
                                                     </router-link>
                                                 </figure>
                                                 <div class="media_info">
-                                                    <h4 class="media_title color-primary">{{userName}}</h4>
-                                                    <router-link to="/vendor_profile_view" class="btn-link">View Profile</router-link>
+                                                    <h4 class="media_title color-primary">{{userData.firstName}} {{userData.lastName}}</h4>
+                                                    <router-link to="/user_profile" class="btn-link">View Profile</router-link>
                                                 </div>
                                             </div>
                                         </header>
@@ -158,26 +158,44 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
     name: 'NavbarMember',
     data(){
         return{
-            userName:localStorage.getItem('userName')
+            userData: JSON.parse(localStorage.getItem('userData'))
         }
     },
     computed:{
+        ...mapGetters({user:"returnUser", auth:"isAuthenticated"}),
         allServices:function(){return this.$store.getters.returnAllServices},
-        ...mapGetters({user:"returnUser", auth:"isAuthenticated"})
     },
     methods: {
+        ...mapActions(['loadFacebookSDK','initFacebook']),
+        
+        getCloudinaryImg(src){
+            return src
+        },
       async logout (){
-        await this.$store.dispatch('LogOut')
-        this.$router.go({path:'/login'});
+          
+          FB.getLoginStatus(async (response)=>{
+              console.log(response.status);
+              if(response.status === 'connected'){
+                FB.logout();
+                await this.$store.dispatch('LogOut')
+                this.$router.go({name:'Login'});
+              }else{
+                await this.$store.dispatch('LogOut')
+                this.$router.go({name:'Login'});
+              }
+                console.log(response.status);
+          })
       }
     },
     mounted(){
-        this.$store.dispatch('allServices')
+        this.loadFacebookSDK();
+        this.initFacebook();
+        this.$store.dispatch('allServices');
     }
 }
 </script>

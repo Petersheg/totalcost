@@ -46,11 +46,11 @@
                             <div class="social_prop">
                                 <span class="info_title font-md">or Continue with - </span>
                                 <div class="social_btn_icons">
-                                    <a href="#" class="social_btn bg_fb">
+                                    <button @click="facebookLogIn" class="social_btn bg_fb">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="cust_icon icon_xs" viewBox="0 0 64 64">
                                             <path d="M45.1,31.8l-8.4,0.1L37,62.6l-12.7,0.1L24,32l-6,0.1l-0.1-10.8l6-0.1l-0.1-7c-0.1-5,2.2-12.8,12.7-13l9.4-0.1L46,11.7l-6.8,0.1c-1.1,0-2.7,0.6-2.7,3l0.1,6.4l9.5-0.1L45.1,31.8z M45.1,31.8"/>
                                         </svg>
-                                    </a>
+                                    </button>
                                     <a href="#" class="social_btn bg_tw">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="cust_icon icon_xs" viewBox="0 0 64 64">
                                             <path d="M64,12.2c-2.4,1-4.9,1.8-7.5,2.1c2.7-1.6,4.8-4.2,5.8-7.3c-2.5,1.5-5.3,2.6-8.3,3.2C51.5,7.6,48.1,6,44.3,6c-7.3,0-13.1,5.9-13.1,13.1c0,1,0.1,2,0.3,3C20.6,21.6,10.9,16.3,4.5,8.4c-1.1,1.9-1.8,4.2-1.8,6.6c0,4.6,2.3,8.6,5.8,10.9c-2.2-0.1-4.2-0.7-5.9-1.6c0,0.1,0,0.1,0,0.2c0,6.4,4.5,11.7,10.5,12.9c-1.1,0.3-2.3,0.5-3.5,0.5c-0.8,0-1.7-0.1-2.5-0.2c1.7,5.2,6.5,9,12.3,9.1C15,50.2,9.3,52.3,3.1,52.3c-1.1,0-2.1-0.1-3.1-0.2C5.8,55.8,12.7,58,20.1,58c24.1,0,37.4-20,37.4-37.4c0-0.6,0-1.1,0-1.7C60,17.1,62.2,14.8,64,12.2L64,12.2z M64,12.2"/>
@@ -84,46 +84,113 @@ export default {
             email:"",
             password:""
           },
+
       }
   },
-
+    
+    computed:{
+    ...mapGetters({errors:'returnMessage',success:'returnData', auth:'isAuthenticated'}),
+  },
+  
   methods: {
-    ...mapActions(["LogIn"]),
+    ...mapActions(["fbLogin","LogIn",'loadFacebookSDK','initFacebook','getUserDetails']),
+    
     // this function will make the token available
     async submit() {
-        const User={
-            email: this.form.email,
-            password: this.form.password
-        }
+        
         try {
+            const User={
+                email: this.form.email,
+                password: this.form.password
+            }
             await this.LogIn(User);
         } catch (error) {
             console.log(error);
         }
       
     },
-
+    routePath(path){
+        return this.$router.go({name:path});
+    },
     // While this function make use of the token.
     async getSubmit(){
       await this.submit()
       const token = localStorage.getItem('token');//get token from LS
-        const decodeToken = jwt_decode(token);//decode the token
-        const role = localStorage.setItem('role',decodeToken.role);//store role to Localstorage
+        try {
+                  
+            const decodeToken = jwt_decode(token);//decode the token
+            localStorage.setItem('userId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1]);
+            const role = localStorage.setItem('role',decodeToken.role);//store role to Localstorage
 
-        if(this.success === "success" && decodeToken.role === 'User'){
-            this.$router.go({path:"/user_profile"});
-            console.log(this.success);
-        }else{
-            this.$router.go({path:"/vendor_profile"});
+            const userCre={
+                userId: localStorage.getItem('userId'),
+                bearerToken: localStorage.getItem('token'),
+            };
+            await this.getUserDetails(userCre);
+
+            if(this.success === "success" && role === 'User'){
+                this.routePath("UserProfile")
+                //this.$router.go({path:"/user_profile"});
+            }else{
+                //console.log('failed');
+                this.routePath("VendorProfile")
+                //this.$router.go({path:"/vendor_profile"});
+            }
+        } catch (error) {
+            console.log(error);
         }
-    }
+        
+    },
     
+    async facebookLogIn() {
+        try {
+            FB.login(async (response) => {
+            if (response.authResponse) {
+                const returnToken = await this.fbLogin(response.authResponse.accessToken);// return Totalcost Token
+                const decodeToken = jwt_decode(returnToken);//Decode Totalcost token
+                    console.log(decodeToken);
+                localStorage.setItem('token',returnToken)//store Totalcost token to localStorage
+                localStorage.setItem('userId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1]);
+
+                const userCre={
+                    userId: localStorage.getItem('userId'),
+                    bearerToken: localStorage.getItem('token'),
+                };
+
+                console.log(userCre);
+                
+                
+
+                if(decodeToken.role === 'User'){    
+                    console.log('user log in');
+
+                    this.routePath("UserProfile");
+                    await this.getUserDetails(userCre);
+                }else{
+                    console.log('admin login');
+                    this.routePath("VendorProfile");
+                }
+                
+                return response.authResponse
+                    // Now you can redirect the user or do an AJAX request to
+                    // a PHP script that grabs the signed request from the cookie.
+            } else {
+                alert("User cancelled login or did not fully authorize.");
+            }
+        });
+            return false;
+        } catch (error) {
+            console.log(error);
+        }
+    },
   },
-  computed:{
-        ...mapGetters({errors:'returnMessage',success:'returnData', auth:'isAuthenticated'}),
-        //...mapGetters()
+
+  mounted(){
+      
   },
-  mounted(){   
+  created(){
+      this.loadFacebookSDK();
+      this.initFacebook();
   }
 }
 </script>

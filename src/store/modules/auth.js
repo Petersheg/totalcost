@@ -1,4 +1,4 @@
-import FetchAPI from '../../api/newService'
+import {FetchAPI} from '../../api/newService'
 import axios from 'axios'
 
 const state= {
@@ -14,6 +14,29 @@ const state= {
     veryError:null,
     userEmail:null,
     token: localStorage.getItem('token') || '',
+  
+    userData:{
+        city :null,
+        state : null,
+        country :null,
+        firstName : null,
+        lastName : null,
+        gender : null,
+        address :null,
+        age : null,
+        contactEmail : null,
+        contactPhoneNumber : null,
+        DBO : null,
+        dateJoined : null,
+        description : null,
+        website : null,
+        socialMediaHandles:{
+          facebook:null,
+          twitter:null,
+          instagram:null,
+          pinInterest:null
+        }
+    }
 
   };
 
@@ -57,7 +80,63 @@ const mutations={
     },
     adduserEmail(state,data){
         state.userEmail = data
-    }
+    },
+
+    // Mutating user information
+    mutateState(state,data){
+      state.userData.state = data;
+    },
+    mutateCity(state,data){
+      state.userData.city = data;
+    },
+    mutateCountry(state,data){
+      state.userData.country = data;
+    },
+    mutateFirstName(state,data){
+      state.userData.firstName = data;
+    },
+    mutateLastName(state,data){
+      state.userData.lastName = data;
+    },
+    mutateGender (state,data){
+      state.userData.gender = data;
+    },
+    mutateAddress(state,data){
+      state.userData.address = data;
+    },
+    mutateAge(state,data){
+      state.userData.address = data;
+    },
+    mutateContactEmail(state,data){
+      state.userData.contactEmail = data;
+    },
+    mutateContactPhoneNumber(state,data){
+      state.userData.contactPhoneNumber = data;
+    },
+    mutateDBO(state,data){
+      state.userData.DBO = data;
+    },
+    mutateDateJoined(state,data){
+      state.userData.dateJoined = data;
+    },
+    mutateDescription(state,data){
+      state.userData.description = data;
+    },
+    mutateWebsite(state,data){
+      state.userData.website = data;
+    },
+    mutateFacebook(state,data){
+      state.userData.socialMediaHandles.facebook = data;
+    },
+    mutateTwitter(state,data){
+      state.userData.socialMediaHandles.twitter = data;
+    },
+    mutateInstagram(state,data){
+      state.userData.socialMediaHandles.instagram = data;
+    },
+    mutatePinInterest(state,data){
+      state.userData.socialMediaHandles.pinInterest = data;
+    },
   };
 
 const actions= {
@@ -121,11 +200,9 @@ const actions= {
           const token = res.data.data.token;
           if(res.data.status === 'success'){
               localStorage.setItem('token',token);
-              axios.defaults.headers.common['Authorization'] = token
           }
         } catch (error) {
           console.log(error)
-          localStorage.removeItem('token')
         }  
     },
      
@@ -141,17 +218,89 @@ const actions= {
         }
 
     },
+    async fbLogin({commit},token){
+      try {
+        const fbLogIn = new FetchAPI();
+        const res = await fbLogIn.authUser(process.env.VUE_APP_fbLogin,{token:token});
+
+        localStorage.setItem('token',res.data.data.token);
       
+        //const token = localStorage.setItem('token',res.token)
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // load facebook SDK for login
+    loadFacebookSDK() {
+      var js,
+        fjs = document.getElementsByTagName("script")[0];
+      if (document.getElementById("facebook-jssdk")) {
+        return;
+      }
+      js = document.createElement("script");
+      js.id = "facebook-jssdk";
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    },
+
+    // Initiate facebaook App
+    initFacebook() {
+      window.fbAsyncInit = function() {
+        window.FB.init({
+          appId:"677190916279332", //You will need to change this
+          cookie: true, // This is important, it's not enabled by default
+          version: "v13.0"
+        });
+      };
+    },
+
     async LogOut({commit}){
         let user = null;
         localStorage.removeItem('token');
-        localStorage.removeItem('userEmail');
-        localStorage.removeItem('regEmail');
+        localStorage.removeItem('userData');
         localStorage.removeItem('vuex');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('role');
         delete axios.defaults.headers.common['Authorization']
         commit('logOut',user)
-      }
-      
+    },
+    
+    
+    // User information
+    async getUserDetails({commit},Id){
+      const getUser = new FetchAPI();
+      try {
+      const res =await getUser.getData(`/users/${Id.userId}/profile`, {headers:{'Authorization': `Bearer ${Id.bearerToken}`}})
+        
+        let result = res.data.data;
+        console.log(res.data);
+        localStorage.setItem('userData', JSON.stringify(result));
+        result =await JSON.parse(localStorage.getItem('userData'));
+        
+        commit('mutateCity',result.city);
+        commit('mutateState',result.state);
+        commit('mutateCountry',result.country);
+        commit('mutateFirstName',result.firstName);
+        commit('mutateLastName',result.lastName);
+        commit('mutateGender',result.gender);
+        commit('mutateAddress',result.address);
+        commit('mutateAge',result.age);
+        commit('mutateContactEmail',result.contactEmail);
+        commit('mutateContactPhoneNumber',result.contactPhoneNumber);
+        commit('mutateDBO',result.DBO);
+        commit('mutateDateJoined',result.epochDateJoined);
+        commit('mutateDescription',result.description);
+        commit('mutateFacebook',result.socialMediaHandles.facebook);
+        commit('mutateTwitter',result.socialMediaHandles.twitter);
+        commit('mutateInstagram',result.socialMediaHandles.instagram);
+        commit('mutatePinInterest',result.socialMediaHandles.pinInterest);
+    } catch (error) {
+        console.log(error);
+    }
+
+  },
+
   };
 
 const getters={
@@ -166,8 +315,28 @@ const getters={
     returnRegE: state => state.regError,
     returnVeryS: state => state.verySuccess,
     returnVeryE: state => state.veryError,
-    returnUserEmail: state => state.userEmail
-  };
+    returnUserEmail: state => state.userEmail,
+
+    // get user information
+    getCity :state => state.userData.city,
+    getState : state => state.userData.state ,
+    getCountry :state => state.userData.country,
+    getFirstName : state => state.userData.firstName ,
+    getLastName : state => state.userData.lastName ,
+    getGender : state => state.userData.gender ,
+    getAddress :state => state.userData.address,
+    getAge : state => state.userData.age ,
+    getContactEmail : state => state.userData.contactEmail ,
+    getContactPhoneNumber : state => state.userData.contactPhoneNumber ,
+    getDBO : state => state.userData.DBO ,
+    getDateJoined : state => state.userData.dateJoined ,
+    getDescription : state => state.userData.description ,
+    getWebsite : state => state.userData.website,
+    getFacebook : state => state.userData.socialMediaHandles.facebook,
+    getTwitter : state => state.userData.socialMediaHandles.twitter,
+    getInstagram : state => state.userData.socialMediaHandles.instagram,
+    getPinInterest : state => state.userData.socialMediaHandles.pinInterest,
+};
 
 
   export default {

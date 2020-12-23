@@ -588,7 +588,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+import {httpClient} from '../../../api/newService'
 import Card from './Card.vue';
 import Gallery from './Gallery.vue';
 
@@ -624,7 +625,7 @@ export default {
   methods:{
    async getUrl(endPoint){
         try {
-            let res = await axios.get(endPoint)
+            let res = await httpClient.get(endPoint)
 
             this.servicesDetail.push(res.data.data);
             this.packages = res.data.data.packages;

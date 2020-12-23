@@ -741,7 +741,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Updatebio from './update_bio'
+import Updatebio from './update_bio';
+import axios from 'axios';
 export default {
   name: 'VendorProfile',
   data(){
@@ -754,7 +755,8 @@ export default {
   methods:{
       getSrc(src){
           return require('@/assets'+src)
-      }
+      },
+      
   },
 }
 </script>
