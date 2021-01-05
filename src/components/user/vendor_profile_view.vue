@@ -225,7 +225,7 @@ export default {
       return{
           servicesList:null,
           packages:null,
-          baseURL : process.env.VUE_APP_baseURL,
+          baseURL : process.env.VUE_APP_BASE_URL,
           listURL : `/api/v1/services/${this.id}/vendors`,
       }
   },
@@ -242,7 +242,6 @@ export default {
         .then(res => {
             this.servicesList = res.data.data;
             this.packages = res.data.data[0].packages;
-            console.log(res.data.data[0].packages);
         })
         .catch(err => console.log(err));
 

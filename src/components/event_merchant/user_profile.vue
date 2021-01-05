@@ -191,10 +191,6 @@
                                             <input type="file" id="profile_image" class="inputfile" @change="selectImg($event)">
                                                 <span>Change Image</span>
                                             </label>
-                                            <!-- Progress Bar -->
-                                             <!-- <div v-show="showProgress">
-                                                <progress-bar :options="options" :value="progress" />
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -223,6 +219,7 @@
                                     <input type="file"  id="banner_image" class="inputfile" @change="selectBanner($event)">
                                         <span>Change Image</span>
                                     </label>
+                                    <progress max="100" :value.prop="uploadPercentage"></progress>
                                 </div>
                              </div>
                          </div>
@@ -795,11 +792,12 @@ export default {
   name: 'UserProfile',
   data(){
       return{
-          result: JSON.parse(localStorage.getItem('userData')),
+          //result: JSON.parse(localStorage.getItem('userData')),
           day:null,
           month:null,
           year:null,
           email : localStorage.getItem('regEmail'),
+          
           userCre:{
             userId: localStorage.getItem('userId'),
             bearerToken: localStorage.getItem('token'),
@@ -809,15 +807,16 @@ export default {
           results:null,
           file:null,
           modaFade:true,
-          cloudName: process.env.VUE_APP_cloudName,
-          preset:process.env.VUE_APP_preset,
+          cloudName: process.env.VUE_APP_CLOUD_NAME,
+          preset:process.env.VUE_APP_PRESET,
           //fileContents:null,
           profile:null,
           bannerPic:null,
           bannerResult:null,
           banner:null,
-          tags: process.env.VUE_APP_tags,
+          tags: process.env.VUE_APP_TAGS,
           formData: null,
+          uploadPercentage: 0,
           //progress: 0,
           //showProgress: false, 
         
@@ -832,9 +831,12 @@ export default {
             twitter : 'getTwitter',
             instagram : 'getInstagram',
             pinInterest : 'getPinInterest',
+            id: 'getUserId',
+            //result: 'getUserInfo',
         }),
 
         dateOfBirth:function(){return `${this.day}-${this.month}-${this.year}`},
+        result: function(){return this.$store.getters.getUserInfo}
   },
   methods:{
       ...mapActions(["getUserDetails"]),
@@ -848,12 +850,12 @@ export default {
         try {
             await this.getUserDetails(this.userCre);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
       },    
     
     selectImg:function(event) {
-      console.log("SelectImg", event.target.files);
+      //console.log("SelectImg", event.target.files);
       this.file = event.target.files[0];
       this.upload(this.file,this.profile,this.results);
       
@@ -865,13 +867,13 @@ export default {
                 localStorage.setItem('image',this.results.secure_url);
                 localStorage.removeItem('cloudResult');
             }
-        }, 5000);
+    }, 3000);
     },
 
     selectBanner: function(event) {
-      console.log("SelectBanner", event.target.files);
       this.banner = event.target.files[0];
         this.upload(this.banner,this.bannerPic,this.bannerResult);
+        
         setTimeout(() => {
             const cloudResult = JSON.parse(localStorage.getItem('cloudResult'));
             if(cloudResult){
@@ -880,7 +882,7 @@ export default {
                 localStorage.setItem('banner',this.bannerResult.secure_url);
                 localStorage.removeItem('cloudResult');
             }
-        }, 5000);
+        }, 3000);
     
     },
 
@@ -906,7 +908,10 @@ export default {
             let requestObj = {
                 url: cloudinaryUploadURL,
                 method: "POST",
-                data: this.formData
+                data: this.formData,
+                onUploadProgress: function( progressEvent ) {
+                    this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 ));
+                }.bind(this)
             };
             
                 const axiosInstance = axios.create({
@@ -917,13 +922,13 @@ export default {
                 .then(response => {
                     axioResponse = response.data;
                     //console.log("secure_url", cloudResult.secure_url);
-                    //return cloudResult
+                    //return cloudResult;
                     //localStorage.setItem("public_id", cloudResult.public_id);
                     localStorage.setItem("cloudResult", JSON.stringify(axioResponse));
                     
                 })
                 .catch(error => {
-                    console.log(error);
+                    //console.log(error);
                 });
             }.bind(this),
             false
@@ -938,7 +943,6 @@ export default {
 
       async editUserInfo(){
          try {
-             
            const res = await httpClient.put(`/users/${this.userCre.userId}/profile`, 
                 {
                     firstName:this.result.firstName,
@@ -979,26 +983,15 @@ export default {
                 }
             });
              if(res.data.status === "success"){
-                 console.log(res);
-                this.getUserDetails(this.userCre);
-                const btn = document.getElementById('submitbtn');
-                btn.setAttribute('data-dismiss','modal');
-                btn.setAttribute('aria-hidden',true);
-                console.log('done');
-                 //this.getUserDetailz();
-               
-                //this.modaFade = false
-                //this.getUserDetailz();
+                this.getUserDetailz();
             }
          } catch (error) {
-            console.log(error);
+           // console.log(error);
          }
       }
   },
   mounted(){
-    console.log(this.cloudName);
-    console.log("router",this.$router);
-    console.log("route",this.$route);
+      this.getUserDetailz();
   },
 }
 </script>

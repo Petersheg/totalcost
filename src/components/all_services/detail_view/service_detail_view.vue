@@ -560,7 +560,7 @@
                     <article class="prd_card col-sm-6 col-md-3" v-for="similar in similaService" :key="similar">
                         <div class="prd_card_wrapper bg-white">
                             <router-link to="/mng_service" class="prd_card_banner">
-                                <div class="prd_card_img" :style ="{backgroundImage:`url(${getImg(similar.logo)})`}">
+                                <div class="prd_card_img" :style ="{backgroundImage:`url(${getImgSrc(similar.logo)})`}">
                                 </div>
                                 <div class="card_gradient"></div>
                             </router-link>
@@ -623,7 +623,7 @@ export default {
       serid: String
   },
   methods:{
-   async getUrl(endPoint){
+   async getServiceDetail(endPoint){
         try {
             let res = await httpClient.get(endPoint)
 
@@ -634,7 +634,7 @@ export default {
             this.faqs = res.data.data.faqs;
             this.gallery = res.data.data.gallery;
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
         
     },
@@ -645,7 +645,7 @@ export default {
         }
     },
 
-    getImg(src){
+    getImgSrc(src){
         return src
     },
 
@@ -659,16 +659,13 @@ export default {
       script.async = true;
       document.body.appendChild(script);
     },
-
-    getId(){
-        this.$refs["detailz"].scrollIntoView("#sv_faqs",50000);
-    }
   },
+
   computed:{
         similaService:function(){return this.$store.getters.returnVendors}
     },
   mounted(){
-      this.getUrl(this.listDetailURL);
+      this.getServiceDetail(this.listDetailURL);
       this.$store.dispatch('fetchVendors');
       //Loading Script
       this.loadScript('../../../../js/ScrollMagic.min.js');

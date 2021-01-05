@@ -12,21 +12,21 @@
                         <div class="form-horizontal">
                             <div class="form-group funky_form col-sm-6">
                                 <label class="control-label">Phone Number</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number">
+                                <input type="tel" class="form-control" placeholder="Phone Number" v-model="vendorResult.contactPhoneNumber">
                             </div>
                             <div class="form-group funky_form col-sm-6">
                                 <label class="control-label">Website</label>
-                                <input type="url" class="form-control" placeholder="Website">
+                                <input type="url" class="form-control" placeholder="Website" v-model="vendorResult.website">
                             </div>
                         </div>
                         <div class="form-group funky_form">
                             <label class="control-label">Address Line 1</label>
-                             <textarea class="form-control" placeholder="E.g. No 3, Adeniyi Jones, Ikeja"></textarea>
+                             <textarea class="form-control" placeholder="E.g. No 3, Adeniyi Jones, Ikeja" v-model="vendorResult.address"></textarea>
                         </div>
                         <div class="form-horizontal ">
                             <div class="col-sm-6 funky_form form-group">
                                 <label for="" class="control-label">State</label>
-                                <select class="form-control">
+                                <select class="form-control" v-model="vendorResult.state">
                                     <option>--State--</option>
                                     <option>Lagos</option>
                                     <option>Kaduna</option>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-sm-6 funky_form form-group">
                                 <label for="" class="control-label">City/Town</label>
-                                <select class="form-control">
+                                <select class="form-control" v-model="vendorResult.city">
                                     <option>--City/Town--</option>
                                     <option>Alausa</option>
                                     <option>Ikeja</option>
@@ -82,11 +82,11 @@
                         <div class="form-horizontal ">
                             <div class="col-sm-6 funky_form form-group">
                                 <label class="control-label">Zip/Postal Code</label>
-                                <input type="tel" class="form-control" placeholder="Zip/Postal Code">
+                                <input type="tel" class="form-control" placeholder="Zip/Postal Code" v-model="vendorResult.postalCode">
                             </div>
                             <div class="col-sm-6 funky_form form-group">
                                 <label for="" class="control-label">Country</label>
-                                <select class="form-control">
+                                <select class="form-control" v-model="vendorResult.country">
                                     <option>--Country--</option>
                                     <option selected>Nigeria</option>
                                     <option>United States of America</option>
@@ -117,7 +117,7 @@
                                     <span class="input-group-addon">
                                         Facebook
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://facebook.com/david_01">
+                                    <input type="url" class="form-control" placeholder="https://facebook.com/david_01" v-model="vendorResult.socialMediaHandles.facebook">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,7 +125,7 @@
                                     <span class="input-group-addon">
                                         Twitter
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://twitter.com/david_01">
+                                    <input type="url" class="form-control" placeholder="https://twitter.com/david_01" v-model="vendorResult.socialMediaHandles.twitter">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -133,7 +133,7 @@
                                     <span class="input-group-addon">
                                         Pinterest
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://pinterest.com/david_01">
+                                    <input type="url" class="form-control" placeholder="https://pinterest.com/david_01" v-model="vendorResult.socialMediaHandles.pinInterest">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -141,14 +141,14 @@
                                     <span class="input-group-addon">
                                         Instagram
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://instagram.com/david_01">
+                                    <input type="url" class="form-control" placeholder="https://instagram.com/david_01" v-model="vendorResult.socialMediaHandles.instagram">
                                 </div>
                             </div>
                         </fieldset>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-sm btn-inverse">
+                    <button class="btn btn-sm btn-inverse" @click="updateVendorContact">
                         Save Changes
                     </button>
                 </div>
@@ -164,7 +164,7 @@
                         <button class="close_dialog" data-dismiss="modal" aria-hidden="true"></button>
                     </header>
                     <div class="modal-body">
-                        <form action="">
+                        <form @submit.prevent="updateVendorContact">
                             <div class="input_grid row">
                                 <div class="col-sm-6 input_block">
                                     <label class="control-label font-bold">Profile Image
@@ -173,15 +173,21 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="mediaUploadControl">
-                                        <figure class="mediaUploadPreview">
+                                        <figure class="mediaUploadPreview" v-if="results && results.secure_url">
                                             <div class="user_avatar">
-                                                <img :src="this.getSrc('/img/test_dp.png')" alt="David Olaniyi">
+                                                <img :src="getcloudinaryIMG(results.secure_url)" alt="David Olaniyi">
                                             </div>
+                                        </figure>
+
+                                        <figure class="mediaUploadPreview" v-else>
+                                        <div class="user_avatar" >
+                                            <img :src="getcloudinaryIMG(vendorResult.picture)" alt="results.public_id">
+                                        </div>
                                         </figure>
                                         <div class="mediaUploadInfo">
                                             <div class="file_upload">
-                                                <label for="banner_image" class="btn btn-sm btn-primary">
-                                                <input type="file" name="file" id="banner_image" class="inputfile">
+                                                <label for="profile_image" class="btn btn-sm btn-primary">
+                                                <input type="file" name="file" id="profile_image" class="inputfile" @change="selectImg($event)">
                                                     <span>Change Image</span>
                                                 </label>
                                             </div>
@@ -197,28 +203,34 @@
                                 <p class="help-block"><strong>TIP:</strong> Uplaod a cover image that best communicate who you are.</p>
                                 </div>
                                 <div class="col-sm-6">
-                                    <figure class="banner_preview">
-                                        <div class="preview_holder" style="background-image: url(./img/banners/bridal_gown.jpg);">
+                                    <figure class="banner_preview" v-if="bannerResult && bannerResult.secure_url">
+                                        <div class="preview_holder" :style ="{backgroundImage: `url(${this.getcloudinaryIMG(bannerResult.secure_url)})`}"> <!--style="background-image: url(./img/banners/bridal_gown.jpg);"-->
                                         </div>
+                                    </figure>
+                                    <figure class="banner_preview" v-else>
+                                        <div class="preview_holder" :style ="{backgroundImage: `url(${this.getcloudinaryIMG(vendorResult.banner)})`}">
+                                        </div>
+                                    <!-- getSrc('/img/banners/merchant_hold.jpg') -->
                                     </figure>
                                     <div class="file_upload">
                                         <label for="banner_image" class="btn btn-sm btn-primary">
-                                        <input type="file" name="file" id="banner_image" class="inputfile">
+                                        <input type="file" name="file" id="banner_image" class="inputfile" @change="selectBanner($event)">
                                             <span>Change Image</span>
                                         </label>
+                                        <progress max="100" :value.prop="uploadPercentage"></progress>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-check form-check-inline">
                                     <label for="gender_fml" class="control-label">
-                                        <input type="radio" id="gender_fml" name="us_gender">
+                                        <input type="radio" value="Female" id="gender_fml" name="us_gender" v-model="vendorResult.gender">
                                         <span>Female</span>
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <label for="gender_ml" class="control-label">
-                                        <input type="radio" id="gender_ml" name="us_gender">
+                                        <input type="radio" value="Male" id="gender_ml" name="us_gender" v-model="vendorResult.gender">
                                         <span>Male</span>
                                     </label>
                                 </div>
@@ -226,21 +238,21 @@
                             <div class="form-horizontal">
                                 <div class="form-group funky_form col-sm-6">
                                     <label class="control-label">First Name</label>
-                                    <input type="text" class="form-control" placeholder="First Name">
+                                    <input type="text" class="form-control" placeholder="First Name" v-model="vendorResult.firstName">
                                 </div>
                                 <div class="form-group funky_form col-sm-6">
                                     <label class="control-label">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last Name">
+                                    <input type="text" class="form-control" placeholder="Last Name" v-model="vendorResult.lastName">
                                 </div>
                             </div>
                             <div class="form-group funky_form">
                                 <label class="control-label">About Me</label>
-                                <textarea rows="5" class="form-control" placeholder="Tell us a little about yourself"></textarea>
+                                <textarea rows="5" class="form-control" placeholder="Tell us a little about yourself" v-model="vendorResult.description"></textarea>
                             </div>
                             <div class="form-horizontal">
                                 <div class="form-group funky_form col-sm-4">
                                     <label class="control-label">Day</label>
-                                    <select class="form-control">
+                                    <select class="form-control" v-model="day">
                                         <option>Day</option>
                                         <option>1</option>
                                         <option>2</option>
@@ -253,7 +265,7 @@
                                 </div>
                                 <div class="form-group funky_form col-sm-4">
                                     <label class="control-label">Month</label>
-                                    <select class="form-control">
+                                    <select class="form-control" v-model="month">
                                         <option>Month</option>
                                         <option>January</option>
                                         <option>February</option>
@@ -271,7 +283,7 @@
                                 </div>
                                 <div class="form-group funky_form col-sm-4">
                                     <label class="control-label">Year</label>
-                                    <select class="form-control">
+                                    <select class="form-control" v-model="year">
                                         <option>Year</option>
                                         <option>2000</option>
                                         <option>1999</option>
@@ -296,29 +308,30 @@
                                     </select>
                                 </div>
                             </div>
+                            <button class="btn btn-sm btn-inverse" type="submit">
+                                Save Changes
+                            </button>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-sm btn-inverse">
-                            Save Changes
-                        </button>
+                        
                     </div>
                 </div>
         </div>
     </div>
 
     <main class="main_content_area bg-off-white">
-        <section class="user_banner_area" :style ="{backgroundImage:`url(${this.getSrc('/img/banners/merchant_hold.jpg')})`}">
+        <section class="user_banner_area" :style ="{backgroundImage:`url(${this.getcloudinaryIMG(vendorResult.banner)})`}">
             <div class="container">
                 <div class="merchant_profile_details">
                     <div class="pr_info_block">
                         <figure class="merchant_logo">
                             <div class="user_avatar">
-                                <img src="../../assets/img/icons/user_default.png" alt="David Olaniyi">
+                                <img :src="vendorResult.picture" alt="David Olaniyi">
                             </div>
                         </figure>
                         <div class="prof_header">
-                            <h4 class="prof_title d-inline-block ">{{userName}}</h4>
+                            <h4 class="prof_title d-inline-block">{{vendorResult.firstName}} {{vendorResult.lastName}}</h4>
                             <span class="vend_status" title="Verified Vendor" data-toggle="tooltip">
                                 <i class="cust_icon user_verified"></i>
                             </span>
@@ -329,10 +342,10 @@
                                     <path d="M7,0A7,7,0,0,0,0,7c0,3.65,5.52,12,5.75,12.32A1.47,1.47,0,0,0,7,20a1.47,1.47,0,0,0,1.21-.7c.24-.35,5.76-8.68,5.76-12.33A7,7,0,0,0,7,0ZM7,11.27A4.3,4.3,0,1,1,11.27,7,4.3,4.3,0,0,1,7,11.27Z"/>
                                 </svg>
                             </span>
-                            <span class="meta_value">{{city}}, {{state}}</span>
+                            <span class="meta_value">{{vendorResult.merchantData.city}}, {{vendorResult.merchantData.state}}</span>
                         </div>
                         <div class="info_meta meta_date">
-                            <p class="meta_label">Joined <strong>2 Months ago</strong></p>
+                            <p class="meta_label">Joined <strong>{{vendorResult.epochDateJoined}}</strong></p>
                         </div>
                     </div>
                     <div class="pr_info_block">
@@ -401,14 +414,14 @@
                                                 <div class="media_figure ">
                                                     <div class="rating_avg">
                                                         <span class="value">
-                                                            4.5
+                                                            {{vendorResult.rating}}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="media_info">
                                                     <p class="rating_remarks dsp_tab_row">
                                                         <span class="font-bold">Very Good</span>
-                                                        <span class="rating_sample_space">15</span>
+                                                        <span class="rating_sample_space">{{vendorResult.rateCount}}</span>
                                                     </p>
                                                     <div class="rating_ind">
                                                         <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" 
@@ -438,7 +451,7 @@
                                 <div class="card_wrapper">
                                     <div class="info_label">Listed Services</div>
                                     <div class="info_value color-primary">
-                                        <span class="font-bold">4</span>
+                                        <span class="font-bold" v-text="numberOfService()"></span>
                                     </div>
                                     <div class="meta_cto">
                                         <router-link to="/wallet">
@@ -482,17 +495,17 @@
                                         <div class="info_list">
                                             <div class="info_list_item">
                                                 <div class="info_container">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore ipsam assumenda quod fugit perspiciatis, amet accusamus, hic, inventore in sint accusantium id, voluptate magni totam voluptates expedita odit tempora unde.</p>
+                                                    <p>{{vendorResult.description}}</p>
                                                 </div>
                                             </div>
                                             <div class="info_list_item">
                                                 <div class="info_container">
-                                                    <p>Male</p>
+                                                    <p>{{vendorResult.gender}}</p>
                                                 </div>
                                             </div>
                                             <div class="info_list_item">
                                                 <div class="info_container">
-                                                    <p>43 Years Old</p>
+                                                    <p>{{vendorResult.age}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -517,9 +530,8 @@
                                                 </div>
                                                 <div class="info_container">
                                                     <address>
-                                                        <span>4, Olayiwola Street, Off kudirat Abiola Road,</span> 
-                                                        <span>10213 Oregun, Ikeja,</span>
-                                                        <span>Lagos State</span>
+                                                        <span>{{vendorResult.address}},</span> 
+                                                        <span>{{vendorResult.state}}</span>
                                                     </address>
                                                 </div>
                                             </div>
@@ -530,9 +542,9 @@
                                                 </div>
                                                 <div class="info_container">
                                                     <p>
-                                                        <span>Call</span>
+                                                        <span>Call </span>
                                                         <strong>
-                                                            <a href="tel:08033752311" >08033752311
+                                                            <a href="tel:08033752311" >{{vendorResult.contactPhoneNumber}}
                                                             </a>
                                                         </strong>
                                                     </p>
@@ -546,7 +558,7 @@
                                                 <div class="info_container">
                                                     <p>
                                                         <strong>
-                                                            <a href="#" >Visit Website
+                                                            <a :href="vendorResult.website"> {{vendorResult.website}}
                                                             </a>
                                                         </strong>
                                                     </p>
@@ -559,9 +571,9 @@
                                                 </div>
                                                 <div class="info_container">
                                                     <p>
-                                                       <span>E-Mail</span>
+                                                       <span>E-Mail </span>
                                                         <strong>
-                                                            <a href="mailto:daniely_01@gmail.com" >daniely_01@gmail.com
+                                                            <a :href="vendorResult.contactEmail" >{{vendorResult.contactEmail}}
                                                             </a>
                                                         </strong>
                                                     </p>
@@ -743,21 +755,201 @@
 import { mapGetters, mapActions } from "vuex";
 import Updatebio from './update_bio';
 import axios from 'axios';
+import {httpClient } from '../../api/newService'
+
 export default {
   name: 'VendorProfile',
   data(){
       return{
-          userName: localStorage.getItem('userName'),
-          city: localStorage.getItem('city'),
-          state: localStorage.getItem('state'),
+        day:null,
+        month:null,
+        year:null,
+
+          userCre:{
+            userId: localStorage.getItem('userId'),
+            bearerToken: localStorage.getItem('token'),
+          },
+
+           // Data for Cloudinary Upload
+          results:null,
+          file:null,
+          modaFade:true,
+          cloudName: process.env.VUE_APP_CLOUD_NAME,
+          preset:process.env.VUE_APP_PRESET,
+          //fileContents:null,
+          profile:null,
+          bannerPic:null,
+          bannerResult:null,
+          banner:null,
+          tags: process.env.VUE_APP_TAGS,
+          formData: null,
+          uploadPercentage: 0,
       }
   },
-  methods:{
-      getSrc(src){
-          return require('@/assets'+src)
-      },
-      
+  computed:{
+      dateOfBirth:function(){return `${this.day}-${this.month}-${this.year}`},
+      vendorResult: function(){return this.$store.getters.getVendorInfo}
   },
+  methods:{
+      ...mapActions(["getVendorDetails"]),
+      getSrc(src){
+          return require('@/assets'+src);
+      },
+        getcloudinaryIMG(src){
+           return src
+       },
+    selectImg:function(event) {
+      //console.log("SelectImg", event.target.files);
+      this.file = event.target.files[0];
+      this.upload(this.file,this.profile,this.results);
+      
+      setTimeout(() => {
+            const cloudResult = JSON.parse(localStorage.getItem('cloudResult'));
+            if(cloudResult){
+                
+                this.results = cloudResult;
+                localStorage.setItem('image',this.results.secure_url);
+                localStorage.removeItem('cloudResult');
+            }
+        }, 3000);
+    },
+
+    selectBanner: function(event) {
+      //console.log("SelectBanner", event.target.files);
+      this.banner = event.target.files[0];
+        this.upload(this.banner,this.bannerPic,this.bannerResult);
+        setTimeout(() => {
+            const cloudResult = JSON.parse(localStorage.getItem('cloudResult'));
+            if(cloudResult){
+                
+                this.bannerResult = cloudResult;
+                localStorage.setItem('banner',this.bannerResult.secure_url);
+                localStorage.removeItem('cloudResult');
+            }
+        }, 3000);
+    
+    },
+
+    prepareFormData: function(base64File) {
+      this.formData = new FormData();
+      this.formData.append("upload_preset", this.preset);
+      this.formData.append("tags", this.tags); // Optional - add tag for image admin in Cloudinary
+      this.formData.append("file", base64File);
+    },
+    
+        // function to handle image upload
+    upload: function(uploadFile, base64File, axioResponse) {
+        
+        let reader = new FileReader();
+        // attach listener to be called when data from file
+        reader.addEventListener(
+            "load",
+            function() {
+            base64File = reader.result;
+            this.prepareFormData(base64File);
+            let cloudinaryUploadURL = `/${this.cloudName}/upload`;
+
+            let requestObj = {
+                url: cloudinaryUploadURL,
+                method: "POST",
+                data: this.formData,
+                onUploadProgress: function( progressEvent ) {
+                    this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 ));
+                }
+            };
+            
+                const axiosInstance = axios.create({
+                    baseURL:'https://api.cloudinary.com/v1_1', headers:false
+                })
+
+                axiosInstance(requestObj)
+                .then(response => {
+                    axioResponse = response.data;
+                    //console.log("secure_url", cloudResult.secure_url);
+                    //return cloudResult
+                    //localStorage.setItem("public_id", cloudResult.public_id);
+                    localStorage.setItem("cloudResult", JSON.stringify(axioResponse));
+                    
+                })
+                .catch(error => {
+                    //console.log(error);
+                });
+            }.bind(this),
+            false
+        );
+
+        // call for file read if there is a file
+        if (uploadFile && uploadFile.name) {
+            reader.readAsDataURL(uploadFile);
+        }
+        
+    },
+      async updateVendorContact(){
+            //console.log(this.vendorResult);
+           try {
+                const res = await httpClient.put(`/vendor/${this.userCre.userId}/profile`, 
+                {
+                    firstName:  this.vendorResult.firstName,
+                    lastName: this.vendorResult.lastName,
+                    city: this.vendorResult.city,
+                    state: this.vendorResult.state,
+                    address : this.vendorResult.address,
+                    //age:this.vendorResult.age,
+                    age:this.dateOfBirth,
+                    contactEmail : this.vendorResult.contactEmail,
+                    country : this.vendorResult.country,
+                    contactPhoneNumber : this.vendorResult.contactPhoneNumber,
+                    description : this.vendorResult.description,
+                    gender : this.vendorResult.gender,
+                    website: this.vendorResult.website,
+                    postalCode :this.vendorResult.postalCode,
+                    picture:localStorage.getItem('image'),
+                    banner:localStorage.getItem('banner'),
+                    imageData: {
+                        name: localStorage.getItem('dpName'),
+                        data: null,
+                        mimeType: localStorage.getItem('dpType'),
+                        fileType: null,
+                        base64String: this.fileContents
+                    },
+                    socialMediaHandles:{
+                        facebook:this.vendorResult.socialMediaHandles.facebook,
+                        twitter:this.vendorResult.socialMediaHandles.twitter,
+                        instagram:this.vendorResult.socialMediaHandles.instagram,
+                        pinInterest:this.vendorResult.socialMediaHandles.pinInterest
+                    },
+                }, 
+           { headers:
+                {
+                    'Authorization': `Bearer ${this.userCre.bearerToken}`,
+                    'Content-Type': "application/json",
+                    'Accept': "application/json"
+                }
+            });
+             if(res.data.status === "success"){
+                this.returnVendorDetails();
+            }
+         } catch (error) {
+            //console.log(error);
+         }
+      },
+
+      numberOfService(){
+          return this.vendorResult.services.length
+      },
+
+      async returnVendorDetails(){
+          try {
+              await this.getVendorDetails(this.userCre);
+          } catch (error) {
+              //console.log(error);
+          }
+      }
+  },
+
+  mounted(){
+      this.returnVendorDetails();
+  }
 }
 </script>
 

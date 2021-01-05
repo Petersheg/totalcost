@@ -331,7 +331,7 @@ export default {
   data(){
       return{
         serviceLists:[],
-        baseURL : process.env.VUE_APP_baseURL,
+        baseURL : process.env.VUE_APP_BASE_URL,
         listURL : `/services/${this.id}/vendors`,
       }
   },

@@ -170,8 +170,6 @@ export default {
                 const returnToken = this.fbLogin(response.authResponse.accessToken);
                 
                 const decodeToken = jwt_decode(returnToken);
-                console.log(decodeToken);
-                console.log(this.auth,decodeToken.role);
 
                  //localStorage.setItem('token',returnToken)//store Totalcost token to localStorage
                 localStorage.setItem('userId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1]);

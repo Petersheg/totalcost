@@ -281,13 +281,13 @@
                     <p class="subtitle">Select a service to see a list of verified vendors offering such service near you. </p>
                 </header>
                 <div class="card_list">
-                    <article class="card_item" v-for="browse in browses" :key="browse.id">
-                        <router-link :to="{path:`/service_listings/${browse.id}/vendors`}" class="feature_wrapper">
+                    <article class="card_item" v-for="service in allServices" :key="service.id">
+                        <router-link :to="{path:`/service_listings/${service.id}/vendors`}" class="feature_wrapper">
                             <figure class="feature_icon">
-                                <img :src="getImg(browse.imageUrl)" alt="{{browse.name}}">
+                                <img :src="getImgSrc(service.imageUrl)" alt="{{service.name}}">
                             </figure>
                             <h4 class="feature_title font-regular">
-                                {{browse.name}}
+                                {{service.name}}
                             </h4>
                         </router-link>
                     </article>
@@ -305,12 +305,12 @@ export default {
   name: 'Marchant',
 
   methods:{
-      getImg(src){
+      getImgSrc(src){
           return require('../../assets'+ src);
       }
   },
   computed:{
-      browses:function(){return this.$store.getters.returnAllServices}
+      allServices:function(){return this.$store.getters.returnAllServices}
   },
   mounted: function(){
       this.$store.dispatch('allServices')

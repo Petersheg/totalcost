@@ -189,7 +189,6 @@ export default {
         //...mapGetters()
   },
   mounted(){
-    console.log(this.auth);
   }
 }
 </script>

@@ -74,9 +74,9 @@ export default {
             if(this.success==="success"){
                 this.$router.push({name:"Login"})
             }
-            console.log(verify);
+            //console.log(verify);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     },
     getLength(){
@@ -84,9 +84,9 @@ export default {
     }
   },
   mounted(){  
-      console.log(!!this.errors);
-      console.log(this.email);
-      console.log(this.user);
+      //console.log(!!this.errors);
+      //console.log(this.email);
+      //console.log(this.user);
   },
   created(){
   }

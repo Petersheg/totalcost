@@ -1,5 +1,6 @@
 import {FetchAPI} from '../../api/newService'
 import axios from 'axios'
+import jwt_decode from "jwt-decode";
 
 const state= {
     services:null,
@@ -27,6 +28,8 @@ const state= {
         contactEmail : null,
         contactPhoneNumber : null,
         DBO : null,
+        userId : null,
+        userRole : null,
         dateJoined : null,
         description : null,
         website : null,
@@ -36,8 +39,10 @@ const state= {
           instagram:null,
           pinInterest:null
         }
-    }
+    },
 
+    userInfo: null,
+    vendorInfo : null,
   };
 
 const mutations={
@@ -58,7 +63,9 @@ const mutations={
     },
 
     logOut(state){
-        state.user = null
+        state.userData.userId = "";
+        state.userData.role = "";
+        state.userInfo = "";
     },
     addMessage(state,data){
         state.message = data
@@ -137,51 +144,63 @@ const mutations={
     mutatePinInterest(state,data){
       state.userData.socialMediaHandles.pinInterest = data;
     },
+    mutateUserId(state,data){
+      state.userData.userId = data;
+    },
+    mutateUserRole(state,data){
+      state.userData.userRole = data;
+    },
+    mutateUserInfo(state,data){
+      state.userInfo = data;
+    },
+    mutateVendorInfo(state,data){
+      state.vendorInfo = data;
+    }
   };
 
 const actions= {
     async fetchServices(state){
       try {
         const featureService = new FetchAPI();
-        const response =await featureService.getData(process.env.VUE_APP_featureURL)
+        const response =await featureService.getData(process.env.VUE_APP_FEATURE_URL)
 
         state.commit('addService', response.data.data)
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
 
     async fetchVendors(state){
       try {
         const vendor = new FetchAPI();
-        const response = await vendor.getData(process.env.VUE_APP_vendorURL);
+        const response = await vendor.getData(process.env.VUE_APP_VENDOR_URL );
 
         state.commit('addVendors', response.data.data)
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
 
     async allServices(state){
       try {
         const allService = new FetchAPI();
-        const response = await allService.getData(process.env.VUE_APP_allServiceURL);
+        const response = await allService.getData(process.env.VUE_APP_ALL_SERVICE_URL );
 
         state.commit('addAllServices', response.data.data)
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
 
     async Register({commit}, form) {
         //const res = await axios.post('/vendor/new', form)
         const register = new FetchAPI();
-        const res = await register.authUser(process.env.VUE_APP_vendorReg, form)
+        const res = await register.authUser(process.env.VUE_APP_VENDOR_REG , form)
         try {
           commit('addregSuccess', res.data.data);
           commit('addregError', res.data.error_messages);
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
 
         await commit('userEmail',form.email);
@@ -192,42 +211,44 @@ const actions= {
     async LogIn({commit}, form) {
         //const res = await axios.post('/identity/login', form)
         const login = new FetchAPI();
-        const res = await login.authUser(process.env.VUE_APP_login, form);
+        const res = await login.authUser(process.env. VUE_APP_LOGIN, form);
         try {
           commit('addMessage', res.data.error_messages);
           commit('addData', res.data.status);
 
           const token = res.data.data.token;
           if(res.data.status === 'success'){
-              localStorage.setItem('token',token);
+            localStorage.setItem('token',token);
+            axios.defaults.headers.common['Authorization'] = token
           }
         } catch (error) {
-          console.log(error)
+          //console.log(error);
         }  
     },
      
     async Verification({commit},verify){
         //const res = await axios.post('/identity/verify',verify);
         const varify = new FetchAPI();
-        const res = await varify.authUser(process.env.VUE_APP_verify,verify)
+        const res = await varify.authUser(process.env. VUE_APP_VERIFY,verify)
         try {
           commit('addveryError',res.data.error_messages);
           commit('addverySuccess',res.data.status);
         } catch (error) {
-          console.log(error);
+          //console.log(error);
         }
-
     },
+
     async fbLogin({commit},token){
       try {
         const fbLogIn = new FetchAPI();
-        const res = await fbLogIn.authUser(process.env.VUE_APP_fbLogin,{token:token});
+        const res = await fbLogIn.authUser(process.env. VUE_APP_FB_LOGIN,{token:token});
 
         localStorage.setItem('token',res.data.data.token);
-      
+        //commit('mutateUserRole', res.data.data.token.role)
+        return res.data.data.token
         //const token = localStorage.setItem('token',res.token)
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     },
 
@@ -256,16 +277,19 @@ const actions= {
     },
 
     async LogOut({commit}){
-        let user = null;
+        //let user = null;
+        commit('logOut')
         localStorage.removeItem('token');
-        localStorage.removeItem('userData');
-        localStorage.removeItem('vuex');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('role');
         delete axios.defaults.headers.common['Authorization']
-        commit('logOut',user)
     },
     
+    async decodeJWTToken({commit},token){
+      
+      const decodeToken = jwt_decode(token);//decode the token
+      commit('mutateUserId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1]);
+      localStorage.setItem('userId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1])
+      commit('mutateUserRole', decodeToken.role);
+    },
     
     // User information
     async getUserDetails({commit},Id){
@@ -274,10 +298,10 @@ const actions= {
       const res =await getUser.getData(`/users/${Id.userId}/profile`, {headers:{'Authorization': `Bearer ${Id.bearerToken}`}})
         
         let result = res.data.data;
-        console.log(res.data);
-        localStorage.setItem('userData', JSON.stringify(result));
-        result =await JSON.parse(localStorage.getItem('userData'));
-        
+        //localStorage.setItem('userData', JSON.stringify(result));
+        //result = await JSON.parse(localStorage.getItem('userData'));
+        commit('mutateUserInfo', result)
+
         commit('mutateCity',result.city);
         commit('mutateState',result.state);
         commit('mutateCountry',result.country);
@@ -296,7 +320,22 @@ const actions= {
         commit('mutateInstagram',result.socialMediaHandles.instagram);
         commit('mutatePinInterest',result.socialMediaHandles.pinInterest);
     } catch (error) {
-        console.log(error);
+        //console.log(error);
+    }
+
+  },
+
+    // Vendor information
+    async getVendorDetails({commit},Id){
+      
+      const getUser = new FetchAPI();
+      try {
+      const res =await getUser.getData(`/vendor/${Id.userId}/profile`, {headers:{'Authorization': `Bearer ${Id.bearerToken}`}})
+        
+        let vendorDetails = res.data.data;
+        commit('mutateVendorInfo', vendorDetails);
+    } catch (error) {
+       // console.log(error);
     }
 
   },
@@ -336,6 +375,10 @@ const getters={
     getTwitter : state => state.userData.socialMediaHandles.twitter,
     getInstagram : state => state.userData.socialMediaHandles.instagram,
     getPinInterest : state => state.userData.socialMediaHandles.pinInterest,
+    getUserId : state => state.userData.userId,
+    getUserRole : state => state.userData.userRole,
+    getUserInfo : state => state.userInfo,
+    getVendorInfo : state => state.vendorInfo
 };
 
 

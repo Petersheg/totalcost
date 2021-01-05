@@ -84,14 +84,25 @@
                                     </router-link>
                                     <div class="dropdown-menu dropdown-right profile_dropdown">
                                         <header class="dpd_header">
-                                            <div class="media_item user_media">
+                                            <div class="media_item user_media" v-if="userInformation">
                                                 <figure class="media_figure">
                                                     <router-link to="/user_profile" class="user_avatar">
-                                                        <img :src="getCloudinaryImg(userData.picture)" alt="profile_image">
+                                                        <img :src="getCloudinaryImg(userInformation.picture)" alt="profile_image">
                                                     </router-link>
                                                 </figure>
                                                 <div class="media_info">
-                                                    <h4 class="media_title color-primary">{{userData.firstName}} {{userData.lastName}}</h4>
+                                                    <h4 class="media_title color-primary"> {{userInformation.firstName}} {{userInformation.lastName}}</h4>
+                                                    <router-link to="/user_profile" class="btn-link">View Profile</router-link>
+                                                </div>
+                                            </div>
+                                            <div class="media_item user_media" v-else-if="vendorInformation">
+                                                <figure class="media_figure">
+                                                    <router-link to="/vendor_profile" class="user_avatar">
+                                                        <img :src="getCloudinaryImg(vendorInformation.picture)" alt="profile_image">
+                                                    </router-link>
+                                                </figure>
+                                                <div class="media_info">
+                                                    <h4 class="media_title color-primary"> {{vendorInformation.firstName}} {{vendorInformation.lastName}}</h4>
                                                     <router-link to="/user_profile" class="btn-link">View Profile</router-link>
                                                 </div>
                                             </div>
@@ -163,34 +174,45 @@ export default {
     name: 'NavbarMember',
     data(){
         return{
-            userData: JSON.parse(localStorage.getItem('userData'))
+            token:localStorage.getItem('token'),
+            userCredentials:{
+                userId: this.id,
+                bearerToken: this.token,
+            }
         }
     },
     computed:{
-        ...mapGetters({user:"returnUser", auth:"isAuthenticated"}),
+        ...mapGetters({
+            user:"returnUser", auth:"isAuthenticated",
+            id:'getUserId',firstName:"getFirstName", lastName:"getLastName"}),
         allServices:function(){return this.$store.getters.returnAllServices},
+    
+        Id: function(){return this.$store.getters.getUserId},
+        userInformation: function(){return this.$store.getters.getUserInfo},
+        vendorInformation: function(){return this.$store.getters.getVendorInfo}
+        
     },
     methods: {
-        ...mapActions(['loadFacebookSDK','initFacebook']),
+        ...mapActions(['loadFacebookSDK','initFacebook','getUserDetails','getVendorDetails']),
         
         getCloudinaryImg(src){
             return src
         },
-      async logout (){
+
+        async logout (){
           
           FB.getLoginStatus(async (response)=>{
-              console.log(response.status);
+
               if(response.status === 'connected'){
                 FB.logout();
-                await this.$store.dispatch('LogOut')
-                this.$router.go({name:'Login'});
+                await this.$store.dispatch('LogOut');
+                this.$router.replace({name:'Login'});
               }else{
-                await this.$store.dispatch('LogOut')
-                this.$router.go({name:'Login'});
+                await this.$store.dispatch('LogOut');
+                this.$router.replace({name:'Login'});
               }
-                console.log(response.status);
           })
-      }
+        }
     },
     mounted(){
         this.loadFacebookSDK();

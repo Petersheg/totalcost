@@ -55,7 +55,7 @@ export default {
       return{
         servicesList:null,
         packages:null,
-        baseURL : process.env.VUE_APP_baseURL,
+        baseURL : process.env.VUE_APP_BASE_URL,
         listURL : `/services/${this.id}/vendors`,
       }
   },
