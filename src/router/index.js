@@ -4,7 +4,7 @@ import Allservices from '@/views/all_services.vue';
 import ServiceList from '@/views/service_list.vue';
 import ServicedetailsV from '@/views/servicedetails_view.vue';
 import Merchant from '@/views/marchant_home.vue';
-import store from '../store'
+import store from '../store';
 
 
 const routes = [
@@ -74,8 +74,8 @@ const routes = [
   {
     path:'/signup',
     name:'SignUp',
-    component:()=> import('@/views/event_merchant/sign_up.vue'),
     meta: { guest: true },
+    component:()=> import('@/views/event_merchant/sign_up.vue'),
   },
   {
     path:'/f_password',
@@ -97,6 +97,12 @@ const routes = [
     path:'/vendor_profile',
     name:'VendorProfile',
     component:()=> import('@/views/event_merchant/vendor_profile.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/user_profile',
+    name:'UserProfile',
+    component:()=> import('@/views/event_merchant/user_profile.vue'),
     meta: {requiresAuth: true},
   },
   {
@@ -182,8 +188,12 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.guest)) {
-    if (store.getters.isAuthenticated) {
-      next("/vendor_profile");
+    const role = localStorage.getItem('role');
+    if (store.getters.isAuthenticated && role === "User") {
+      next('User_profile');
+      return;
+    }else if(store.getters.isAuthenticated && role === "Admin"){
+      next('/vendor_profile');
       return;
     }
     next();

@@ -54,14 +54,12 @@ export default {
   data(){
       return{
           userToken:"",
-          //newEmail:"",
-          email: this.$route.params.email,
-          //email: localStorage.getItem('regEmail'),
-          check:false
+          //email: this.email,
+          email: localStorage.getItem('regEmail'),
       }
   },
   computed:{
-      ...mapGetters({errors:"returnVeryE",success:"returnVeryS"})
+      ...mapGetters({errors:"returnVeryE",success:"returnVeryS",email:"returnUserEmail", user:"returnUser"})
   },
   methods:{
       ...mapActions(["Verification"]),
@@ -80,7 +78,6 @@ export default {
         } catch (error) {
             console.log(error);
         }
-        
     },
     getLength(){
         return !!this.errors
@@ -88,6 +85,8 @@ export default {
   },
   mounted(){  
       console.log(!!this.errors);
+      console.log(this.email);
+      console.log(this.user);
   },
   created(){
   }

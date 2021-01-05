@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+import {httpClient} from '../../api/newService'
 export default {
   name: 'Subservicelist',
 
@@ -69,7 +70,7 @@ export default {
       },
       getUrl(endPoint){
         const url = this.baseURL+endPoint;
-        axios.get(url)
+        httpClient.get(url)
         .then(res => {
             this.servicesList = res.data.data;
             this.packages = res.data.data[0].packages;
