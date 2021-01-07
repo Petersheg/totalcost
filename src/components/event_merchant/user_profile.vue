@@ -510,7 +510,7 @@
                     <div class="merchant_content_area">
                         <ul class="nav nav-tabs">
                             <li class="active"><router-link to="/user_profile">Overview</router-link></li>
-                            <li><router-link to="/user_events">Events</router-link></li>
+                            <li><router-link to="/user_event">Events</router-link></li>
                         </ul>
                     </div>
                 </div>
@@ -692,11 +692,11 @@
                                         My Events
                                     </h4>
                                     <div class="infoAction">
-                                        <a href="#" class="btn btn-icon">
+                                        <router-link to="/new_event_basicInfo" class="btn btn-icon">
                                             <svg class="cust_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.52 16">
                                                 <polygon points="9.23 0 9.23 6.56 15.52 6.56 15.52 9.38 9.23 9.38 9.23 16 6.29 16 6.29 9.38 0 9.38 0 6.56 6.29 6.56 6.29 0 9.23 0"/>
                                             </svg>
-                                        </a>
+                                        </router-link>
                                     </div>
                                 </header>
                                 <div class="empty_state d-none">
@@ -768,7 +768,7 @@
                                         </div>
                                     </div>
                                     <div class="card_cto">
-                                        <router-link to="/user_events" class="btn-link font-bold">More</router-link>
+                                        <router-link to="/user_event" class="btn-link font-bold">More</router-link>
                                     </div>
                                 </div>
                             </div>

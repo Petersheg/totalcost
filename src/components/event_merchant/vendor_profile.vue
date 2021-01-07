@@ -360,7 +360,7 @@
                     <div class="merchant_content_area">
                         <ul class="nav nav-tabs">
                             <li class="active"><router-link to="/vendor_profile">Overview</router-link></li>
-                            <li><router-link to="/user_events">Events</router-link></li>
+                            <li><router-link to="/user_event">Events</router-link></li>
                             <li><router-link to="/vendor_services">Services</router-link></li>
                         </ul>
                     </div>
@@ -473,10 +473,10 @@
                                         <ul class="taskList">
                                             <li><router-link to="/edit_profile">Update your Profile</router-link></li>
                                             <li><router-link to="/edit_profile">Update your contact details</router-link></li>
-                                            <li><router-link to="/">Create an Event</router-link></li>
+                                            <li><router-link to="/new_event_basicInfo">Create an Event</router-link></li>
                                             <li><router-link to="new_service_category">List a Service</router-link></li>
                                             <li><router-link to="/account_settings">Manage your Bank accounts</router-link></li>
-                                            <li><router-link to="/">Report a Vendor</router-link></li>
+                                            <li><router-link to="/report">Report a Vendor</router-link></li>
                                         </ul>
                                     </div>
                                 </div>
