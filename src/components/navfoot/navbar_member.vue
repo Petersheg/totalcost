@@ -92,7 +92,10 @@
                                                 </figure>
                                                 <div class="media_info">
                                                     <h4 class="media_title color-primary"> {{userInformation.firstName}} {{userInformation.lastName}}</h4>
-                                                    <router-link to="/user_profile" class="btn-link">View Profile</router-link>
+                                                    <router-link to="/user_profile">View Profile</router-link>
+                                                    <!-- <router-link to="" class="btn-link">
+                                                        <button type="button"  @click="viewCurrentProfile">View Profile</button>
+                                                    </router-link> -->
                                                 </div>
                                             </div>
                                             <div class="media_item user_media" v-else-if="vendorInformation">
@@ -103,7 +106,10 @@
                                                 </figure>
                                                 <div class="media_info">
                                                     <h4 class="media_title color-primary"> {{vendorInformation.firstName}} {{vendorInformation.lastName}}</h4>
-                                                    <router-link to="/user_profile" class="btn-link">View Profile</router-link>
+                                                    <router-link to="/vendor_profile">View Profile</router-link>
+                                                    <!-- <router-link to="" class="btn-link">
+                                                        <button type="button"  @click="viewCurrentProfile">View Profile</button>
+                                                    </router-link> -->
                                                 </div>
                                             </div>
                                         </header>
@@ -194,7 +200,14 @@ export default {
     },
     methods: {
         ...mapActions(['loadFacebookSDK','initFacebook','getUserDetails','getVendorDetails']),
-        
+        viewCurrentProfile(){
+            const currentRoute = this.$route.path;
+            if(currentRoute === "/vendor_profile" || currentRoute === "/vendor_services"){
+                this.$router.push('/vendor_profile');
+            }else{
+                this.$router.push('/vendor_profile');
+            }
+        },
         getCloudinaryImg(src){
             return src
         },
@@ -206,10 +219,10 @@ export default {
               if(response.status === 'connected'){
                 FB.logout();
                 await this.$store.dispatch('LogOut');
-                this.$router.replace({name:'Login'});
+                this.$router.push({name:'Login'});
               }else{
                 await this.$store.dispatch('LogOut');
-                this.$router.replace({name:'Login'});
+                this.$router.push({name:'Login'});
               }
           })
         }

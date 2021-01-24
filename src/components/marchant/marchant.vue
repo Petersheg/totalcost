@@ -77,25 +77,29 @@
                             <p>Start by completing your vendor profile. </p>
                         </header>
                         <div class="content_inner">
-                            <form action="">
+
+                            <div class="error_message" v-if="this.errors">
+                                <p v-for="error in this.errors" :key="error">{{error}}</p>  
+                            </div>
+                            <form @submit.prevent="submitForm">
                                 <div class="form-group funky_form">
                                     <label for="" class="control-label">Business Name</label>
-                                    <input type="text" class="form-control input_filled" placeholder="Business Name">
+                                    <input type="text" class="form-control input_filled" placeholder="Business Name" v-model="form.businessName">
                                 </div>
                                 <div class="form-group funky_form">
                                     <label for="" class="control-label">Ẹmail Address</label>
-                                    <input type="Email" class="form-control input_filled" placeholder="Ẹmail Address">
+                                    <input type="Email" class="form-control input_filled" placeholder="Ẹmail Address" v-model="form.email">
                                 </div>
 
                                 <div class="form-group funky_form">
                                     <label for="" class="control-label">Phone Number</label>
-                                    <input type="tel" class="form-control input_filled" placeholder="Phone Number">
+                                    <input type="tel" class="form-control input_filled" placeholder="Phone Number" v-model="form.phoneNumber">
                                 </div>
 
                                 <div class="form-horizontal ">
                                     <div class="col-sm-6 form-group funky_form">
                                         <label for="" class="control-label">State</label>
-                                        <select class="form-control input_filled">
+                                        <select class="form-control input_filled" v-model="form.state">
                                             <option>--State--</option>
                                             <option>Lagos</option>
                                             <option>Kaduna</option>
@@ -122,7 +126,7 @@
                                     </div>
                                     <div class="col-sm-6 form-group funky_form">
                                         <label for="" class="control-label">City/Town</label>
-                                        <select class="form-control input_filled">
+                                        <select class="form-control input_filled" v-model="form.city">
                                             <option>--City/Town--</option>
                                             <option>Alausa</option>
                                             <option>Ikeja</option>
@@ -150,10 +154,14 @@
                                 </div>
                                 <div class="form-group funky_form">
                                     <label for="" class="control-label">A little about your Business</label>
-                                    <textarea class="form-control input_filled" rows="5" placeholder="A little about your Business"></textarea>
+                                    <textarea class="form-control input_filled" rows="5" placeholder="A little about your Business" v-model="form.description"></textarea>
+                                </div>
+                                <div class="form-group funky_form">
+                                    <label for="" class="control-label">Password</label>
+                                    <input type="password" class="form-control input_filled" placeholder="Password" v-model="form.newPassword">
                                 </div>
                                 <div class="section_cto">
-                                    <button type="button" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary">
                                         Submit Request
                                     </button>
                                 </div>
@@ -301,16 +309,43 @@
 </template>
 
 <script>
+import { mapActions, mapGetters} from "vuex";
 export default {
   name: 'Marchant',
-
-  methods:{
-      getImgSrc(src){
-          return require('../../assets'+ src);
+  data(){
+      return{
+        form:{
+            email:"",
+            newPassword:"",
+            businessName:"",
+            phoneNumber:"",
+            description:""
+        }
       }
   },
   computed:{
-      allServices:function(){return this.$store.getters.returnAllServices}
+    //   Mapping Getters to variable.
+    allServices:function(){return this.$store.getters.returnAllServices},
+    ...mapGetters({errors:"returnRegE",success:"returnRegS", auth:'isAuthenticated'}),
+  },
+  methods:{
+    ...mapActions(["Register",'getUserDetails']),
+      getImgSrc(src){
+          return require('../../assets'+ src);
+      },
+      async submitForm() {
+      try {
+          await this.Register(this.form);
+        if(this.success){
+            //redirect to Varification page after successful registration
+            this.$router.replace({name:"verification"});
+            localStorage.setItem('vendorEmail', this.form.email);
+        }
+        
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted: function(){
       this.$store.dispatch('allServices')

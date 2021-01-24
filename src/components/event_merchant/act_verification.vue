@@ -55,11 +55,11 @@ export default {
       return{
           userToken:"",
           //email: this.email,
-          email: localStorage.getItem('regEmail'),
+          email: localStorage.getItem('vendorEmail'),
       }
   },
   computed:{
-      ...mapGetters({errors:"returnVeryE",success:"returnVeryS",email:"returnUserEmail", user:"returnUser"})
+      ...mapGetters({errors:"returnVeryE",success:"returnVeryS", user:"returnUser"})
   },
   methods:{
       ...mapActions(["Verification"]),
@@ -71,8 +71,9 @@ export default {
         }
         try {
             await this.Verification(verify)
-            if(this.success==="success"){
+            if(this.success === "success"){
                 this.$router.push({name:"Login"})
+                localStorage.removeItem("vendorEmail");
             }
             //console.log(verify);
         } catch (error) {

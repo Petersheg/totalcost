@@ -53,7 +53,7 @@
                             <router-link to="/merchant_home" class="nav_link_item">Become a Vendor</router-link>
                         </li>
                         <li class="nav_item">
-                            <button type="button" class="nav_link_item" @click='routeUrl' v-text="login">
+                            <button type="button" class="nav_link_item" @click='routeUrl' v-text="this.login">
                             </button>
                         </li>
                         <li class="nav_item " v-if="!auth">
@@ -93,35 +93,40 @@ export default {
             login:"Login"
         }
     },
+    watch:{
+         
+    },
     computed:{
         ...mapGetters({auth:"isAuthenticated",allServices:"returnAllServices"}),
         role: function(){return this.$store.getters.getUserRole}
         //allServices:function(){return this.$store.getters.returnAllServices}
     },
     methods:{
-        toggleLogin(){
+       toggleLogin:function(){
             if(this.auth && this.role === 'User'){
-                return this.login = "Profile";
-            }else if(this.auth && this.role === 'Vendor'){
-                return this.login = "My Profile"
+                this.login = "Profile";
+            }else if(this.auth && this.role === 'VENDOR'){
+                this.login = "My Profile"
             }
-            else return this.login
+            else this.login
         },
 
         routeUrl(){
             if(this.login === "Login"){
                 this.$router.push({name:"Login"});
             }else if(this.login === "Profile" ){
-                this.$router.push({name:"UserProfile"})
+                this.$router.push("/user_profile");
                 //this.$router.push({name:"VendorProfile"})
             }else{
-                this.$router.push({name:"VendorProfile"})
+                this.$router.push("vendor_profile");
             }
-        }
+        },
+        
     },
     mounted(){
-        this.toggleLogin()
-        this.$store.dispatch('allServices')
+        this.toggleLogin();
+        this.$store.dispatch('allServices');
+        console.log(this.auth,this.role);
     }
 }
 </script>

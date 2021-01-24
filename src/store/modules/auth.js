@@ -203,8 +203,8 @@ const actions= {
           //console.log(error);
         }
 
-        await commit('userEmail',form.email);
-        await commit('setUser', form.fullName);
+        //await commit('userEmail',form.email);
+        // await commit('setUser', form.fullName);
       
     },
 
@@ -339,6 +339,9 @@ const actions= {
     }
 
   },
+
+  //Cloudinary image upload
+  
 
   };
 

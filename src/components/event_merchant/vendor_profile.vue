@@ -8,7 +8,7 @@
                     <button class="close_dialog" data-dismiss="modal" aria-hidden="true"></button>
                 </header>
                 <div class="modal-body">
-                    <form action="">
+                    <form @submit.prevent="updateVendorContact">
                         <div class="form-horizontal">
                             <div class="form-group funky_form col-sm-6">
                                 <label class="control-label">Phone Number</label>
@@ -52,31 +52,8 @@
                                 </select>
                             </div>
                             <div class="col-sm-6 funky_form form-group">
-                                <label for="" class="control-label">City/Town</label>
-                                <select class="form-control" v-model="vendorResult.city">
-                                    <option>--City/Town--</option>
-                                    <option>Alausa</option>
-                                    <option>Ikeja</option>
-                                    <option>Ojodu</option>
-                                    <option>Ojota</option>
-                                    <option>Maryland</option>
-                                    <option>Mende</option>
-                                    <option>Festac</option>
-                                    <option>Surulere</option>
-                                    <option>Yaba</option>
-                                    <option>Ojuelegba</option>
-                                    <option>Mushin</option>
-                                    <option>Ogba</option>
-                                    <option>Magboro</option>
-                                    <option>Magodo</option>
-                                    <option>Victoria Island</option>
-                                    <option>Ikoyi</option>
-                                    <option>Ajah</option>
-                                    <option>Leki</option>
-                                    <option>Command</option>
-                                    <option>Abule Egba</option>
-                                    <option>Ipaja</option>
-                                </select>
+                                <label for="city" class="control-label">City/Town</label>
+                                <input type="text" id="city" class="form-control" placeholder="Website" v-model="vendorResult.city">
                             </div>
                         </div>
                         <div class="form-horizontal ">
@@ -117,7 +94,7 @@
                                     <span class="input-group-addon">
                                         Facebook
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://facebook.com/david_01" v-model="vendorResult.socialMediaHandles.facebook">
+                                    <input type="url" class="form-control" placeholder="https://facebook.com/david_01" ><!-- v-model="vendorResult.socialMediaHandles.facebook" -->
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,7 +102,7 @@
                                     <span class="input-group-addon">
                                         Twitter
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://twitter.com/david_01" v-model="vendorResult.socialMediaHandles.twitter">
+                                    <input type="url" class="form-control" placeholder="https://twitter.com/david_01">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -133,7 +110,7 @@
                                     <span class="input-group-addon">
                                         Pinterest
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://pinterest.com/david_01" v-model="vendorResult.socialMediaHandles.pinInterest">
+                                    <input type="url" class="form-control" placeholder="https://pinterest.com/david_01" >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -141,22 +118,23 @@
                                     <span class="input-group-addon">
                                         Instagram
                                     </span>
-                                    <input type="url" class="form-control" placeholder="https://instagram.com/david_01" v-model="vendorResult.socialMediaHandles.instagram">
+                                    <input type="url" class="form-control" placeholder="https://instagram.com/david_01" >
                                 </div>
                             </div>
                         </fieldset>
+                        <button class="btn btn-sm btn-inverse">
+                            Save Changes
+                        </button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-sm btn-inverse" @click="updateVendorContact">
-                        Save Changes
-                    </button>
+                    
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="modal fade" id="update_bio">
+    <div class="modal" id="update_bio">
         <div class="modal-dialog">
                 <div class="modal-content">
                     <header class="modal-header">
@@ -190,6 +168,8 @@
                                                 <input type="file" name="file" id="profile_image" class="inputfile" @change="selectImg($event)">
                                                     <span>Change Image</span>
                                                 </label>
+
+                                                <!-- <progress max="100" :value.prop="uploadPercentage"></progress> -->
                                             </div>
                                         </div>
                                     </div>
@@ -249,10 +229,12 @@
                                 <label class="control-label">About Me</label>
                                 <textarea rows="5" class="form-control" placeholder="Tell us a little about yourself" v-model="vendorResult.description"></textarea>
                             </div>
+                            <p class="control-label">Date of Birth</p>
                             <div class="form-horizontal">
                                 <div class="form-group funky_form col-sm-4">
                                     <label class="control-label">Day</label>
-                                    <select class="form-control" v-model="day">
+                                    <input type="number" class="form-control" placeholder="Day" v-model="day">
+                                    <!-- <select class="form-control" v-model="day">
                                         <option>Day</option>
                                         <option>1</option>
                                         <option>2</option>
@@ -261,11 +243,12 @@
                                         <option>5</option>
                                         <option>6</option>
                                         <option>7</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <div class="form-group funky_form col-sm-4">
                                     <label class="control-label">Month</label>
-                                    <select class="form-control" v-model="month">
+                                    <input type="number" class="form-control" placeholder="Month" v-model="month">
+                                    <!-- <select class="form-control" v-model="month">
                                         <option>Month</option>
                                         <option>January</option>
                                         <option>February</option>
@@ -279,11 +262,12 @@
                                         <option>October</option>
                                         <option>Novermber</option>
                                         <option>December</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <div class="form-group funky_form col-sm-4">
                                     <label class="control-label">Year</label>
-                                    <select class="form-control" v-model="year">
+                                    <input type="number" class="form-control" placeholder="Year" v-model="year">
+                                    <!-- <select class="form-control" v-model="year">
                                         <option>Year</option>
                                         <option>2000</option>
                                         <option>1999</option>
@@ -305,12 +289,13 @@
                                         <option>1983</option>
                                         <option>1982</option>
                                         <option>1981</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
-                            <button class="btn btn-sm btn-inverse" type="submit">
+                            <button class="btn btn-sm btn-inverse" type="submit" id="close_Modal">
                                 Save Changes
                             </button>
+                             <button type="button " class="btn btn-default" data-dismiss="modal" aria-hidden="true" >Ok</button>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -321,54 +306,9 @@
     </div>
 
     <main class="main_content_area bg-off-white">
-        <section class="user_banner_area" :style ="{backgroundImage:`url(${this.getcloudinaryIMG(vendorResult.banner)})`}">
-            <div class="container">
-                <div class="merchant_profile_details">
-                    <div class="pr_info_block">
-                        <figure class="merchant_logo">
-                            <div class="user_avatar">
-                                <img :src="vendorResult.picture" alt="David Olaniyi">
-                            </div>
-                        </figure>
-                        <div class="prof_header">
-                            <h4 class="prof_title d-inline-block">{{vendorResult.firstName}} {{vendorResult.lastName}}</h4>
-                            <span class="vend_status" title="Verified Vendor" data-toggle="tooltip">
-                                <i class="cust_icon user_verified"></i>
-                            </span>
-                        </div>
-                        <div class="info_meta meta_loc">
-                            <span class="meta_icon color-grey-light">
-                                <svg class="cust_icon icon_xs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13.94 20">
-                                    <path d="M7,0A7,7,0,0,0,0,7c0,3.65,5.52,12,5.75,12.32A1.47,1.47,0,0,0,7,20a1.47,1.47,0,0,0,1.21-.7c.24-.35,5.76-8.68,5.76-12.33A7,7,0,0,0,7,0ZM7,11.27A4.3,4.3,0,1,1,11.27,7,4.3,4.3,0,0,1,7,11.27Z"/>
-                                </svg>
-                            </span>
-                            <span class="meta_value">{{vendorResult.merchantData.city}}, {{vendorResult.merchantData.state}}</span>
-                        </div>
-                        <div class="info_meta meta_date">
-                            <p class="meta_label">Joined <strong>{{vendorResult.epochDateJoined}}</strong></p>
-                        </div>
-                    </div>
-                    <div class="pr_info_block">
-                        <a href="#update_bio" data-toggle="modal" class="btn btn-sm btn-secondary">
-                            Update Profile
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <nav class="user_context_nav">
-                <div class="container">
-                    <div class="merchant_content_area">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><router-link to="/vendor_profile">Overview</router-link></li>
-                            <li><router-link to="/user_event">Events</router-link></li>
-                            <li><router-link to="/vendor_services">Services</router-link></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </section>
+        <VendorBanner/>
         
-        <section class="section_block">
+        <section class="section_block" v-if="currentRoute === '/vendor_profile'">
             <div class="container">
                 <div class="content_wrapper merchant_content_area">
                     
@@ -558,7 +498,7 @@
                                                 <div class="info_container">
                                                     <p>
                                                         <strong>
-                                                            <a :href="vendorResult.website"> {{vendorResult.website}}
+                                                            <a :href="vendorResult.website"> Visit Website
                                                             </a>
                                                         </strong>
                                                     </p>
@@ -573,7 +513,7 @@
                                                     <p>
                                                        <span>E-Mail </span>
                                                         <strong>
-                                                            <a :href="vendorResult.contactEmail" >{{vendorResult.contactEmail}}
+                                                            <a :href="vendorResult.merchantData.email" >{{vendorResult.merchantData.email}}
                                                             </a>
                                                         </strong>
                                                     </p>
@@ -747,16 +687,76 @@
                 </div>
             </div>
         </section>
+
+        <section class="section_block" v-else>
+            <div class="container">
+                <div class="content_wrapper merchant_content_area">
+                    <header class="user_infoHeader">
+                        <h3 class="pane_title text-caps color-primary">My Services</h3>
+                        <div class="header_cto">
+                            <router-link to="/new_service_category" class="btn btn-sm btn-inverse">New Service</router-link>
+                        </div>
+                    </header>
+                    <div class="empty_state d-none">
+                        <div class="def_wrapper text-center">
+                            <h4 class="title font-bold color-primary">No Service found</h4>
+                            <p class="">You have no listed services. Start by creating a service, and submiting it for verification.</p>
+                            <div class="section_cto">
+                                <router-link to="new_service_category" class="btn btn-inverse">
+                                New Service</router-link>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content_inner">
+                        <div class="prd_card_list row">
+                            <article class="prd_card col-sm-6 col-md-4">
+                                <div class="prd_card_wrapper bg-white">
+                                    <header class="prd_card_hd">
+                                        <div class="prd_card_meta meta_type">
+                                            <span class="prd_program_type" title="Catering">
+                                                Catering
+                                            </span>
+                                        </div>
+                                    </header>
+                                    <router-link to="mng_service" class="prd_card_banner">
+                                        <div class="prd_card_img" :style ="{backgroundImage: `url(${this.getSrc('/img/banners/merchant_hold.jpg')})`}">
+                                        </div>
+                                        <div class="card_gradient"></div>
+                                    </router-link>
+                                    <div class="prd_card_bd">
+                                        <h4 class="prd_title">
+                                            <router-link title="Thyme & Again Creative Catering" to="/mng_service">Thyme & Again Creative Catering</router-link>
+                                        </h4>
+                                        <div class="prd_support_info">
+                                            <div class="rating_ind">
+                                                <div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" 
+                                            data-rateit-readonly="true"></div>
+                                                <span class="rating_space" title="4.5 from 10 reviews">10</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="prd_card_support">
+                                        <router-link to="/mng_service" class="btn btn-block btn-sm btn-default ">
+                                            Manage Service
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
     </main>
 
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Updatebio from './update_bio';
 import axios from 'axios';
-import {httpClient } from '../../api/newService'
-
+import {httpClient } from '../../api/newService';
+import VendorBanner from './vendor_banners'
 export default {
   name: 'VendorProfile',
   data(){
@@ -764,9 +764,8 @@ export default {
         day:null,
         month:null,
         year:null,
-
           userCre:{
-            userId: localStorage.getItem('userId'),
+            userId:localStorage.getItem('userId'),
             bearerToken: localStorage.getItem('token'),
           },
 
@@ -777,8 +776,8 @@ export default {
           cloudName: process.env.VUE_APP_CLOUD_NAME,
           preset:process.env.VUE_APP_PRESET,
           //fileContents:null,
-          profile:null,
-          bannerPic:null,
+          profileBase64:null,
+          bannerBase64:null,
           bannerResult:null,
           banner:null,
           tags: process.env.VUE_APP_TAGS,
@@ -786,14 +785,29 @@ export default {
           uploadPercentage: 0,
       }
   },
+  components:{
+      VendorBanner
+  },
   computed:{
-      dateOfBirth:function(){return `${this.day}-${this.month}-${this.year}`},
-      vendorResult: function(){return this.$store.getters.getVendorInfo}
+      dateOfBirth:function(){return this.calculateDOB(this.year)},
+      vendorResult: function(){return this.$store.getters.getVendorInfo},
+      currentRoute:function(){return this.$route.path},
+      ...mapGetters({
+            success:'returnData', 
+            auth:'isAuthenticated',
+            id: 'getUserId',
+            //result: 'getUserInfo',
+        }),
   },
   methods:{
       ...mapActions(["getVendorDetails"]),
       getSrc(src){
           return require('@/assets'+src);
+      },
+      calculateDOB(yearOfBirth){
+         const currentYear = new Date().getFullYear()
+          const age = currentYear - yearOfBirth;
+          return age;
       },
         getcloudinaryIMG(src){
            return src
@@ -801,23 +815,24 @@ export default {
     selectImg:function(event) {
       //console.log("SelectImg", event.target.files);
       this.file = event.target.files[0];
-      this.upload(this.file,this.profile,this.results);
-      
-      setTimeout(() => {
-            const cloudResult = JSON.parse(localStorage.getItem('cloudResult'));
+      console.log(this.file);
+      this.upload(this.file,this.profileBase64,this.results);
+
+       setTimeout(() => {
+             const cloudResult = JSON.parse(localStorage.getItem('cloudResult'));
             if(cloudResult){
-                
+                console.log(this.profileBase64)
                 this.results = cloudResult;
                 localStorage.setItem('image',this.results.secure_url);
                 localStorage.removeItem('cloudResult');
             }
-        }, 3000);
+         }, 3000);
     },
 
     selectBanner: function(event) {
       //console.log("SelectBanner", event.target.files);
       this.banner = event.target.files[0];
-        this.upload(this.banner,this.bannerPic,this.bannerResult);
+        this.upload(this.banner,this.bannerBase64,this.bannerResult);
         setTimeout(() => {
             const cloudResult = JSON.parse(localStorage.getItem('cloudResult'));
             if(cloudResult){
@@ -854,8 +869,8 @@ export default {
                 method: "POST",
                 data: this.formData,
                 onUploadProgress: function( progressEvent ) {
-                    this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 ));
-                }
+                    this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 ))
+                }.bind(this),
             };
             
                 const axiosInstance = axios.create({
@@ -869,10 +884,11 @@ export default {
                     //return cloudResult
                     //localStorage.setItem("public_id", cloudResult.public_id);
                     localStorage.setItem("cloudResult", JSON.stringify(axioResponse));
+                    return axioResponse;
                     
                 })
                 .catch(error => {
-                    //console.log(error);
+                    console.log(error);
                 });
             }.bind(this),
             false
@@ -884,18 +900,19 @@ export default {
         }
         
     },
-      async updateVendorContact(){
-            //console.log(this.vendorResult);
+    async updateVendorContact(){
+            console.log(this.dateOfBirth);
+            
            try {
                 const res = await httpClient.put(`/vendor/${this.userCre.userId}/profile`, 
                 {
-                    firstName:  this.vendorResult.firstName,
+                    firstName: this.vendorResult.firstName,
                     lastName: this.vendorResult.lastName,
                     city: this.vendorResult.city,
                     state: this.vendorResult.state,
                     address : this.vendorResult.address,
                     //age:this.vendorResult.age,
-                    age:this.dateOfBirth,
+                    age: 40, //this.dateOfBirth,
                     contactEmail : this.vendorResult.contactEmail,
                     country : this.vendorResult.country,
                     contactPhoneNumber : this.vendorResult.contactPhoneNumber,
@@ -913,10 +930,10 @@ export default {
                         base64String: this.fileContents
                     },
                     socialMediaHandles:{
-                        facebook:this.vendorResult.socialMediaHandles.facebook,
-                        twitter:this.vendorResult.socialMediaHandles.twitter,
-                        instagram:this.vendorResult.socialMediaHandles.instagram,
-                        pinInterest:this.vendorResult.socialMediaHandles.pinInterest
+                        facebook:"this.vendorResult.socialMediaHandles.facebook",
+                        twitter:"this.vendorResult.socialMediaHandles.twitter",
+                        instagram:"this.vendorResult.socialMediaHandles.instagram",
+                        pinInterest:"his.vendorResult.socialMediaHandles.pinInterest"
                     },
                 }, 
            { headers:
@@ -926,25 +943,50 @@ export default {
                     'Accept': "application/json"
                 }
             });
-             if(res.data.status === "success"){
+            console.log(res);
+             if(res && res.data.status === "success"){
                 this.returnVendorDetails();
+
+                // Toast a mesaage after data successfully updated
+                const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                        toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                }
+                });
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Data Successfully Saved.'
+                });
+                
+                // Close modal after successfull call.
+                $('#update_bio').modal('hide');
+                $('#contact_details').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                
             }
          } catch (error) {
-            //console.log(error);
+            console.log(error);
          }
-      },
+    },
 
-      numberOfService(){
-          return this.vendorResult.services.length
-      },
+    numberOfService(){
+        return this.vendorResult.services.length
+    },
 
-      async returnVendorDetails(){
-          try {
-              await this.getVendorDetails(this.userCre);
-          } catch (error) {
-              //console.log(error);
-          }
-      }
+    async returnVendorDetails(){
+        try {
+            await this.getVendorDetails(this.userCre);
+        } catch (error) {
+            console.log(error);
+        }
+    }
   },
 
   mounted(){

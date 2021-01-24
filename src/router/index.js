@@ -212,6 +212,7 @@ const routes = [
     path:'/vendor_services',
     name:'VendorServices',
     component:()=> import('@/views/event_merchant/vendor_services.vue'),
+    meta: {requiresAuth: true},
   },
   {
     path:'/service_details',
@@ -242,11 +243,13 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.guest)) {
-    const role = localStorage.getItem('role');
+    //...mapGetters({role:"getUserRole"});
+    const role =localStorage.getItem('role'); //store.getters.getUserRole //
+
     if (store.getters.isAuthenticated && role === "User") {
-      next('User_profile');
+      next('/User_profile');
       return;
-    }else if(store.getters.isAuthenticated && role === "Admin"){
+    }else if(store.getters.isAuthenticated && role === "VENDOR"){
       next('/vendor_profile');
       return;
     }

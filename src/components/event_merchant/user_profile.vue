@@ -832,6 +832,7 @@ export default {
             instagram : 'getInstagram',
             pinInterest : 'getPinInterest',
             id: 'getUserId',
+            role:"getUserRole"
             //result: 'getUserInfo',
         }),
 
@@ -982,6 +983,8 @@ export default {
                     'Accept': "application/json"
                 }
             });
+            
+            console.log(res);
              if(res.data.status === "success"){
                 this.getUserDetailz();
             }

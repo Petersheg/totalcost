@@ -110,11 +110,11 @@ export default {
             await this.LogIn(User);
             await this.submitFormLogin();
         } catch (error) {
-            //console.log(error);
+            console.log(error);
         }
     },
     routePath(path){
-        return this.$router.replace({name:path});
+        return this.$router.push({name:path});
     },
 
     // While this function make use of the token.
@@ -129,19 +129,17 @@ export default {
                 bearerToken: token,
             };
 
-            if(this.success === "success" && this.role === 'User'){
-                //await this.getVendorDetails(userCredentials);
+            if(this.success === "success" && this.role.toLowerCase() === "user"){
                 await this.getUserDetails(userCredentials)
-                 //this.routePath("VendorProfile");
                 this.routePath("UserProfile")
-            }else if(this.successcc === "success" && this.role === 'Vendor'){
-                await this.getUserDetails(userCredentials)
+            }else if(this.success === "success" && this.role.toLowerCase() === "vendor"){
+                await this.getVendorDetails(userCredentials)
                 this.routePath("VendorProfile")
             }else{
                 this.routePath('Login')
             }
         } catch (error) {
-            //console.log(error);
+            console.log(error);
         }
         
     },
@@ -160,9 +158,9 @@ export default {
                 };
                 
                 if(this.role === 'User'){    
-                    await this.getUserDetails(userCredentials);
-                    
-                    this.routePath("UserProfile");
+                    //await this.getUserDetails(userCredentials);
+                    console.log(this.role);
+                    //this.routePath("UserProfile");
                 }else if(this.role === 'Vendor'){
                     //console.log('admin login');
                     this.routePath("VendorProfile");
