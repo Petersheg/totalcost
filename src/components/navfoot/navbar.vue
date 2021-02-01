@@ -53,8 +53,8 @@
                             <router-link to="/merchant_home" class="nav_link_item">Become a Vendor</router-link>
                         </li>
                         <li class="nav_item">
-                        <router-link to="/login" class="nav_link_item" v-text="login">
-                            </router-link>
+                            <button type="button" class="nav_link_item" @click='routeUrl' v-text="this.login">
+                            </button>
                         </li>
                         <li class="nav_item " v-if="!auth">
                             <router-link to="/signup" class="nav_link_item link_highlight">
@@ -93,19 +93,40 @@ export default {
             login:"Login"
         }
     },
+    watch:{
+         
+    },
     computed:{
         ...mapGetters({auth:"isAuthenticated",allServices:"returnAllServices"}),
+        role: function(){return this.$store.getters.getUserRole}
         //allServices:function(){return this.$store.getters.returnAllServices}
     },
     methods:{
-        toggleLogin(){
-            if(this.auth) return this.login = "Profile"
-            else return this.login
-        }
+       toggleLogin:function(){
+            if(this.auth && this.role === 'User'){
+                this.login = "Profile";
+            }else if(this.auth && this.role === 'VENDOR'){
+                this.login = "My Profile"
+            }
+            else this.login
+        },
+
+        routeUrl(){
+            if(this.login === "Login"){
+                this.$router.push({name:"Login"});
+            }else if(this.login === "Profile" ){
+                this.$router.push("/user_profile");
+                //this.$router.push({name:"VendorProfile"})
+            }else{
+                this.$router.push("vendor_profile");
+            }
+        },
+        
     },
     mounted(){
-        this.toggleLogin()
-        this.$store.dispatch('allServices')
+        this.toggleLogin();
+        this.$store.dispatch('allServices');
+        console.log(this.auth,this.role);
     }
 }
 </script>

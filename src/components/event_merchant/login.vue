@@ -13,7 +13,7 @@
                             <div class="error_message" v-if="errors">
                                 <p v-for="error in errors" :key="error">{{error}}</p>
                             </div>
-                            <form  @submit.prevent="getSubmit"><!-- -->
+                            <form  @submit.prevent="initiateLogIn"><!---->
                                 <div class="form-group funky_form">
                                     <label class="control-label">
                                         Email
@@ -46,7 +46,7 @@
                             <div class="social_prop">
                                 <span class="info_title font-md">or Continue with - </span>
                                 <div class="social_btn_icons">
-                                    <button @click="facebookLogIn" class="social_btn bg_fb">
+                                    <button @click="submitFacebookLogIn" class="social_btn bg_fb">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="cust_icon icon_xs" viewBox="0 0 64 64">
                                             <path d="M45.1,31.8l-8.4,0.1L37,62.6l-12.7,0.1L24,32l-6,0.1l-0.1-10.8l6-0.1l-0.1-7c-0.1-5,2.2-12.8,12.7-13l9.4-0.1L46,11.7l-6.8,0.1c-1.1,0-2.7,0.6-2.7,3l0.1,6.4l9.5-0.1L45.1,31.8z M45.1,31.8"/>
                                         </svg>
@@ -84,57 +84,59 @@ export default {
             email:"",
             password:""
           },
-
+        token : localStorage.getItem('token')//get token from LS
       }
   },
     
     computed:{
-    ...mapGetters({errors:'returnMessage',success:'returnData', auth:'isAuthenticated'}),
+    ...mapGetters({
+        errors:'returnMessage',success:'returnData',
+         auth:'isAuthenticated', id:"getUserId", role:"getUserRole"
+         }),
+    result: function(){return this.$store.getters.getUserInfo},
+    Id: function(){return this.$store.getters.getUserId}
   },
   
   methods: {
-    ...mapActions(["fbLogin","LogIn",'loadFacebookSDK','initFacebook','getUserDetails']),
+    ...mapActions(["fbLogin","LogIn",'loadFacebookSDK','initFacebook','getUserDetails','decodeJWTToken','getVendorDetails']),
     
     // this function will make the token available
-    async submit() {
-        
+    async initiateLogIn() { 
         try {
             const User={
                 email: this.form.email,
                 password: this.form.password
             }
             await this.LogIn(User);
+            await this.submitFormLogin();
         } catch (error) {
             console.log(error);
         }
-      
     },
     routePath(path){
-        return this.$router.go({name:path});
+        return this.$router.push({name:path});
     },
+
     // While this function make use of the token.
-    async getSubmit(){
-      await this.submit()
-      const token = localStorage.getItem('token');//get token from LS
+    async submitFormLogin(){
+      //await this.initiateLogIn()
         try {
-                  
-            const decodeToken = jwt_decode(token);//decode the token
-            localStorage.setItem('userId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1]);
-            const role = localStorage.setItem('role',decodeToken.role);//store role to Localstorage
+            const token = localStorage.getItem('token');//get token from LS
+            await this.decodeJWTToken(token);
 
-            const userCre={
-                userId: localStorage.getItem('userId'),
-                bearerToken: localStorage.getItem('token'),
+            const userCredentials={
+                userId: this.id,
+                bearerToken: token,
             };
-            await this.getUserDetails(userCre);
 
-            if(this.success === "success" && role === 'User'){
+            if(this.success === "success" && this.role.toLowerCase() === "user"){
+                await this.getUserDetails(userCredentials)
                 this.routePath("UserProfile")
-                //this.$router.go({path:"/user_profile"});
-            }else{
-                //console.log('failed');
+            }else if(this.success === "success" && this.role.toLowerCase() === "vendor"){
+                await this.getVendorDetails(userCredentials)
                 this.routePath("VendorProfile")
-                //this.$router.go({path:"/vendor_profile"});
+            }else{
+                this.routePath('Login')
             }
         } catch (error) {
             console.log(error);
@@ -142,36 +144,32 @@ export default {
         
     },
     
-    async facebookLogIn() {
+    async submitFacebookLogIn() {
+        
         try {
             FB.login(async (response) => {
             if (response.authResponse) {
                 const returnToken = await this.fbLogin(response.authResponse.accessToken);// return Totalcost Token
-                const decodeToken = jwt_decode(returnToken);//Decode Totalcost token
-                    console.log(decodeToken);
-                localStorage.setItem('token',returnToken)//store Totalcost token to localStorage
-                localStorage.setItem('userId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1]);
-
-                const userCre={
-                    userId: localStorage.getItem('userId'),
-                    bearerToken: localStorage.getItem('token'),
+                setTimeout(async () => {
+                     await this.decodeJWTToken(returnToken);
+                const userCredentials={
+                    userId: this.id,
+                    bearerToken: returnToken,
                 };
-
-                console.log(userCre);
                 
-                
-
-                if(decodeToken.role === 'User'){    
-                    console.log('user log in');
-
-                    this.routePath("UserProfile");
-                    await this.getUserDetails(userCre);
-                }else{
-                    console.log('admin login');
+                if(this.role === 'User'){    
+                    //await this.getUserDetails(userCredentials);
+                    console.log(this.role);
+                    //this.routePath("UserProfile");
+                }else if(this.role === 'Vendor'){
+                    //console.log('admin login');
                     this.routePath("VendorProfile");
+                }else{
+                    this.routePath("Login");
                 }
                 
                 return response.authResponse
+                }, 2000);
                     // Now you can redirect the user or do an AJAX request to
                     // a PHP script that grabs the signed request from the cookie.
             } else {
@@ -180,7 +178,7 @@ export default {
         });
             return false;
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     },
   },

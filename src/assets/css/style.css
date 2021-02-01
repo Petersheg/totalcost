@@ -3893,9 +3893,9 @@ a.btn:focus {
 @media only screen and (min-width: 992px) {
   /* line 1, ../sass/partials/_heroes.scss */
   .hero_area {
-    height: 100vh;
+    height: 135vh;
     max-height: 700px;
-    padding: 60px 0;
+    padding: 30px 0;
   }
 }
 /* line 17, ../sass/partials/_heroes.scss */

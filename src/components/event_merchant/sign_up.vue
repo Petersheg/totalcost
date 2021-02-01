@@ -12,41 +12,20 @@
                         <div class="content_inner" >
                             <div class="error_message" v-if="errors">
                                 <p v-for="error in errors" :key="error">{{error}}</p>
-                                
                             </div>
                             <form @submit.prevent="submit"><!--  -->
-                                <div class="form-group funky_form">
-                                    <label class="control-label">
-                                        Full Name
-                                    </label>
-                                    <input type="text" class="form-control" v-model="form.fullName" placeholder="Full Name" required>
-                                </div>
                                 <div class="form-horizontal">
                                     <div class="form-group funky_form col-sm-6">
                                         <label class="control-label">
-                                            Business Name
+                                            First Name
                                         </label>
-                                        <input type="text" class="form-control"  v-model="form.businessName" placeholder="Business Name">
+                                        <input type="text" class="form-control"  v-model="form.firstname" placeholder="First Name">
                                     </div>
                                     <div class="form-group funky_form col-sm-6">
                                         <label class="control-label">
-                                            Phone Number
+                                            Last Name
                                         </label>
-                                        <input type="phone" class="form-control" v-model="form.phoneNumber" placeholder="Phone Number">
-                                    </div>
-                                </div>
-                                <div class="form-horizontal">
-                                    <div class="form-group funky_form col-sm-6">
-                                        <label class="control-label">
-                                            State
-                                        </label>
-                                        <input type="text" class="form-control" v-model="form.state" placeholder="State">
-                                    </div>
-                                    <div class="form-group funky_form col-sm-6">
-                                        <label class="control-label">
-                                            City
-                                        </label>
-                                        <input type="phone" class="form-control" v-model="form.city" placeholder="City">
+                                        <input type="phone" class="form-control" v-model="form.lastName" placeholder="Last Nmae">
                                     </div>
                                 </div>
                                 <div class="form-group funky_form">
@@ -60,13 +39,6 @@
                                         Password
                                     </label>
                                     <input type="password" class="form-control" v-model="form.newPassword" placeholder="Password" required>
-                                </div>
-                               
-                               <div class="form-group funky_form">
-                                    <label class="control-label">
-                                        Description
-                                    </label>
-                                    <textarea name="description" class="form-control" cols="30" rows="10" v-model="form.description" placeholder="Description"></textarea>
                                 </div>
 
                                <div class="section_cto text-center">
@@ -115,15 +87,10 @@ export default {
   data(){
       return{
           form:{
-              fullName:"",
+              firstName:"",
+              lastName:"",
               email:"",
               newPassword:"",
-              businessName:"",
-              phoneNumber:"",
-              state:"",
-              city:"",
-              description:""
-
           },
       }
   },
@@ -142,16 +109,12 @@ export default {
         if(this.success){
 
             const email=this.form.email;
-            const userName = this.form.fullName;
-            const city = this.form.city;
-            const state = this.form.state;
 
             //redirect to Varification page after successful registration
             this.$router.replace({name:"verification"});
 
             // Saving some items to localStorage for later Use
-            localStorage.setItem('regEmail',email);
-            localStorage.setItem('userName',userName);
+            localStorage.setItem('userEmail',email);
         }
         
       } catch (error) {
@@ -170,8 +133,6 @@ export default {
                 const returnToken = this.fbLogin(response.authResponse.accessToken);
                 
                 const decodeToken = jwt_decode(returnToken);
-                console.log(decodeToken);
-                console.log(this.auth,decodeToken.role);
 
                  //localStorage.setItem('token',returnToken)//store Totalcost token to localStorage
                 localStorage.setItem('userId',decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'][1]);

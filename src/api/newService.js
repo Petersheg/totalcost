@@ -5,7 +5,7 @@ import router from '../router'
 const token = localStorage.getItem('token');
 
 export const httpClient = axios.create({
-    baseURL: process.env.VUE_APP_baseURL,//set axios base url
+    baseURL: process.env.VUE_APP_BASE_URL,//set axios base url
     withCredentials : true,
     headers:{
         'Authorization':token
@@ -13,13 +13,13 @@ export const httpClient = axios.create({
 })
 
 //axios.defaults.withCredentials = false
-//axios.defaults.baseURL = process.env.VUE_APP_baseURL;//set axios base url
+//axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;//set axios base url
 
 httpClient.interceptors.response.use((res)=> res, function (error) {
     if (error) {
       const originalRequest = error.config;
       if (error.response.status === 401 && !originalRequest._retry) {
-        console.log('There is error');
+        //console.log('There is error');
           originalRequest._retry = true;
           store.dispatch('LogOut')
           return router.go('/login')

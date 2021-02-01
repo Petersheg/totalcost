@@ -94,6 +94,36 @@ const routes = [
     meta: {requiresAuth: true},
   },
   {
+    path:'/new_event_basicInfo',
+    name:'EventBasicInfo',
+    component:()=> import('@/views/user/new_event_basicInfo.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/new_event_category',
+    name:'EventCategory',
+    component:()=> import('@/views/user/new_event_category.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/new_event_vendor',
+    name:'EventVendor',
+    component:()=> import('@/views/user/new_event_vendor.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/user_event',
+    name:'UserEvent',
+    component:()=> import('@/views/user/user_event.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/user_event_view',
+    name:'UserEventView',
+    component:()=> import('@/views/user/user_event_view.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
     path:'/vendor_profile',
     name:'VendorProfile',
     component:()=> import('@/views/event_merchant/vendor_profile.vue'),
@@ -103,6 +133,18 @@ const routes = [
     path:'/user_profile',
     name:'UserProfile',
     component:()=> import('@/views/event_merchant/user_profile.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/report',
+    name:'Report',
+    component:()=> import('@/views/event_merchant/report.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/event_details_view',
+    name:'EventDetailsView',
+    component:()=> import('@/views/event_merchant/event_details_view.vue'),
     meta: {requiresAuth: true},
   },
   {
@@ -155,9 +197,22 @@ const routes = [
     meta: {requiresAuth: true},
   },
   {
+    path:'/mng_pricing',
+    name:'MngPricing',
+    component:()=> import('@/views/event_merchant/mng_pricing.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
+    path:'/mng_event',
+    name:'MngEvent',
+    component:()=> import('@/views/event_merchant/mng_event.vue'),
+    meta: {requiresAuth: true},
+  },
+  {
     path:'/vendor_services',
     name:'VendorServices',
     component:()=> import('@/views/event_merchant/vendor_services.vue'),
+    meta: {requiresAuth: true},
   },
   {
     path:'/service_details',
@@ -188,11 +243,13 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.guest)) {
-    const role = localStorage.getItem('role');
+    //...mapGetters({role:"getUserRole"});
+    const role =localStorage.getItem('role'); //store.getters.getUserRole //
+
     if (store.getters.isAuthenticated && role === "User") {
-      next('User_profile');
+      next('/User_profile');
       return;
-    }else if(store.getters.isAuthenticated && role === "Admin"){
+    }else if(store.getters.isAuthenticated && role === "VENDOR"){
       next('/vendor_profile');
       return;
     }
